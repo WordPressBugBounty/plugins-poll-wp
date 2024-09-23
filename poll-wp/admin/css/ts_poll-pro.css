@@ -1,0 +1,409 @@
+body * {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.tsp_pro_special *,
+.tsp_pro_container * {
+    font-family: cursive, sans-serif;
+}
+
+.tsp_pro_special>.tsp-text-upgrade>p {
+    margin: 15px 0;
+    font-size: 25px;
+    color: #ec712d;
+    text-align: center;
+}
+
+#wpcontent {
+    padding-left: 0 !important;
+}
+
+#wpbody-content>#screen-meta {
+    margin: 0 !important;
+}
+
+.tsp-banner {
+    font-family: 'Ubuntu Condensed', sans-serif;
+    width: 100%;
+    background: linear-gradient(to top right, #974AB8, #3B3BBC);
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+}
+
+.tsp-banner p {
+    color: #fff;
+    max-width: 100%;
+    word-break: break-word;
+    width: 100%;
+    overflow: hidden;
+    text-align: center;
+    text-decoration: none;
+}
+
+.tsp-banner h1,
+.tsp-banner h2 {
+    text-shadow: 1px 2px 5px #000;
+    line-height: 1.2;
+    color: #fff;
+    margin: 0;
+    font-weight: normal;
+    text-transform: uppercase;
+}
+
+.tsp-banner h1 {
+    font-size: 2em
+}
+
+.tsp-banner h2 {
+    font-size: 1.5em;
+}
+
+.tsp-banner .tsp-banner-text,
+.tsp-banner .tsp-banner-image {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: .4em 1.4em;
+    z-index: 20;
+}
+
+.tsp-banner .tsp-banner-text {
+    width: 60%;
+    height: 100%;
+}
+
+.tsp-banner .tsp-banner-image {
+    width: 40%;
+    height: 100%;
+    transition: all 3s ease;
+    position: relative;
+    text-align: center;
+}
+
+.tsp-banner .tsp-banner-image p {
+    color: #fff;
+    margin: .2em 0;
+    text-shadow: 1px 2px 5px #000;
+}
+
+.tsp-banner .tsp-banner-image .tsp-big-text {
+    font-size: 1.2em;
+    text-transform: uppercase;
+    margin-bottom: .7em;
+}
+
+.tsp-banner .tsp-banner-image .tsp-big-text>span {
+    font-size: 1.3em;
+    color: #e69e30;
+    position: relative;
+}
+
+.tsp-banner .tsp-banner-image .tsp-big-text>span:after {
+    content: '';
+    border-bottom: 1px solid #e69e30;
+    height: 1px;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+}
+
+.tsp-banner .tsp-banner-image .small-text {
+    margin-bottom: .7em;
+    text-transform: uppercase;
+    font-size: .7em;
+}
+
+.tsp-banner .tsp-banner-image .tsp-button {
+    text-decoration: none;
+    font-size: .7em;
+    padding: .7em 1.2em;
+    color: #fff;
+    background-color: #e69e30;
+    display: inline-block;
+    margin: 0 auto;
+    text-transform: uppercase;
+    border-radius: 3px;
+    transition: all .3s ease;
+}
+
+.tsp-banner .tsp-banner-image .tsp-button:hover {
+    color: #fff;
+    background-color: #e69e30;
+}
+
+svg {
+    z-index: 10;
+    width: 250px;
+    height: auto;
+    position: absolute;
+    opacity: .7;
+    top: -45%;
+    right: 5%;
+}
+
+@keyframes tsp-borders {
+    50% {
+        stroke-dashoffset: 0;
+    }
+
+    100% {
+        stroke-dashoffset: 2000;
+    }
+}
+
+.tsp-cls-1,
+.tsp-cls-2,
+.tsp-cls-3,
+.tsp-cls-4 {
+    fill: transparent;
+    stroke-miterlimit: 10;
+    stroke-width: 3px;
+    stroke-dashoffset: 2000;
+    animation: tsp-borders 100s linear infinite;
+}
+
+.tsp-cls-1 {
+    stroke: #ff9800;
+    stroke-dasharray: 70;
+}
+
+.tsp-cls-2 {
+    stroke: #c6c0ff;
+    stroke-dasharray: 200;
+}
+
+.tsp-cls-3 {
+    stroke: #fff;
+    stroke-dasharray: 30;
+    stroke-width: 6px;
+}
+
+.tsp-cls-4 {
+    stroke: #513fbb;
+    stroke-dasharray: 51;
+    stroke-width: 9px;
+}
+
+section.tsp_pro_container {
+    color: #808d9b;
+    background: #eef2f5;
+    min-height: 100vh;
+    max-width: 100%;
+    -webkit-font-smoothing: antialiased;
+    margin-top: 5vh;
+}
+
+.tsp_pro_flex_row {
+    width: 90%;
+    height: 100%;
+    padding: 0 5%;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-justify-content: space-around;
+    justify-content: space-around;
+    -webkit-align-content: center;
+    -ms-flex-line-pack: center;
+    align-content: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+
+}
+
+@media only screen and (min-width : 769px) {
+    .tsp_pro_flex_row>.tsp_pro_item {
+        width: 25%;
+    }
+}
+
+@media only screen and (max-width: 768px) and (min-width : 451px) {
+    .tsp_pro_flex_row>.tsp_pro_item {
+        width: 45%;
+    }
+}
+
+@media only screen and (max-width: 450px) {
+    .tsp_pro_flex_row>.tsp_pro_item {
+        width: 90%;
+    }
+}
+
+.tsp-pricing-table {
+    color: #3a3a3a;
+    font-family: 'Open Sans', sans-serif;
+    text-align: center;
+    padding: 0 20px 35px;
+    position: relative;
+    z-index: 1;
+    max-width: 100%;
+}
+
+.tsp-pricing-table:before {
+    content: "";
+    background: #fff;
+    border-radius: 30px 0;
+    box-shadow: 0 0 15px -5px rgba(0, 0, 0, 0.2);
+    position: absolute;
+    top: 70px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+}
+
+.tsp-pricing-table .tsp-price-value {
+    color: #fff;
+    height: 140px;
+    width: 140px;
+    margin: 0 auto 50px;
+    position: relative;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-flex-wrap: nowrap;
+    -ms-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-align-content: center;
+    -ms-flex-line-pack: center;
+    align-content: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+.tsp-pricing-table .tsp-price-value:before {
+    content: '';
+    background: linear-gradient(to top right, #974AB8, #3B3BBC);
+    height: 100%;
+    width: 100%;
+    border-radius: 50% 50% 0 50%;
+    transform: rotate(45deg);
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: -1;
+}
+
+.tsp-pricing-table .tsp-price-value .tsp-amount {
+    font-size: 55px;
+    font-weight: 700;
+    line-height: 55px;
+    letter-spacing: -0.5px;
+    display: block;
+}
+
+/* .tsp-pricing-table .tsp-price-value .tsp-duration{
+    text-transform: uppercase;
+    display: block;
+} */
+.tsp-pricing-table .tsp-title {
+    /* font-size: 35px; */
+    font-size: 25px;
+    font-weight: 400;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin: 0;
+    text-align: center;
+}
+
+.ts-poll-check-circle,
+.ts-poll-gift {
+    color: #008000;
+    margin-left: .1875rem;
+}
+
+.tsp-pricing-table .tsp-title:after {
+    content: '';
+    background: linear-gradient(to top right, #974AB8, #3B3BBC);
+    height: 3px;
+    width: 40%;
+    margin: 10px auto 30px;
+    clear: both;
+    display: block;
+}
+
+.tsp-pricing-table .tsp-pricing-content {
+    padding: 0;
+    margin: 0 0 35px;
+    list-style: none;
+}
+
+.tsp-pricing-table .tsp-pricing-content .tsp-special-li {
+    color: #ee672c;
+}
+
+.tsp-pricing-table .tsp-pricing-content li {
+    color: #7b7b7b;
+    font-size: 17px;
+    line-height: 22px;
+    text-transform: uppercase;
+    margin: 0 0 20px;
+    position: relative;
+}
+
+.tsp-pricing-table .tsp-pricing-content li:last-child {
+    margin-bottom: 0;
+}
+
+.tsp-pricing-table .tsp-pricing-table-signup a {
+    color: #fff;
+    background: linear-gradient(to top right, #974AB8, #3B3BBC);
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 25px;
+    text-transform: uppercase;
+    padding: 11px 30px;
+    border-radius: 8px;
+    display: inline-block;
+    transition: all 0.3s ease 0s;
+}
+
+.tsp-pricing-table .tsp-pricing-table-signup a:hover {
+    box-shadow: 3px 5px 5px rgba(0, 0, 0, 0.3);
+    text-decoration: none;
+}
+
+.tsp-pricing-table.pink .tsp-price-value:before,
+.tsp-pricing-table.pink .tsp-title:after,
+.tsp-pricing-table.pink .tsp-pricing-table-signup a {
+    background: linear-gradient(to top right, #BB2CA6, #C4334C);
+}
+
+.tsp-pricing-table.orange .tsp-price-value:before,
+.tsp-pricing-table.orange .tsp-title:after,
+.tsp-pricing-table.orange .tsp-pricing-table-signup a {
+    background: linear-gradient(to top right, #F3482B, #E3B331);
+}
+
+@media only screen and (max-width: 990px) {
+    .tsp-pricing-table {
+        margin: 0 0 40px;
+    }
+}

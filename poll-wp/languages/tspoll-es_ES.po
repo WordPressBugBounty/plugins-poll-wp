@@ -1,0 +1,970 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: TS Poll\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-05-16 15:50+0400\n"
+"PO-Revision-Date: 2022-05-16 15:50+0400\n"
+"Last-Translator: \n"
+"Language-Team: Spanish\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Loco-Source-Locale: en_AM\n"
+"X-Generator: Poedit 3.0.1\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-Flags-xgettext: --add-comments=translators:\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Loco-Parser: loco_parse_po\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.min.js\n"
+"X-Poedit-SearchPathExcluded-1: vendor\n"
+"X-Poedit-SearchPathExcluded-2: node_modules\n"
+
+#: admin/class-ts_poll-admin.php:161 admin/ts_poll_admin.php:34
+msgid "Support"
+msgstr "Soporte"
+
+#: admin/class-ts_poll-admin.php:162 admin/ts_poll_admin.php:37
+msgid "Go Pro"
+msgstr "Conviértete en profesional"
+
+#: admin/class-ts_poll-admin.php:185
+msgid "Click for change text"
+msgstr "Haga clic para cambiar el texto"
+
+#: admin/class-ts_poll-admin.php:219 admin/class-ts_poll_list.php:105
+#: admin/class-ts_poll_list.php:123 admin/class-ts_poll_list.php:182
+msgid "Copy"
+msgstr "Dupdo"
+
+#: admin/class-ts_poll-admin.php:220 admin/class-ts_poll_list.php:106
+#: admin/class-ts_poll_list.php:181
+msgid "Delete"
+msgstr "Borrar"
+
+#: admin/class-ts_poll-admin.php:221
+msgid "Do you really want to copy this poll?"
+msgstr "¿De verdad quieres copiar esta encuesta?"
+
+#: admin/class-ts_poll-admin.php:222
+msgid "Do you really want to delete this poll? This process cannot be undone."
+msgstr ""
+"¿Realmente quieres eliminar esta encuesta? Este proceso no se puede deshacer."
+
+#: admin/class-ts_poll-admin.php:223
+msgid "Copied"
+msgstr "Copiado"
+
+#: admin/class-ts_poll-admin.php:234 admin/ts_poll_admin.php:41
+msgid "Search"
+msgstr "Búsqueda"
+
+#: admin/class-ts_poll-admin.php:235
+msgid "entries per page"
+msgstr "entradas por pagina"
+
+#: admin/class-ts_poll-admin.php:236
+msgid "No entries found"
+msgstr "Entradas no encontradas"
+
+#: admin/class-ts_poll-admin.php:237
+msgid "Showing"
+msgstr "Demostración"
+
+#: admin/class-ts_poll-admin.php:238
+msgid "to"
+msgstr "para"
+
+#: admin/class-ts_poll-admin.php:239
+msgid "of"
+msgstr "de"
+
+#: admin/class-ts_poll-admin.php:240
+msgid "entries"
+msgstr "entradas"
+
+#: admin/class-ts_poll-admin.php:271
+msgid "Warning"
+msgstr "Advertencia"
+
+#: admin/class-ts_poll-admin.php:272
+msgid "Info"
+msgstr "Información"
+
+#: admin/class-ts_poll-admin.php:273
+msgid "Success"
+msgstr "Éxito"
+
+#: admin/class-ts_poll-admin.php:274
+msgid "Error"
+msgstr "Error"
+
+#: admin/class-ts_poll-admin.php:275
+msgid "You are already choose theme."
+msgstr "Ya estás eligiendo tema."
+
+#: admin/class-ts_poll-admin.php:276
+msgid "Please choose a theme for more experiance."
+msgstr "Elija un tema para obtener más experiencia."
+
+#: admin/class-ts_poll-admin.php:277
+msgid "Poll statistics field is pro feature."
+msgstr ""
+"El campo de estadísticas de encuesta es una característica profesional."
+
+#: admin/class-ts_poll-admin.php:278
+msgid "Please save poll for getting results."
+msgstr "Guarde la encuesta para obtener resultados."
+
+#: admin/class-ts_poll-admin.php:279
+msgid "Icon for this field required."
+msgstr "Icono para este campo requerido."
+
+#: admin/class-ts_poll-admin.php:280
+msgid "Your selected video has not thumbnail,but you can add image."
+msgstr ""
+"Su video seleccionado no tiene miniatura, pero puede agregar una imagen."
+
+#: admin/class-ts_poll-admin.php:281
+msgid "Your inserted link isn't valid."
+msgstr "Su enlace insertado no es válido."
+
+#: admin/class-ts_poll-admin.php:282
+msgid "Your inserted file type isn't image."
+msgstr "Su tipo de archivo insertado no es una imagen."
+
+#: admin/class-ts_poll-admin.php:283
+msgid "Your poll isn't saved."
+msgstr "Tu encuesta no está guardada."
+
+#: admin/class-ts_poll-admin.php:284
+msgid "Minimum amount of answers is 2."
+msgstr "La cantidad mínima de respuestas es 2."
+
+#: admin/class-ts_poll-admin.php:285
+msgid "Answer successfully copied."
+msgstr "Respuesta copiada correctamente."
+
+#: admin/class-ts_poll-admin.php:286
+msgid "Answer successfully deleted."
+msgstr "Respuesta eliminada con éxito."
+
+#: admin/class-ts_poll-admin.php:287
+msgid "New answer successfully added."
+msgstr "Nueva respuesta agregada con éxito."
+
+#: admin/class-ts_poll-admin.php:288
+msgid "Shortcode copied."
+msgstr "Código abreviado copiado."
+
+#: admin/class-ts_poll-admin.php:289
+msgid "Shortcode theme code copied."
+msgstr "Código de tema de código abreviado copiado."
+
+#: admin/class-ts_poll-admin.php:290
+msgid "Your selected video has thumbnail,but you can change it."
+msgstr "Su video seleccionado tiene una miniatura, pero puede cambiarlo."
+
+#: admin/class-ts_poll-admin.php:441
+msgid "length"
+msgstr "largura"
+
+#: admin/class-ts_poll-admin.php:645
+msgid "Polls per page"
+msgstr "Encuestas por página"
+
+#: admin/class-ts_poll-admin.php:668
+msgid "All TS Poll"
+msgstr ""
+
+#: admin/class-ts_poll-admin.php:669
+msgid "All Polls"
+msgstr "Todas las encuestas"
+
+#: admin/class-ts_poll-admin.php:680
+msgid "TS Poll Builder"
+msgstr ""
+
+#: admin/class-ts_poll-admin.php:681
+msgid "Add Poll"
+msgstr "Añadir un sondeo"
+
+#: admin/class-ts_poll_block.php:58
+msgid "Select a poll"
+msgstr "Seleccione una encuesta"
+
+#: admin/class-ts_poll_block.php:78
+msgid ""
+"Poll plugin is a responsive and customizable for WordPress. Poll plugin will "
+"help you more easily create powerful poll, Image poll, video poll."
+msgstr ""
+"El complemento de encuesta es receptivo y personalizable para WordPress. El "
+"complemento de encuesta lo ayudará a crear más fácilmente encuestas "
+"poderosas, encuestas de imágenes, encuestas de video."
+
+#: admin/class-ts_poll_block.php:93
+msgid "Selected poll is not defined."
+msgstr "La encuesta seleccionada no está definida."
+
+#: admin/class-ts_poll_list.php:8
+msgid "Poll"
+msgstr "Encuesta"
+
+#: admin/class-ts_poll_list.php:9
+msgid "Polls"
+msgstr "Centro"
+
+#: admin/class-ts_poll_list.php:90
+msgid "No polls avaliable."
+msgstr "No polls avaliable."
+
+#: admin/class-ts_poll_list.php:104
+msgid "Edit"
+msgstr "Editar"
+
+#: admin/class-ts_poll_list.php:153
+msgid "Title"
+msgstr "Título"
+
+#: admin/class-ts_poll_list.php:154 admin/ts_poll_builder.php:825
+msgid "Shortcode"
+msgstr "Código corto"
+
+#: admin/class-ts_poll_list.php:155
+msgid "Question theme"
+msgstr "Tema de la pregunta"
+
+#: admin/class-ts_poll_list.php:156
+msgid "Created At"
+msgstr "Creado en"
+
+#: admin/class-ts_poll_list.php:197
+msgid "Sorry, your nonce did not verify."
+msgstr "Lo sentimos, tu nonce no se verificó."
+
+#: admin/class-ts_poll_list.php:221
+msgid "Not valid action."
+msgstr "Acción no válida."
+
+#: admin/ts_poll_admin.php:12
+msgid "Upgrade to Pro"
+msgstr "Actualízate a Pro"
+
+#: admin/ts_poll_admin.php:28
+msgid "Dashboard"
+msgstr "Panel"
+
+#: admin/ts_poll_admin.php:31
+msgid "Create Poll"
+msgstr "Crear encuesta"
+
+#: admin/ts_poll_builder.php:35
+msgid "FREE THEME"
+msgstr "TEMA GRATIS"
+
+#: admin/ts_poll_builder.php:40
+msgid "Use Theme"
+msgstr "Usar tema"
+
+#: admin/ts_poll_builder.php:50
+msgid "General options"
+msgstr "Opciones generales"
+
+#: admin/ts_poll_builder.php:51
+msgid "Main width"
+msgstr "Ancho principal"
+
+#: admin/ts_poll_builder.php:52 admin/ts_poll_builder.php:118
+#: admin/ts_poll_builder.php:128 admin/ts_poll_builder.php:140
+#: admin/ts_poll_builder.php:146 admin/ts_poll_builder.php:158
+#: admin/ts_poll_builder.php:163 admin/ts_poll_builder.php:171
+#: admin/ts_poll_builder.php:173 admin/ts_poll_builder.php:181
+msgid "Position"
+msgstr "Posición"
+
+#: admin/ts_poll_builder.php:52 admin/ts_poll_builder.php:64
+#: admin/ts_poll_builder.php:118 admin/ts_poll_builder.php:128
+#: admin/ts_poll_builder.php:146 admin/ts_poll_builder.php:163
+#: admin/ts_poll_builder.php:173
+msgid "Left"
+msgstr "Izquierda"
+
+#: admin/ts_poll_builder.php:52 admin/ts_poll_builder.php:64
+#: admin/ts_poll_builder.php:118
+msgid "Center"
+msgstr "Centro"
+
+#: admin/ts_poll_builder.php:52 admin/ts_poll_builder.php:64
+#: admin/ts_poll_builder.php:118 admin/ts_poll_builder.php:128
+#: admin/ts_poll_builder.php:146 admin/ts_poll_builder.php:163
+#: admin/ts_poll_builder.php:173
+msgid "Right"
+msgstr "Derecha"
+
+#: admin/ts_poll_builder.php:53 admin/ts_poll_builder.php:85
+#: admin/ts_poll_builder.php:129 admin/ts_poll_builder.php:147
+#: admin/ts_poll_builder.php:195 admin/ts_poll_builder.php:197
+msgid "Border width"
+msgstr "Ancho del borde"
+
+#: admin/ts_poll_builder.php:54 admin/ts_poll_builder.php:86
+#: admin/ts_poll_builder.php:130 admin/ts_poll_builder.php:148
+#: admin/ts_poll_builder.php:164 admin/ts_poll_builder.php:174
+#: admin/ts_poll_builder.php:196 admin/ts_poll_builder.php:198
+msgid "Border color"
+msgstr "Color del borde"
+
+#: admin/ts_poll_builder.php:55 admin/ts_poll_builder.php:87
+#: admin/ts_poll_builder.php:131
+msgid "Border radius"
+msgstr "Radio del borde"
+
+#: admin/ts_poll_builder.php:56
+msgid "Shadow type"
+msgstr "Tipo de sombra"
+
+#: admin/ts_poll_builder.php:56 admin/ts_poll_builder.php:69
+#: admin/ts_poll_builder.php:113 admin/ts_poll_builder.php:188
+#: admin/ts_poll_builder.php:209 admin/ts_poll_builder.php:212
+#: admin/ts_poll_builder.php:219
+msgid "None"
+msgstr "Ninguna"
+
+#: admin/ts_poll_builder.php:56
+msgid "Shadow"
+msgstr "Sombra"
+
+#: admin/ts_poll_builder.php:57 admin/ts_poll_builder.php:81
+msgid "Shadow color"
+msgstr "Color de sombra"
+
+#: admin/ts_poll_builder.php:59 admin/ts_poll_builder.php:273
+#: admin/ts_poll_builder.php:288
+msgid "Header"
+msgstr "Encabezamiento"
+
+#: admin/ts_poll_builder.php:60 admin/ts_poll_builder.php:184
+#: admin/ts_poll_builder.php:264
+msgid "Background color"
+msgstr "Color de fondo"
+
+#: admin/ts_poll_builder.php:61 admin/ts_poll_builder.php:70
+#: admin/ts_poll_builder.php:74 admin/ts_poll_builder.php:114
+#: admin/ts_poll_builder.php:119 admin/ts_poll_builder.php:133
+#: admin/ts_poll_builder.php:151 admin/ts_poll_builder.php:166
+#: admin/ts_poll_builder.php:176 admin/ts_poll_builder.php:185
+#: admin/ts_poll_builder.php:214 admin/ts_poll_builder.php:227
+#: admin/ts_poll_builder.php:265
+msgid "Color"
+msgstr "Color"
+
+#: admin/ts_poll_builder.php:62 admin/ts_poll_builder.php:82
+#: admin/ts_poll_builder.php:120 admin/ts_poll_builder.php:136
+#: admin/ts_poll_builder.php:154 admin/ts_poll_builder.php:228
+msgid "Font size"
+msgstr "Tamaño de fuente"
+
+#: admin/ts_poll_builder.php:63 admin/ts_poll_builder.php:83
+#: admin/ts_poll_builder.php:137 admin/ts_poll_builder.php:155
+#: admin/ts_poll_builder.php:229
+msgid "Font family"
+msgstr "Familia tipográfica"
+
+#: admin/ts_poll_builder.php:64
+msgid "Text align"
+msgstr "Texto alineado"
+
+#: admin/ts_poll_builder.php:66
+msgid "Header line"
+msgstr "Línea de cabecera"
+
+#: admin/ts_poll_builder.php:67 admin/ts_poll_builder.php:111
+msgid "Width"
+msgstr "Ancho"
+
+#: admin/ts_poll_builder.php:68 admin/ts_poll_builder.php:112
+msgid "Height"
+msgstr "Altura"
+
+#: admin/ts_poll_builder.php:69 admin/ts_poll_builder.php:113
+msgid "Style"
+msgstr "Estilo"
+
+#: admin/ts_poll_builder.php:69 admin/ts_poll_builder.php:113
+#: admin/ts_poll_builder.php:188 admin/ts_poll_builder.php:212
+msgid "Solid"
+msgstr "Sólido"
+
+#: admin/ts_poll_builder.php:69 admin/ts_poll_builder.php:113
+#: admin/ts_poll_builder.php:188 admin/ts_poll_builder.php:212
+msgid "Dotted"
+msgstr "Punteado"
+
+#: admin/ts_poll_builder.php:69 admin/ts_poll_builder.php:113
+#: admin/ts_poll_builder.php:188 admin/ts_poll_builder.php:212
+msgid "Dashed"
+msgstr "Punteado"
+
+#: admin/ts_poll_builder.php:72
+msgid "Answer options"
+msgstr "Opciones de respuesta"
+
+#: admin/ts_poll_builder.php:73
+msgid "Individual color"
+msgstr "Color individual"
+
+#: admin/ts_poll_builder.php:74 admin/ts_poll_builder.php:214
+msgid "Individual colors for"
+msgstr "Colores individuales para"
+
+#: admin/ts_poll_builder.php:74 admin/ts_poll_builder.php:214
+msgid "Nothing"
+msgstr "Ninguna cosa"
+
+#: admin/ts_poll_builder.php:74 admin/ts_poll_builder.php:132
+#: admin/ts_poll_builder.php:150 admin/ts_poll_builder.php:165
+#: admin/ts_poll_builder.php:175 admin/ts_poll_builder.php:205
+#: admin/ts_poll_builder.php:214
+msgid "Background"
+msgstr "Fondo"
+
+#: admin/ts_poll_builder.php:75 admin/ts_poll_builder.php:127
+#: admin/ts_poll_builder.php:145 admin/ts_poll_builder.php:162
+#: admin/ts_poll_builder.php:172 admin/ts_poll_builder.php:203
+#: admin/ts_poll_builder.php:215
+msgid "Main background"
+msgstr "Fondo principal"
+
+#: admin/ts_poll_builder.php:76 admin/ts_poll_builder.php:204
+#: admin/ts_poll_builder.php:216
+msgid "Answer background"
+msgstr "Fondo de respuesta"
+
+#: admin/ts_poll_builder.php:77 admin/ts_poll_builder.php:206
+#: admin/ts_poll_builder.php:217
+msgid "Answer color"
+msgstr "Color de respuesta"
+
+#: admin/ts_poll_builder.php:78 admin/ts_poll_builder.php:134
+#: admin/ts_poll_builder.php:152 admin/ts_poll_builder.php:167
+#: admin/ts_poll_builder.php:177
+msgid "Hover background"
+msgstr "Fondo flotante"
+
+#: admin/ts_poll_builder.php:79 admin/ts_poll_builder.php:97
+#: admin/ts_poll_builder.php:135 admin/ts_poll_builder.php:153
+#: admin/ts_poll_builder.php:168 admin/ts_poll_builder.php:178
+msgid "Hover color"
+msgstr "Color de libración"
+
+#: admin/ts_poll_builder.php:80
+msgid "Hover shadow"
+msgstr "Sombra flotante"
+
+#: admin/ts_poll_builder.php:84
+msgid "Column count"
+msgstr "Recuento de columnas"
+
+#: admin/ts_poll_builder.php:89 admin/ts_poll_builder.php:272
+#: admin/ts_poll_builder.php:283 admin/ts_poll_builder.php:284
+#: admin/ts_poll_builder.php:287 admin/ts_poll_builder.php:402
+#: admin/ts_poll_builder.php:425
+msgid "Answer image"
+msgstr "Imagen de respuesta"
+
+#: admin/ts_poll_builder.php:90
+msgid "Image height type"
+msgstr "Tipo de altura de la imagen"
+
+#: admin/ts_poll_builder.php:90
+msgid "Fixed"
+msgstr "Reparado"
+
+#: admin/ts_poll_builder.php:90
+msgid "Ratio"
+msgstr ""
+
+#: admin/ts_poll_builder.php:91
+msgid "Image height"
+msgstr "Altura de imagen"
+
+#: admin/ts_poll_builder.php:92 admin/ts_poll_builder.php:94
+#: admin/ts_poll_builder.php:280
+msgid "Image ratio"
+msgstr "Relación de imagen"
+
+#: admin/ts_poll_builder.php:93 admin/ts_poll_builder.php:279
+msgid "Image width"
+msgstr "Ancho de la imagen"
+
+#: admin/ts_poll_builder.php:95
+msgid "Hover Overlay"
+msgstr "Superposición de desplazamiento"
+
+#: admin/ts_poll_builder.php:96
+msgid "Hover icon"
+msgstr "Icono de desplazamiento"
+
+#: admin/ts_poll_builder.php:98 admin/ts_poll_builder.php:141
+#: admin/ts_poll_builder.php:159 admin/ts_poll_builder.php:266
+msgid "Icon size"
+msgstr "Tamaño de ícono"
+
+#: admin/ts_poll_builder.php:100
+msgid "Checkbox options"
+msgstr "Opciones de casilla de verificación"
+
+#: admin/ts_poll_builder.php:101
+msgid "Check many"
+msgstr "Compruebe muchos"
+
+#: admin/ts_poll_builder.php:102
+msgid "Show checkbox"
+msgstr "Mostrar casilla de verificación"
+
+#: admin/ts_poll_builder.php:103
+msgid "Size"
+msgstr "Tamaño"
+
+#: admin/ts_poll_builder.php:104
+msgid "Unchecked icon"
+msgstr "Icono desmarcado"
+
+#: admin/ts_poll_builder.php:105
+msgid "Unchecked color"
+msgstr "Color sin marcar"
+
+#: admin/ts_poll_builder.php:106
+msgid "Checked Icon"
+msgstr "Icono marcado"
+
+#: admin/ts_poll_builder.php:107
+msgid "Checked color"
+msgstr "Color a cuadros"
+
+#: admin/ts_poll_builder.php:108
+msgid "Checkbox position"
+msgstr "Posición de la casilla de verificación"
+
+#: admin/ts_poll_builder.php:110
+msgid "Line after answers"
+msgstr "Línea después de las respuestas"
+
+#: admin/ts_poll_builder.php:116
+msgid "Total votes"
+msgstr "Total de votos"
+
+#: admin/ts_poll_builder.php:117 admin/ts_poll_builder.php:126
+#: admin/ts_poll_builder.php:144
+msgid "Show button"
+msgstr "Mostrar botón"
+
+#: admin/ts_poll_builder.php:121 admin/ts_poll_builder.php:138
+#: admin/ts_poll_builder.php:156 admin/ts_poll_builder.php:169
+#: admin/ts_poll_builder.php:179 admin/ts_poll_builder.php:225
+msgid "Text"
+msgstr "Texto"
+
+#: admin/ts_poll_builder.php:122 admin/ts_poll_builder.php:139
+#: admin/ts_poll_builder.php:157 admin/ts_poll_builder.php:170
+#: admin/ts_poll_builder.php:180 admin/ts_poll_builder.php:267
+msgid "Icon"
+msgstr "Icono"
+
+#: admin/ts_poll_builder.php:123
+msgid "Icon position"
+msgstr "Posición del icono"
+
+#: admin/ts_poll_builder.php:123 admin/ts_poll_builder.php:140
+#: admin/ts_poll_builder.php:158 admin/ts_poll_builder.php:171
+#: admin/ts_poll_builder.php:181
+msgid "After text"
+msgstr "Después del texto"
+
+#: admin/ts_poll_builder.php:123 admin/ts_poll_builder.php:140
+#: admin/ts_poll_builder.php:158 admin/ts_poll_builder.php:171
+#: admin/ts_poll_builder.php:181
+msgid "Before text"
+msgstr "Antes del texto"
+
+#: admin/ts_poll_builder.php:125
+msgid "Vote button"
+msgstr "Botón votar"
+
+#: admin/ts_poll_builder.php:128 admin/ts_poll_builder.php:146
+#: admin/ts_poll_builder.php:163 admin/ts_poll_builder.php:173
+msgid "Full Width"
+msgstr "Ancho completo"
+
+#: admin/ts_poll_builder.php:143
+msgid "Result button"
+msgstr "Botón de resultado"
+
+#: admin/ts_poll_builder.php:149
+msgid "Border Radius"
+msgstr "Radio del borde"
+
+#: admin/ts_poll_builder.php:161
+msgid "Back button"
+msgstr "Botón de retroceso"
+
+#: admin/ts_poll_builder.php:183
+msgid "Result header"
+msgstr "Encabezado de resultado"
+
+#: admin/ts_poll_builder.php:186 admin/ts_poll_builder.php:210
+msgid "Line width"
+msgstr "Grosor de línea"
+
+#: admin/ts_poll_builder.php:187 admin/ts_poll_builder.php:211
+msgid "Line height"
+msgstr "Altura de la línea"
+
+#: admin/ts_poll_builder.php:188 admin/ts_poll_builder.php:212
+msgid "Line style"
+msgstr "Estilo de línea"
+
+#: admin/ts_poll_builder.php:189 admin/ts_poll_builder.php:213
+msgid "Line color"
+msgstr "Color de linea"
+
+#: admin/ts_poll_builder.php:191
+msgid "Popup option"
+msgstr "Opción emergente"
+
+#: admin/ts_poll_builder.php:192
+msgid "Show popup"
+msgstr "Mostrar ventanas emergentes"
+
+#: admin/ts_poll_builder.php:193
+msgid "Close icon"
+msgstr "Cerrar icono"
+
+#: admin/ts_poll_builder.php:194
+msgid "Icon color"
+msgstr "Color del icono"
+
+#: admin/ts_poll_builder.php:199
+msgid "Show in popup"
+msgstr "Mostrar en ventana emergente"
+
+#: admin/ts_poll_builder.php:200
+msgid "Show effect"
+msgstr "Mostrar efecto"
+
+#: admin/ts_poll_builder.php:200
+msgid "From Top to Bottom"
+msgstr "De arriba a abajo"
+
+#: admin/ts_poll_builder.php:200
+msgid "From Left to Right"
+msgstr "De izquierda a derecha"
+
+#: admin/ts_poll_builder.php:200
+msgid "From Right to Left"
+msgstr "De derecha a izquierda"
+
+#: admin/ts_poll_builder.php:200
+msgid "From Center to Full"
+msgstr "Del centro a lleno"
+
+#: admin/ts_poll_builder.php:200
+msgid "Rotate Y"
+msgstr "Rotar Y"
+
+#: admin/ts_poll_builder.php:200
+msgid "Rotate X"
+msgstr "Rotar X"
+
+#: admin/ts_poll_builder.php:200
+msgid "Rotate"
+msgstr "Girar"
+
+#: admin/ts_poll_builder.php:200
+msgid "Skew X"
+msgstr "Sesgar X"
+
+#: admin/ts_poll_builder.php:200
+msgid "Skew Y"
+msgstr "Sesgar Y"
+
+#: admin/ts_poll_builder.php:202 admin/ts_poll_builder.php:246
+#: admin/ts_poll_builder.php:247 admin/ts_poll_builder.php:248
+#: admin/ts_poll_builder.php:249 admin/ts_poll_builder.php:250
+msgid "After vote"
+msgstr "Después de votar"
+
+#: admin/ts_poll_builder.php:207
+msgid "Vote color"
+msgstr "Votar color"
+
+#: admin/ts_poll_builder.php:208
+msgid "Vote type"
+msgstr "Tipo de voto"
+
+#: admin/ts_poll_builder.php:208 admin/ts_poll_builder.php:218
+#: admin/ts_poll_builder.php:246
+msgid "Percent"
+msgstr "Por ciento"
+
+#: admin/ts_poll_builder.php:208 admin/ts_poll_builder.php:218
+msgid "Label + Percent"
+msgstr "Etiqueta + Porcentaje"
+
+#: admin/ts_poll_builder.php:208 admin/ts_poll_builder.php:218
+#: admin/ts_poll_builder.php:246
+msgid "Votes Count"
+msgstr "Recuento de votos"
+
+#: admin/ts_poll_builder.php:208 admin/ts_poll_builder.php:218
+msgid "Label + Votes Count"
+msgstr "Etiqueta + Recuento de votos"
+
+#: admin/ts_poll_builder.php:208 admin/ts_poll_builder.php:218
+#: admin/ts_poll_builder.php:246
+msgid "Both"
+msgstr "Ambas cosas"
+
+#: admin/ts_poll_builder.php:208 admin/ts_poll_builder.php:218
+msgid "Label + Both"
+msgstr "Etiqueta + Ambos"
+
+#: admin/ts_poll_builder.php:209 admin/ts_poll_builder.php:219
+msgid "Vote effect"
+msgstr "Efecto de voto"
+
+#: admin/ts_poll_builder.php:209 admin/ts_poll_builder.php:219
+#: admin/ts_poll_builder.php:247
+msgid "Effect"
+msgstr "Efecto"
+
+#: admin/ts_poll_builder.php:218
+msgid "Result show type"
+msgstr "Tipo de presentación de resultados"
+
+#: admin/ts_poll_builder.php:223
+msgid "Upcoming poll options"
+msgstr "Próximas opciones de encuesta"
+
+#: admin/ts_poll_builder.php:224
+msgid "Start date"
+msgstr "Fecha de inicio"
+
+#: admin/ts_poll_builder.php:226
+msgid "Overlay color"
+msgstr "Color de superposición"
+
+#: admin/ts_poll_builder.php:231
+msgid "End poll options"
+msgstr "Finalizar opciones de encuesta"
+
+#: admin/ts_poll_builder.php:232
+msgid "End date"
+msgstr "Fecha final"
+
+#: admin/ts_poll_builder.php:234
+msgid "Result options"
+msgstr "Opciones de resultado"
+
+#: admin/ts_poll_builder.php:235
+msgid "Show results"
+msgstr "Mostrar resultados"
+
+#: admin/ts_poll_builder.php:236
+msgid "Text for no result"
+msgstr "Texto sin resultado"
+
+#: admin/ts_poll_builder.php:263
+msgid "Video play"
+msgstr "Reproducción de vídeo"
+
+#: admin/ts_poll_builder.php:277 admin/ts_poll_builder.php:278
+msgid "Header image"
+msgstr "Imagen de cabecera"
+
+#: admin/ts_poll_builder.php:281
+msgid "Question image"
+msgstr "Imagen de pregunta"
+
+#: admin/ts_poll_builder.php:292 admin/ts_poll_builder.php:293
+msgid "Header video"
+msgstr "Vídeo de cabecera"
+
+#: admin/ts_poll_builder.php:294
+msgid "Video width"
+msgstr "Ancho de vídeo"
+
+#: admin/ts_poll_builder.php:295
+msgid "Question video"
+msgstr "Vídeo de preguntas"
+
+#: admin/ts_poll_builder.php:345
+msgid "Add answer"
+msgstr "Agregar respuesta"
+
+#: admin/ts_poll_builder.php:353
+msgid "Back to answers"
+msgstr "Volver a las respuestas"
+
+#: admin/ts_poll_builder.php:358 admin/ts_poll_builder.php:360
+msgid "Answer title"
+msgstr "Título de la respuesta"
+
+#: admin/ts_poll_builder.php:363
+msgid "Special color"
+msgstr "Color especial"
+
+#: admin/ts_poll_builder.php:398
+msgid "Answer video"
+msgstr "Vídeo de respuesta"
+
+#: admin/ts_poll_builder.php:400
+msgid "Choose video"
+msgstr "Elegir vídeo"
+
+#: admin/ts_poll_builder.php:404 admin/ts_poll_builder.php:427
+msgid "Choose image"
+msgstr "Elegir imagen"
+
+#: admin/ts_poll_builder.php:527
+msgid "Vote Options"
+msgstr "Opciones de votación"
+
+#: admin/ts_poll_builder.php:528
+msgid "Vote Once"
+msgstr "Votar una vez"
+
+#: admin/ts_poll_builder.php:529
+msgid "One time voting type"
+msgstr "Tipo de votación única"
+
+#: admin/ts_poll_builder.php:530
+msgid "PHP Cookie"
+msgstr "Cookie PHP"
+
+#: admin/ts_poll_builder.php:531
+msgid "IP Address"
+msgstr "Dirección IP"
+
+#: admin/ts_poll_builder.php:532
+msgid "IP Address time"
+msgstr "Hora de la dirección IP"
+
+#: admin/ts_poll_builder.php:533
+msgid "IP Address PHP Cookie"
+msgstr "Dirección IP PHP Cookie"
+
+#: admin/ts_poll_builder.php:534
+msgid "IP Address PHP Cookie time"
+msgstr "Dirección IP PHP Tiempo de cookies"
+
+#: admin/ts_poll_builder.php:535
+msgid "PHP Cookie time"
+msgstr "Tiempo de cookies de PHP"
+
+#: admin/ts_poll_builder.php:542
+msgid "Copy & paste the shortcode directly into any WordPress post or page."
+msgstr ""
+"Copie y pegue el código abreviado directamente en cualquier publicación o "
+"página de WordPress."
+
+#: admin/ts_poll_builder.php:549
+msgid ""
+"Copy & paste this code into a template file to include the poll within your "
+"theme."
+msgstr ""
+"Copie y pegue este código en un archivo de plantilla para incluir la "
+"encuesta dentro de su tema."
+
+#: admin/ts_poll_builder.php:556
+msgid "Please save poll for getting shortcode."
+msgstr "Guarde la encuesta para obtener el código abreviado."
+
+#: admin/ts_poll_builder.php:559
+msgid "Write question text"
+msgstr "Escribir texto de pregunta"
+
+#: admin/ts_poll_builder.php:572
+msgid "If you want to change answer votes,go to pro."
+msgstr "Si desea cambiar los votos de respuesta, vaya a profesional."
+
+#: admin/ts_poll_builder.php:578 admin/ts_poll_builder.php:613
+msgid "No."
+msgstr ""
+
+#: admin/ts_poll_builder.php:581 admin/ts_poll_builder.php:616
+msgid "Answer"
+msgstr "Responder"
+
+#: admin/ts_poll_builder.php:584 admin/ts_poll_builder.php:619
+msgid "Votes count"
+msgstr "Conteo de votos"
+
+#: admin/ts_poll_builder.php:700
+msgid "all"
+msgstr "todo"
+
+#: admin/ts_poll_builder.php:701
+msgid "font awesome"
+msgstr "font awesome"
+
+#: admin/ts_poll_builder.php:702
+msgid "emojies"
+msgstr "emojis"
+
+#: admin/ts_poll_builder.php:703
+msgid "Filter by name..."
+msgstr "Filtrar por nombre..."
+
+#: admin/ts_poll_builder.php:705
+msgid "Select"
+msgstr "Seleccione"
+
+#: admin/ts_poll_builder.php:820
+msgid "Theme"
+msgstr "Temática"
+
+#: admin/ts_poll_builder.php:822
+msgid "Fields"
+msgstr "Los campos"
+
+#: admin/ts_poll_builder.php:823
+msgid "Styles"
+msgstr "Estilos"
+
+#: admin/ts_poll_builder.php:824
+msgid "Settings"
+msgstr "Ajustes"
+
+#: admin/ts_poll_builder.php:826
+msgid "Statistics"
+msgstr "Estadísticas"
+
+#: admin/ts_poll_builder.php:827
+msgid "Results"
+msgstr "Resultados"
+
+#: admin/ts_poll_builder.php:829
+msgid "Go pro"
+msgstr "Hazte profesional"
+
+#: admin/ts_poll_builder.php:831
+msgid "Contact Us"
+msgstr "Contáctenos"
+
+#: admin/ts_poll_builder.php:839
+msgid "Support Forum"
+msgstr "Foro de soporte"
+
+#: admin/ts_poll_builder.php:849
+msgid "Save"
+msgstr "Guardar"
+
+#: admin/ts_poll_builder.php:849
+msgid "Update"
+msgstr "Actualizar"
