@@ -4,7 +4,7 @@ Contributors: totalsoft
 Donate link: https://total-soft.com/wp-poll/
 Requires at least: 5.0
 Tested up to: 6.6
-Stable tag: 2.3.9
+Stable tag: 2.4.0
 Requires PHP: 5.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -269,6 +269,10 @@ A fully featured [All poll demo types](https://total-soft.com/wp-poll-vote-stand
 
 
 == Changelog ==
+
+= Version 2.4.0 =
+
+* Fixed issue with security.
 
 = Version 2.3.9 =
 
