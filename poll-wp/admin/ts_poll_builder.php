@@ -4,11 +4,11 @@ if ( ! defined( 'WPINC' ) ) {
 }
 echo sprintf(
 	'
-	<section id="tsp_loader" class="tsp_flex_col">
-		<div id="tsp_load_circle"></div>
-		<img src="%1$s" class="tsp_load_img">
-	</section>
-	',
+  	<section id="tsp_loader" class="tsp_flex_col">
+  		<div id="tsp_load_circle"></div>
+  		<img src="%1$s" class="tsp_load_img">
+  	</section>
+  	',
 	esc_url( plugin_dir_url( __FILE__ ) . 'img/ts_poll_logo.png' )
 );
 \ob_start();
