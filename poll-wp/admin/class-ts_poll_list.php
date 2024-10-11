@@ -6,9 +6,9 @@ class ts_poll_list_table extends WP_List_Table {
 	public function __construct() {
 		parent::__construct(
 			array(
-				'singular' => esc_html__( 'Poll', 'tspoll' ), // singular name of the listed records
-				'plural'   => esc_html__( 'Polls', 'tspoll' ), // plural name of the listed records
-				'ajax'     => false, // should this table support ajax?
+				'singular' => esc_html__( 'Poll', 'tspoll' ),
+				'plural'   => esc_html__( 'Polls', 'tspoll' ),
+				'ajax'     => false
 			)
 		);
 	}
@@ -24,11 +24,13 @@ class ts_poll_list_table extends WP_List_Table {
 		global $wpdb;
 		$sql = "SELECT `id`,`Question_Title`,`Question_Param`,`created_at` FROM {$wpdb->prefix}ts_poll_questions";
 		if ( isset( $_REQUEST['s'] ) ) {
-			$sql .= ' WHERE Question_Title LIKE "%%' . esc_sql( $_REQUEST['s'] ) . '%%"';
+			$sql .= ' WHERE Question_Title LIKE "%%' . $wpdb->esc_like( $_REQUEST['s'] ) . '%%"';
 		}
 		if ( ! empty( $_REQUEST['orderby'] ) ) {
-			$sql .= ' ORDER BY ' . esc_sql( $_REQUEST['orderby'] );
-			$sql .= ! empty( $_REQUEST['order'] ) ? ' ' . esc_sql( $_REQUEST['order'] ) : ' ASC';
+			$orderby = in_array( $_REQUEST['orderby'], ['Question_Title','id'], true ) ? $_REQUEST['orderby'] : 'id';
+			$order = !empty( $_REQUEST['order'] ) && 'DESC' === strtoupper( $_REQUEST['order'] ) ? 'DESC' : 'ASC';
+			$orderby_sql = sanitize_sql_orderby( "{$orderby} {$order}" );
+			$sql .= " ORDER BY {$orderby_sql}";
 		}
 		$sql   .= " LIMIT $per_page";
 		$sql   .= ' OFFSET ' . ( $page_number - 1 ) * $per_page;

@@ -39,44 +39,44 @@ $tsp_addons_array = array(
         "desc" => "Template for conducting a beautiful poll with two images. There are many features and effects on this version."
     ],
     "All in One" => [
-      "src" => esc_url(plugin_dir_url( __FILE__ ) . 'img/AIO.png'),
-      "desc" => "Briefly about this version. You can use text, video and image together. We have added all in one for you. Our team has added this topic at your request."
+        "src" => esc_url(plugin_dir_url( __FILE__ ) . 'img/AIO.png'),
+        "desc" => "Briefly about this version. You can use text, video and image together. We have added all in one for you. Our team has added this topic at your request."
     ],
     "Vote once" => [
         "src" => esc_url(plugin_dir_url( __FILE__ ) . 'img/vote_once.png'),
         "desc" => "This feature makes possible to restrict votes via (PHP Cookie, IP Address, IP Address time ).  You can choose after how many hours or a day you can vote again."
     ],
     "Start and End" => [
-      "src" => esc_url(plugin_dir_url( __FILE__ ) . 'img/startandend.png'),
-      "desc" => "This feature allows you to decide when the poll will start and end. You can also write the day when the poll will start."
+        "src" => esc_url(plugin_dir_url( __FILE__ ) . 'img/startandend.png'),
+        "desc" => "This feature allows you to decide when the poll will start and end. You can also write the day when the poll will start."
     ],
     "Export as CSV" => [
-      "src" => esc_url(plugin_dir_url( __FILE__ ) . 'img/CSV.png'),
-      "desc" => "You can export and view the results via CSV and save them.  This function gives you a lot of information for the results."
+        "src" => esc_url(plugin_dir_url( __FILE__ ) . 'img/CSV.png'),
+        "desc" => "You can export and view the results via CSV and save them.  This function gives you a lot of information for the results."
     ],
     "Export as PDF" => [
-      "src" => esc_url(plugin_dir_url( __FILE__ ) . 'img/PDF.png'),
-      "desc" => "You can export and view the results via PDF and save them.  This function gives you a lot of information for the results."
+        "src" => esc_url(plugin_dir_url( __FILE__ ) . 'img/PDF.png'),
+        "desc" => "You can export and view the results via PDF and save them.  This function gives you a lot of information for the results."
     ],
     "Export as JSON" => [
-      "src" => esc_url(plugin_dir_url( __FILE__ ) . 'img/JSON.png'),
-      "desc" => "You can export and view the results via JSON and save them.  This function gives you a lot of information for the results."
+        "src" => esc_url(plugin_dir_url( __FILE__ ) . 'img/JSON.png'),
+        "desc" => "You can export and view the results via JSON and save them.  This function gives you a lot of information for the results."
     ],
     "Message Builder" => [
-      "src" => esc_url(plugin_dir_url( __FILE__ ) . 'img/thank_you.png'),
-      "desc" => "This feature is for the Poll Plugin.  You can create your design without any limitation.  And after voting, you can show and even write the text  as you want.  Something like this text 'Thank you for voting.'"
+        "src" => esc_url(plugin_dir_url( __FILE__ ) . 'img/thank_you.png'),
+        "desc" => "This feature is for the Poll Plugin.  You can create your design without any limitation.  And after voting, you can show and even write the text  as you want.  Something like this text 'Thank you for voting.'"
     ],
     "Your design after vote" => [
-      "src" => esc_url(plugin_dir_url( __FILE__ ) . 'img/thankyou_vote.jpg'),
-      "desc" => "After voting under the poll, you can write the text as you want.  You can create through the image and many more features that you want. You can see all the possibilities on our demo version."
+        "src" => esc_url(plugin_dir_url( __FILE__ ) . 'img/thankyou_vote.jpg'),
+        "desc" => "After voting under the poll, you can write the text as you want.  You can create through the image and many more features that you want. You can see all the possibilities on our demo version."
     ],
     "Link button" => [
-      "src" => esc_url(plugin_dir_url( __FILE__ ) . 'img/link_button.jpg'),
-      "desc" => "After voting, you can add a button.  This button gives you the opportunity to put a link to which site you want. There are 7 designs for buttons. You can change colors, font family, size, and more."
+        "src" => esc_url(plugin_dir_url( __FILE__ ) . 'img/link_button.jpg'),
+        "desc" => "After voting, you can add a button.  This button gives you the opportunity to put a link to which site you want. There are 7 designs for buttons. You can change colors, font family, size, and more."
     ],
     "New Message Shortcode" => [
-      "src" => esc_url(plugin_dir_url( __FILE__ ) . 'img/thankyou_shorcode.jpg'),
-      "desc" => "Through the shortcode, you can only show what you created for 'Thank you' text, design with a button for the link and what you created after voting show."
+        "src" => esc_url(plugin_dir_url( __FILE__ ) . 'img/thankyou_shorcode.jpg'),
+        "desc" => "Through the shortcode, you can only show what you created for 'Thank you' text, design with a button for the link and what you created after voting show."
     ] 
 );
 foreach ($tsp_addons_array as $key => $value) {
@@ -97,7 +97,7 @@ foreach ($tsp_addons_array as $key => $value) {
             </div>
             <div class="tsp_addon_card-flap tsp_flap1">
                 <div class="tsp_addon_card-description">
-                   %3$s
+                    %3$s
                 </div>
                 <div class="tsp_addon_card-flap tsp_flap2">
                     <div class="tsp_addon_card-actions">
