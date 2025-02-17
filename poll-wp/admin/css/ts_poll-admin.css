@@ -722,3 +722,171 @@ a[data-tsp-action="delete"] {
 	background: #ba4a52;
 	box-shadow: 0 0.1875rem 0.375rem #ba4a52;
 }
+
+.ts-poll-banner {
+	display: inline-block;
+	width: 100%;
+	max-width: 100%;
+	min-width: 100%;
+	position: relative;
+	overflow: hidden;
+	background-image: linear-gradient(to bottom right, #6840cf, #b7a7e0);
+	background-repeat: no-repeat;
+}
+
+.ts-poll-banner-container {
+	max-width: calc(100%);
+	padding: 15px;
+	color: #fff;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	min-height: 275px;
+	max-height: 450px;
+}
+
+.ts-poll-banner-content {
+	-webkit-box-flex: 0;
+	-webkit-flex: 0 0 100%;
+	-ms-flex: 0 0 100%;
+	flex: 0 0 100%;
+	max-width: 100%;
+	-webkit-align-self: flex-end;
+	-ms-flex-item-align: end;
+	align-self: flex-end;
+}
+
+@media (min-width: 650px) {
+	.ts-poll-banner-content {
+		-webkit-align-self: center;
+		-ms-flex-item-align: center;
+		align-self: center;
+	}
+
+	.ts-poll-banner-container {
+		max-width: calc(100% - 200px);
+	}
+}
+
+p.ts-poll-banner-text {
+	clear: both;
+	font-family: cursive;
+	text-transform: none;
+	text-rendering: optimizeLegibility;
+	font-weight: 500;
+	line-height: 1.15;
+	word-wrap: break-word;
+	margin: 1em 0 0.5em;
+	margin: 0;
+	padding: 0;
+	color: #fff;
+	position: relative;
+	word-wrap: break-word;
+	font-size: 20px;
+	text-transform: uppercase;
+	margin-bottom: 20px;
+}
+
+a.ts-poll-banner-link {
+    background-color: rgba(255, 255, 255, 0.35);
+    display: inline-block;
+    padding: 12px 18px;
+    color: #fff;
+    text-decoration: none;
+    font: 500 15px cursive;
+    line-height: 1.5;
+    text-align: center;
+    border: none !important;
+    position: relative;
+    border-radius: 30px;
+    text-transform: uppercase;
+    -webkit-transition: .1s all ease-in-out;
+    -moz-transition: .1s all ease-in-out;
+    -o-transition: .1s all ease-in-out;
+    transition: .1s all ease-in-out;
+    text-decoration: none;
+    box-shadow: none;
+    border: none;
+}
+
+a.ts-poll-banner-link:hover {
+	background-color: rgba(255, 255, 255, 0.50);
+}
+
+svg.ts-poll-banner-circle {
+	fill: rgba(0, 0, 0, 0.1);
+	position: absolute;
+}
+
+.ts-poll-banner-circle-a {
+	bottom: -80px;
+	left: -80px;
+}
+
+.ts-poll-banner-circle-b {
+	top: -30px;
+	right: 70%;
+}
+
+.ts-poll-banner-circle-c {
+	top: -330px;
+	right: -300px;
+}
+
+.ts-poll-banner-circle-d {
+	top: 195px;
+	right: 145px;
+}
+
+img.ts-poll-banner-img {
+	position: absolute;
+	max-width: 50%;
+	top: 25px;
+	right: 25px;
+	width: 180px;
+	height: 180px;
+}
+
+
+.ts-poll-banner * {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+.ts-poll-banner-btns {
+	display: flex;
+	height: 30px;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	align-content: center;
+	justify-content: flex-end;
+	align-items: center;
+	padding: 2px 20px;
+}
+
+a.ts-poll-banner-btn {
+	display: inline-block;
+	text-decoration: none;
+	margin: 0px 5px;
+	border: none;
+	box-shadow: none;
+	font-size: 16px;
+	font-weight: 500;
+	font-family: cursive;
+	opacity: 0.8;
+	transition: opacity 0.2s ease-in;
+}
+
+a.ts-poll-banner-btn:hover {
+	opacity: 1;
+}
+
+a.ts-poll-remind-btn {
+	color: #3a40a5;
+}
+
+a.ts-poll-dismiss-btn {
+	color: #ba4a52;
+}

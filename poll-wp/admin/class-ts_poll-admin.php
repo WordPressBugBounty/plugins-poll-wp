@@ -69,6 +69,69 @@ class ts_poll_admin{
 		add_action(	'admin_footer', [$this,'ts_poll_dashboard_footer']);
 		add_action( 'wp_ajax_tspoll_dashboard_fetch', array($this,'tspoll_dashboard_fetch_callback') );
 		add_action(	'wp_ajax_tspoll_dashboard_update', array($this,'tspoll_dashboard_update_callback'));
+		add_action( 'admin_notices', array($this, 'tspoll_push_notice') );
+		add_action( 'admin_init', array($this, 'tspoll_dismissed_notice') );
+	}
+	function tspoll_push_notice() {
+		if ($this->tsp_page_slug === 'ts-poll') {
+			$ts_poll_dismissed_meta = get_user_meta(  get_current_user_id(), 'tspoll_dismissed_notice' );
+			$ts_poll_remind_me_meta = get_user_meta(  get_current_user_id(), 'tspoll_remindme_notice' );
+			$ts_poll_dismissed = !$ts_poll_dismissed_meta || $ts_poll_dismissed_meta[0] !== $this->version;
+			$ts_poll_remind_me = !$ts_poll_remind_me_meta || time()+(get_option('gmt_offset') * 3600) - (int) $ts_poll_remind_me_meta[0] > 86400;
+			if ( $ts_poll_dismissed && $ts_poll_remind_me) {
+				echo sprintf(
+					'
+					<div class="ts-poll-banner">
+						<div class="ts-poll-banner-container">
+							<svg class="ts-poll-banner-circle ts-poll-banner-circle-a" height="160" width="160">
+								<circle cx="80" cy="80" r="80" />
+							</svg>
+							<svg class="ts-poll-banner-circle ts-poll-banner-circle-b" height="60" width="60">
+								<circle cx="30" cy="30" r="30" />
+							</svg>
+							<svg class="ts-poll-banner-circle ts-poll-banner-circle-c" height="600" width="600">
+								<circle cx="300" cy="300" r="300" />
+							</svg>
+							<svg class="ts-poll-banner-circle ts-poll-banner-circle-d" height="60" width="60">
+								<circle cx="30" cy="30" r="30" />
+							</svg>
+							<img class="ts-poll-banner-img"
+								src="%1$s" />
+							<div class="ts-poll-banner-content">
+								<p class="ts-poll-banner-text">Video Gallery - YouTube Gallery and Vimeo Gallery</p>
+								<a target="_blank" href="%2$s" class="ts-poll-banner-link">WP Plugin</a>
+								<a target="_blank" href="%3$s" class="ts-poll-banner-link">See demos</a>
+							</div>
+						</div>
+						<div class="ts-poll-banner-btns">
+							<a class="ts-poll-banner-btn ts-poll-remind-btn" href="%4$s">%5$s</a>
+							<a class="ts-poll-banner-btn ts-poll-dismiss-btn" href="%6$s">%7$s</a>
+						</div>
+					</div>
+					',
+					esc_url(plugin_dir_url( __FILE__ ) . 'img/ts-video-gallery-logo.png'),
+					esc_url('https://wordpress.org/plugins/gallery-videos/'),
+					esc_url('https://total-soft.com/wp-video-gallery/'),
+					esc_url( add_query_arg( 'ts-poll-remind-me', 'true' ) ),
+					__('Remind me later'),
+					esc_url( add_query_arg( 'ts-poll-dismissed', 'true' ) ),
+					__('Dismiss')
+				);
+			}
+		}
+	}
+	function tspoll_dismissed_notice() {
+		if ( isset( $_GET['ts-poll-dismissed'] ) || isset( $_GET['ts-poll-remind-me'] )){
+			if ( isset( $_GET['ts-poll-dismissed'] )){
+				$ts_poll_dismissed_meta = get_user_meta(  get_current_user_id(), 'tspoll_dismissed_notice' );
+				!$ts_poll_dismissed_meta ? add_user_meta( get_current_user_id(), 'tspoll_dismissed_notice', $this->version, true ) : update_user_meta( get_current_user_id(), 'tspoll_dismissed_notice', $this->version );
+			}else if (isset( $_GET['ts-poll-remind-me'] )) {
+				$ts_poll_remind_me_meta = get_user_meta(  get_current_user_id(), 'tspoll_remindme_notice' );
+				!$ts_poll_remind_me_meta ? add_user_meta( get_current_user_id(), 'tspoll_remindme_notice', time()+(get_option('gmt_offset') * 3600), true ) : update_user_meta( get_current_user_id(), 'tspoll_remindme_notice', time()+(get_option('gmt_offset') * 3600) ) ;
+			}
+			wp_redirect(wp_get_referer());
+			exit;
+		}
 	}
 	public function tsp_process_requests(){
 		if ( 'ts-poll-builder' === $this->tsp_page_slug && is_admin() ) {

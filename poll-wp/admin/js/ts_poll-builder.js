@@ -353,7 +353,6 @@
                     tsp_theme_name: tspoll_builder_json.tsp_proporties.Question_Param.TS_Poll_Q_Theme,
                     tspDataChange: '',
                     tsp_question_params: tspoll_builder_json.tsp_proporties.Question_Param,
-                    tsp_active_section: false,
                     tsp_answers: "",
                     tsp_total: 1,
                     tsp_sceleton: false,
@@ -373,7 +372,6 @@
                         this.tspDataChange = tsp_question_id;
                         setTimeout(() => {
                             document.getElementById(`ts_poll_section_${tsp_question_id}`).removeAttribute("style");
-                            this.tsp_active_section = true;
                         }, 1000);
                     },
                     tspGetObjKey: function (obj, value) {

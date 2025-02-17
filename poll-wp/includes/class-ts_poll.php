@@ -73,7 +73,7 @@ class TS_Poll {
 		if ( defined( 'TS_POLL_VERSION' ) ) {
 			$this->version = TS_POLL_VERSION;
 		} else {
-			$this->version = '2.4.3';
+			$this->version = '2.4.4';
 		}
 		$this->plugin_name = 'TS Poll';
 		$this->load_dependencies();
@@ -127,7 +127,6 @@ class TS_Poll {
             )
         ));
 	}
-	
     public function ts_poll_render(WP_REST_Request $request) {
 		global $wpdb;
         $ts_poll_id = sanitize_text_field($request->get_param('poll_id'));
@@ -178,7 +177,6 @@ class TS_Poll {
 		}
 		return new WP_Error('not_found', esc_html__('TS Poll render failed.'), array('status' => 404));
     }
-
     public function ts_poll_vote(WP_REST_Request $request) {
 		global $wpdb;
         $ts_poll_id = $request->get_param('poll_id');
@@ -262,7 +260,6 @@ class TS_Poll {
 	public function tspoll_text_domain() {
 		load_plugin_textdomain( 'tspoll', false, TS_POLL_PLUGIN_DIR . '/languages/' );
 	}
-
 	public function tsp_vue_function() {
 		global $wpdb;
 		$tsp_question_id = sanitize_text_field( $_POST['tsp_id'] );
@@ -759,13 +756,7 @@ class TS_Poll {
 			echo sprintf(
 				'
 				<form method="POST" id="ts_poll_form_%1$s" class="ts_poll_form ts_poll_form_%1$s" data-tsp-pos="%2$s" v-bind:data-tsp-mode="ts_poll_mode">
-					<div class="ts_load_vue_poll ts_load_vue_poll_%1$s"  v-bind:class="{tsp_not_active_section : tsp_active_section}">
-						<div class="ts_load_poll_logo">
-							<div class="tsp_load_circle"></div>
-						</div>
-						<span class="tsp_load_span">Loading poll ...</span>
-					</div>
-					<div id="ts_poll_section_%1$s"  class="ts_poll_section_%1$s ts_poll_section" data-tsp-box="%3$s" v-bind:class="{tsp_active_section : tsp_active_section}" > 
+					<div id="ts_poll_section_%1$s"  class="ts_poll_section_%1$s ts_poll_section" data-tsp-box="%3$s" style="display:none;" > 
 				',
 				(string) esc_attr( $total_soft_poll ),
 				esc_attr( $tspoll_question_styles["ts_poll_pos"] ),

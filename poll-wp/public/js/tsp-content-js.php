@@ -740,7 +740,6 @@
 						let ts_poll_app_%1$s = new Vue({
 							el:"#ts_poll_form_%1$s",
 							data:{
-								tsp_active_section : false,
 								tsp_answers:"",
 								tsp_total:"",
 								tsp_sceleton: false,
@@ -776,9 +775,8 @@
 											tspSelf.tsp_total = data.total_votes;
 											setTimeout(() => {
 												document.getElementById("ts_poll_section_%1$s").removeAttribute("style");
-												tspSelf.tsp_active_section = true;
 												tspSelf.ts_poll_mode = data.mode;
-											}, 1000);
+											}, 100);
 										} else {
 											alert("Error: TS Poll loading failed.");
 										}

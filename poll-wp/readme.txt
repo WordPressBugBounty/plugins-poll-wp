@@ -1,10 +1,10 @@
 ﻿=== TS Poll - Survey, Versus Poll, Image Poll, Video Poll ===
 Tags: poll, WordPress poll, poll plugin, Image poll, survey
 Contributors: totalsoft
-Donate link: https://total-soft.com/wp-poll/
+Donate link: https://total-soft.com/wp-poll
 Requires at least: 5.0
-Tested up to: 6.6
-Stable tag: 2.4.3
+Tested up to: 6.7
+Stable tag: 2.4.4
 Requires PHP: 5.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -74,6 +74,7 @@ This plugin allows you to create polls in WordPress and includes the following f
 ### [Premium version adds](https://total-soft.com/wp-poll/)
 
 *  SURVEY NEW THEME
+*  All In One NEW THEME - You can add it to the answer (video, image and text)  in one poll by mixing everything together.
 *  [Versus Poll Theme](”https://poll-wp.total-soft.com/versus-poll/”)
 *  User capabilities
 *  Multiple voting in a poll:
@@ -269,6 +270,10 @@ A fully featured [All poll demo types](https://total-soft.com/wp-poll-vote-stand
 
 
 == Changelog ==
+
+= Version 2.4.4 =
+
+* Changed the loading style when opening a poll.
 
 = Version 2.4.3 =
 
