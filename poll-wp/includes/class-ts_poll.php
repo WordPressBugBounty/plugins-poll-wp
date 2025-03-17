@@ -73,7 +73,7 @@ class TS_Poll {
 		if ( defined( 'TS_POLL_VERSION' ) ) {
 			$this->version = TS_POLL_VERSION;
 		} else {
-			$this->version = '2.4.5';
+			$this->version = '2.4.6';
 		}
 		$this->plugin_name = 'TS Poll';
 		$this->load_dependencies();
@@ -756,7 +756,13 @@ class TS_Poll {
 			echo sprintf(
 				'
 				<form method="POST" id="ts_poll_form_%1$s" class="ts_poll_form ts_poll_form_%1$s" data-tsp-pos="%2$s" v-bind:data-tsp-mode="ts_poll_mode">
-					<div id="ts_poll_section_%1$s"  class="ts_poll_section_%1$s ts_poll_section" data-tsp-box="%3$s" style="display:none;" > 
+					<div class="ts_load_vue_poll ts_load_vue_poll_%1$s"  v-bind:class="{tsp_not_active_section : tsp_active_section}">
+						<div class="ts_load_poll_logo">
+							<div class="tsp_load_circle"></div>
+						</div>
+						<span class="tsp_load_span">Loading poll ...</span>
+					</div>
+					<div id="ts_poll_section_%1$s"  class="ts_poll_section_%1$s ts_poll_section" data-tsp-box="%3$s" v-bind:class="{tsp_active_section : tsp_active_section}" > 
 				',
 				(string) esc_attr( $total_soft_poll ),
 				esc_attr( $tspoll_question_styles["ts_poll_pos"] ),

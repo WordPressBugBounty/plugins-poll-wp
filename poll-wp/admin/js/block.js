@@ -15,6 +15,7 @@
 				new Vue({
 					el: `#ts_poll_form_${tsp_question_id}`,
 					data: {
+						tsp_active_section: false,
 						tsp_answers: "",
 						tsp_total: "",
 						tsp_sceleton: false,
@@ -52,6 +53,7 @@
 									tspSelf.tsp_total = response.data.total_votes;
 									setTimeout(() => {
 										document.getElementById(`ts_poll_section_${tsp_question_id}`).removeAttribute("style");
+										tspSelf.tsp_active_section = true;
 										tspSelf.ts_poll_mode = response.data.mode;
 									}, 1000);
 								}
