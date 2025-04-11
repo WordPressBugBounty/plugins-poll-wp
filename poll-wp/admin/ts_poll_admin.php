@@ -42,9 +42,6 @@
 										<a href="<?php echo esc_url( 'https://total-soft.com/wp-poll/' ); ?>" target="_blank"><?php esc_html_e( 'Go Pro', 'tspoll' ); ?></a>
 									</div>
 								</div>
-								<div class="ts_poll_searchbar">
-									<?php $this->ts_poll_question_obj->search_box( esc_attr__( 'Search', 'tspoll' ), 'search_id' ); ?>
-								</div>
 							</div>
 							<?php
 								$this->ts_poll_question_obj->display();

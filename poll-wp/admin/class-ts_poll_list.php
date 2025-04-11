@@ -23,9 +23,6 @@ class ts_poll_list_table extends WP_List_Table {
 	public static function ts_get_polls( $per_page = 10, $page_number = 1 ) {
 		global $wpdb;
 		$sql = "SELECT `id`,`Question_Title`,`Question_Param`,`created_at` FROM {$wpdb->prefix}ts_poll_questions";
-		if ( isset( $_REQUEST['s'] ) ) {
-			$sql .= ' WHERE Question_Title LIKE "%%' . $wpdb->esc_like( $_REQUEST['s'] ) . '%%"';
-		}
 		if ( ! empty( $_REQUEST['orderby'] ) ) {
 			$orderby = in_array( $_REQUEST['orderby'], ['Question_Title','id'], true ) ? $_REQUEST['orderby'] : 'id';
 			$order = !empty( $_REQUEST['order'] ) && 'DESC' === strtoupper( $_REQUEST['order'] ) ? 'DESC' : 'ASC';

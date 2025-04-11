@@ -4,7 +4,7 @@ Contributors: totalsoft
 Donate link: https://total-soft.com/wp-poll/
 Requires at least: 5.0
 Tested up to: 6.7
-Stable tag: 2.4.6
+Stable tag: 2.4.7
 Requires PHP: 5.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -179,7 +179,7 @@ Also, it is important to set an end date for the vote, as long as you may need t
 
 Every view has its options. Choose the view you use and under that tab make beautiful changes playing with plenty options.
 
-= Technical Support =
+= 👩🏻‍🔧 Technical Support =
 
 * If you notice any errors or have any questions with our poll, you can notify us. We will investigate and solve the problem. Check out the [Poll Plugin Support Forum](https://wordpress.org/support/plugin/poll-wp) on our website. If you don't find a solution to your question here, don't hesitate to [click here to contact us](https://total-soft.com/contact-us/).
 
@@ -203,13 +203,6 @@ Installing plugin in Wordpress.
 * Click the Activate plugin button to activate the plugin.
 * If the poll installation is succeeded you will see a message in the image.
 
-* You may also install the zip file via FTP.
-
-* Download the ZIP file from WordPress website.
-* Extract the poll directory to your computer.
-* Upload the poll directory to the /wp-content/plugins/ directory.
-* Activate the plugin in the Plugin dashboard.
-* You can see the plugin installed on WordPress left menu.
 
 There are no difficult instructions for using this plugin because this plugin designed to make all easy. After reading demonstration of our plugin we believe that you will understand how to use plugin and you will use it easily.
 
@@ -269,6 +262,10 @@ A fully featured [All poll demo types](https://total-soft.com/wp-poll-vote-stand
 
 
 == Changelog ==
+
+= Version 2.4.7 =
+
+* Fixed bug with security.
 
 = Version 2.4.6 =
 
