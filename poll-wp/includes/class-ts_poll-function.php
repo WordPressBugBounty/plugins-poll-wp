@@ -2517,204 +2517,199 @@ class ts_poll_function {
 	}
 	public function tsp_get_all_params($tsp_id,$tsp_saved,$tsp_shortcode,$tsp_from_builder) {
 		global $wpdb;
-		$ts_poll_question_table     = esc_sql( $wpdb->prefix . 'ts_poll_questions' );
-		$ts_poll_answers_table      = esc_sql( $wpdb->prefix . 'ts_poll_answers' );
-		switch ($tsp_saved) {
-			case true:
-				$ts_poll_question_check = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM $ts_poll_question_table WHERE id = %d", (int) $tsp_id ) );
-				$ts_poll_answers_check = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM $ts_poll_answers_table WHERE Question_id = %d", (int) $tsp_id ) );
-				if ( $ts_poll_question_check === 0 || $ts_poll_answers_check === 0 ) { return false; }
-				$ts_poll_question_query = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $ts_poll_question_table WHERE id = %d", (int) $tsp_id ), ARRAY_A );
-				$ts_poll_answers_query  = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $ts_poll_answers_table WHERE Question_id = %d", (int) $tsp_id ),ARRAY_A );
-				$ts_poll_question_query['Question_Style'] = json_decode( $ts_poll_question_query['Question_Style'], true );
-				$ts_poll_question_query['Question_Param'] = json_decode( $ts_poll_question_query['Question_Param'], true );
-				$ts_poll_question_query['Question_Settings'] = json_decode( $ts_poll_question_query['Question_Settings'], true );
-				$ts_poll_question_query['Question_Style'] = $this->tsp_icon_swap($ts_poll_question_query['Question_Style'],$tsp_shortcode);
-				$ts_poll_question_query['answers_count'] = count($ts_poll_answers_query);
-				$ts_poll_question_query['Answers'] = $this->tsp_get_sorted_answers($ts_poll_question_query['answers_count'],$ts_poll_question_query['Answers_Sort'],$ts_poll_answers_query,$tsp_saved);
-				if ($tsp_from_builder === true) {
-					$tsp_total_votes_count = array_sum( array_column( $ts_poll_question_query['Answers'], 'Answer_Votes' ) );
-					$tsp_votes_total_divider =  $tsp_total_votes_count != 0 ? $tsp_total_votes_count : 1;
-					foreach ( $ts_poll_question_query['Answers'] as $tsp_response_key => $tsp_response_value ) {
-						$ts_poll_question_query['Answers'][$tsp_response_key]['tsp_result_percent'] = $ts_poll_question_query['Question_Settings']['TotalSoft_Poll_Set_01'] == "true" ? round( $tsp_response_value["Answer_Votes"] * 100 / $tsp_votes_total_divider, 2 ) : 100;
-						$ts_poll_question_query['Answers'][$tsp_response_key]['img_src'] = $tsp_response_value["Answer_Param"]["TotalSoftPoll_Ans_Im"] == '' ? esc_url( plugins_url( 'public/img/tsp_no_img.jpg', __DIR__ ) ) : esc_url( $tsp_response_value["Answer_Param"]["TotalSoftPoll_Ans_Im"] );
-					}
-				}
+		$ts_poll_question_table = esc_sql( $wpdb->prefix . 'ts_poll_questions' );
+		$ts_poll_answers_table = esc_sql( $wpdb->prefix . 'ts_poll_answers' );
+		if (true === $tsp_saved) {
+			$ts_poll_question_check = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM $ts_poll_question_table WHERE id = %d", (int) $tsp_id ) );
+			$ts_poll_answers_check = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM $ts_poll_answers_table WHERE Question_id = %d", (int) $tsp_id ) );
+			if ( $ts_poll_question_check == 0 || $ts_poll_answers_check == 0 ) { return false; }
+			$ts_poll_question_query = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $ts_poll_question_table WHERE id = %d", (int) $tsp_id ), ARRAY_A );
+			$ts_poll_answers_query  = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $ts_poll_answers_table WHERE Question_id = %d", (int) $tsp_id ),ARRAY_A );
+			$ts_poll_question_query['Question_Style'] = json_decode( $ts_poll_question_query['Question_Style'], true );
+			$ts_poll_question_query['Question_Param'] = json_decode( $ts_poll_question_query['Question_Param'], true );
+			$ts_poll_question_query['Question_Settings'] = json_decode( $ts_poll_question_query['Question_Settings'], true );
+			$ts_poll_question_query['Question_Style'] = $this->tsp_icon_swap($ts_poll_question_query['Question_Style'],$tsp_shortcode);
+			$ts_poll_question_query['answers_count'] = count($ts_poll_answers_query);
+			$ts_poll_question_query['Answers'] = $this->tsp_get_sorted_answers($ts_poll_question_query['answers_count'],$ts_poll_question_query['Answers_Sort'],$ts_poll_answers_query,$tsp_saved);
+			if ($tsp_from_builder === true) {
+				$tsp_total_votes_count = array_sum( array_column( $ts_poll_question_query['Answers'], 'Answer_Votes' ) );
+				$tsp_votes_total_divider =  $tsp_total_votes_count != 0 ? $tsp_total_votes_count : 1;
 				foreach ( $ts_poll_question_query['Answers'] as $tsp_response_key => $tsp_response_value ) {
-					$ts_poll_question_query['Answers'][$tsp_response_key]['Answer_Title'] = html_entity_decode( htmlspecialchars_decode( esc_html( $ts_poll_question_query['Answers'][$tsp_response_key]['Answer_Title'] ), ENT_QUOTES ) );
+					$ts_poll_question_query['Answers'][$tsp_response_key]['tsp_result_percent'] = $ts_poll_question_query['Question_Settings']['TotalSoft_Poll_Set_01'] == "true" ? round( $tsp_response_value["Answer_Votes"] * 100 / $tsp_votes_total_divider, 2 ) : 100;
+					$ts_poll_question_query['Answers'][$tsp_response_key]['img_src'] = $tsp_response_value["Answer_Param"]["TotalSoftPoll_Ans_Im"] == '' ? esc_url( plugins_url( 'public/img/tsp_no_img.jpg', __DIR__ ) ) : esc_url( $tsp_response_value["Answer_Param"]["TotalSoftPoll_Ans_Im"] );
 				}
-				if ( array_key_exists("ts_poll_ch_s", $ts_poll_question_query['Question_Style'] ) ) {
-					if ( ! is_numeric( $ts_poll_question_query['Question_Style']["ts_poll_ch_s"] ) ) {
-						if ( $ts_poll_question_query['Question_Style']["ts_poll_ch_s"] == 'big' ) {
-							$ts_poll_question_query['Question_Style']["ts_poll_ch_s"] = '32';
-						} elseif ( $ts_poll_question_query['Question_Style']["ts_poll_ch_s"] == 'medium 2' ) {
-							$ts_poll_question_query['Question_Style']["ts_poll_ch_s"] = '26';
-						} elseif ( $ts_poll_question_query['Question_Style']["ts_poll_ch_s"] == 'medium 1' ) {
-							$ts_poll_question_query['Question_Style']["ts_poll_ch_s"] = '22';
-						} elseif ( $ts_poll_question_query['Question_Style']["ts_poll_ch_s"] == 'small' ) {
-							$ts_poll_question_query['Question_Style']["ts_poll_ch_s"] = '18';
-						} else {
-							$ts_poll_question_query['Question_Style']["ts_poll_ch_s"] == '22';
-						}
+			}
+			foreach ( $ts_poll_question_query['Answers'] as $tsp_response_key => $tsp_response_value ) {
+				$ts_poll_question_query['Answers'][$tsp_response_key]['Answer_Title'] = html_entity_decode( htmlspecialchars_decode( esc_html( $ts_poll_question_query['Answers'][$tsp_response_key]['Answer_Title'] ), ENT_QUOTES ) );
+			}
+			if ( array_key_exists("ts_poll_ch_s", $ts_poll_question_query['Question_Style'] ) ) {
+				if ( ! is_numeric( $ts_poll_question_query['Question_Style']["ts_poll_ch_s"] ) ) {
+					if ( $ts_poll_question_query['Question_Style']["ts_poll_ch_s"] == 'big' ) {
+						$ts_poll_question_query['Question_Style']["ts_poll_ch_s"] = '32';
+					} elseif ( $ts_poll_question_query['Question_Style']["ts_poll_ch_s"] == 'medium 2' ) {
+						$ts_poll_question_query['Question_Style']["ts_poll_ch_s"] = '26';
+					} elseif ( $ts_poll_question_query['Question_Style']["ts_poll_ch_s"] == 'medium 1' ) {
+						$ts_poll_question_query['Question_Style']["ts_poll_ch_s"] = '22';
+					} elseif ( $ts_poll_question_query['Question_Style']["ts_poll_ch_s"] == 'small' ) {
+						$ts_poll_question_query['Question_Style']["ts_poll_ch_s"] = '18';
+					} else {
+						$ts_poll_question_query['Question_Style']["ts_poll_ch_s"] == '22';
 					}
 				}
-				if ($ts_poll_question_query["Question_Param"]["TS_Poll_Q_Theme"] === "Image Without Button") {
-					foreach ($ts_poll_question_query['Answers'] as $tsp_response_key => $tsp_response_value) {
-						$tsp_check_embed = "";
-						$tsp_check_embed = sprintf(
-							'
-							<div class="tsp_embed_popup_inner tsp_video_popup_embed">
-								<img src="%1$s" alt="%2$s">
-							</div>
-							',
-							$tsp_response_value["Answer_Param"]["TotalSoftPoll_Ans_Im"] == '' ? esc_url( plugin_dir_url( __DIR__ ) . '/public/img/tsp_no_img.jpg' ) : esc_url( $tsp_response_value["Answer_Param"]["TotalSoftPoll_Ans_Im"] ),
-							$tsp_response_value["Answer_Param"]["TotalSoftPoll_Ans_Im"] == '' ?  esc_html("No Image avaible" )  : html_entity_decode( htmlspecialchars_decode( $tsp_response_value['Answer_Title'] ), ENT_QUOTES )
-						);
-						$ts_poll_question_query['Answers'][$tsp_response_key]["embed"] = $tsp_check_embed;
-					}
+			}
+			if ($ts_poll_question_query["Question_Param"]["TS_Poll_Q_Theme"] === "Image Without Button") {
+				foreach ($ts_poll_question_query['Answers'] as $tsp_response_key => $tsp_response_value) {
+					$tsp_check_embed = "";
+					$tsp_check_embed = sprintf(
+						'
+						<div class="tsp_embed_popup_inner tsp_video_popup_embed">
+							<img src="%1$s" alt="%2$s">
+						</div>
+						',
+						$tsp_response_value["Answer_Param"]["TotalSoftPoll_Ans_Im"] == '' ? esc_url( plugin_dir_url( __DIR__ ) . '/public/img/tsp_no_img.jpg' ) : esc_url( $tsp_response_value["Answer_Param"]["TotalSoftPoll_Ans_Im"] ),
+						$tsp_response_value["Answer_Param"]["TotalSoftPoll_Ans_Im"] == '' ?  esc_html("No Image avaible" )  : html_entity_decode( htmlspecialchars_decode( $tsp_response_value['Answer_Title'] ), ENT_QUOTES )
+					);
+					$ts_poll_question_query['Answers'][$tsp_response_key]["embed"] = $tsp_check_embed;
 				}
-				return $ts_poll_question_query;
-				break;
-			case false:
-				$tsp_check_embed = "";
-				switch ($this->tsp_theme_names[$tsp_id]) {
-					case 'Video Poll':
-					case 'Video Without Button':
-					case 'Image Without Button':
-						$tsp_check_embed = sprintf(
-							'
-							<div class="tsp_embed_popup_inner tsp_video_popup_embed">
-								<img src="%1$s" alt="%2$s">
-							</div>
-							',
-							$this->tsp_theme_names[$tsp_id] === "Image Without Button" ? esc_url( plugin_dir_url( __DIR__ ) . '/public/img/tsp_no_img.jpg' ) : esc_url( plugin_dir_url( __DIR__ ) . '/public/img/tsp_no_video.png' ),
-							$this->tsp_theme_names[$tsp_id] === "Image Without Button" ? esc_html("No Image avaible") : esc_html("No Video avaible")
-						);
-						break;
-					default:
-						$tsp_check_embed = "";
-						break;
-				}
-				$ts_poll_question_query = array(
-					'id' => $tsp_id,
-					'Question_Title'    => 'Do You Like Our Plugin?',
-					'Question_Settings' => array(
-						'TotalSoft_Poll_Set_01' => 'true',
-						'TotalSoft_Poll_Set_02' => '',
-						'TotalSoft_Poll_Set_03' => '',
-						'TotalSoft_Poll_Set_04' => 'Coming Soon',
-						'TotalSoft_Poll_Set_05' => 'Thank You !',
-						'TotalSoft_Poll_Set_06' => 'rgba(209,209,209,0.79)',
-						'TotalSoft_Poll_Set_07' => '#000000',
-						'TotalSoft_Poll_Set_08' => '32',
-						'TotalSoft_Poll_Set_09' => 'Cairo',
-						'TotalSoft_Poll_Set_10' => 'false',
-						'TotalSoft_Poll_Set_11' => 'ipaddress'
+			}
+			return $ts_poll_question_query;
+		} else if (false === $tsp_saved) {
+			$tsp_check_embed = "";
+			switch ($this->tsp_theme_names[$tsp_id]) {
+				case 'Video Poll':
+				case 'Video Without Button':
+				case 'Image Without Button':
+					$tsp_check_embed = sprintf(
+						'
+						<div class="tsp_embed_popup_inner tsp_video_popup_embed">
+							<img src="%1$s" alt="%2$s">
+						</div>
+						',
+						$this->tsp_theme_names[$tsp_id] === "Image Without Button" ? esc_url( plugin_dir_url( __DIR__ ) . '/public/img/tsp_no_img.jpg' ) : esc_url( plugin_dir_url( __DIR__ ) . '/public/img/tsp_no_video.png' ),
+						$this->tsp_theme_names[$tsp_id] === "Image Without Button" ? esc_html("No Image avaible") : esc_html("No Video avaible")
+					);
+					break;
+				default:
+					$tsp_check_embed = "";
+					break;
+			}
+			$ts_poll_question_query = array(
+				'id' => $tsp_id,
+				'Question_Title'    => 'Do You Like Our Plugin?',
+				'Question_Settings' => array(
+					'TotalSoft_Poll_Set_01' => 'true',
+					'TotalSoft_Poll_Set_02' => '',
+					'TotalSoft_Poll_Set_03' => '',
+					'TotalSoft_Poll_Set_04' => 'Coming Soon',
+					'TotalSoft_Poll_Set_05' => 'Thank You !',
+					'TotalSoft_Poll_Set_06' => 'rgba(209,209,209,0.79)',
+					'TotalSoft_Poll_Set_07' => '#000000',
+					'TotalSoft_Poll_Set_08' => '32',
+					'TotalSoft_Poll_Set_09' => 'Cairo',
+					'TotalSoft_Poll_Set_10' => 'false',
+					'TotalSoft_Poll_Set_11' => 'ipaddress'
+				),
+				'Question_Param'    => array(
+					'TS_Poll_Q_Theme'    => $this->tsp_theme_names[$tsp_id],
+					'TotalSoftPoll_Q_Im' => '',
+					'TotalSoftPoll_Q_Vd' => ''
+				),
+				'Answers_Sort'      => 'new-1,new-2,new-3,new-4,new-5',
+				'Answers'           => array(
+					'new-1' => array(
+						'id'           => 'new-1',
+						'Question_id'  => $tsp_id,
+						'Answer_Title' => 'The Best Plugin Ever',
+						'Answer_Votes' => '0',
+						'Answer_Param' => array(
+							'TotalSoftPoll_Ans_Im' => '',
+							'TotalSoftPoll_Ans_Vd' => '',
+							'TotalSoftPoll_Ans_Cl' => '#dd3333'
+						),
+						'embed' =>  $tsp_check_embed
 					),
-					'Question_Param'    => array(
-						'TS_Poll_Q_Theme'    => $this->tsp_theme_names[$tsp_id],
-						'TotalSoftPoll_Q_Im' => '',
-						'TotalSoftPoll_Q_Vd' => ''
+					'new-2' => array(
+						'id'           => 'new-2',
+						'Question_id'  => $tsp_id,
+						'Answer_Title' => 'Of Course',
+						'Answer_Votes' => '0',
+						'Answer_Param' => array(
+							'TotalSoftPoll_Ans_Im' => '',
+							'TotalSoftPoll_Ans_Vd' => '',
+							'TotalSoftPoll_Ans_Cl' => '#dd9933'
+						),
+						'embed' =>  $tsp_check_embed
 					),
-					'Answers_Sort'      => 'new-1,new-2,new-3,new-4,new-5',
-					'Answers'           => array(
-						'new-1' => array(
-							'id'           => 'new-1',
-							'Question_id'  => $tsp_id,
-							'Answer_Title' => 'The Best Plugin Ever',
-							'Answer_Votes' => '0',
-							'Answer_Param' => array(
-								'TotalSoftPoll_Ans_Im' => '',
-								'TotalSoftPoll_Ans_Vd' => '',
-								'TotalSoftPoll_Ans_Cl' => '#dd3333'
-							),
-							'embed' =>  $tsp_check_embed
+					'new-3' => array(
+						'id'           => 'new-3',
+						'Question_id'  => $tsp_id,
+						'Answer_Title' => 'Not at All',
+						'Answer_Votes' => '0',
+						'Answer_Param' => array(
+							'TotalSoftPoll_Ans_Im' => '',
+							'TotalSoftPoll_Ans_Vd' => '',
+							'TotalSoftPoll_Ans_Cl' => '#81d742'
 						),
-						'new-2' => array(
-							'id'           => 'new-2',
-							'Question_id'  => $tsp_id,
-							'Answer_Title' => 'Of Course',
-							'Answer_Votes' => '0',
-							'Answer_Param' => array(
-								'TotalSoftPoll_Ans_Im' => '',
-								'TotalSoftPoll_Ans_Vd' => '',
-								'TotalSoftPoll_Ans_Cl' => '#dd9933'
-							),
-							'embed' =>  $tsp_check_embed
-						),
-						'new-3' => array(
-							'id'           => 'new-3',
-							'Question_id'  => $tsp_id,
-							'Answer_Title' => 'Not at All',
-							'Answer_Votes' => '0',
-							'Answer_Param' => array(
-								'TotalSoftPoll_Ans_Im' => '',
-								'TotalSoftPoll_Ans_Vd' => '',
-								'TotalSoftPoll_Ans_Cl' => '#81d742'
-							),
-							'embed' =>  $tsp_check_embed
-						),
-						'new-4' => array(
-							'id'           => 'new-4',
-							'Question_id'  => $tsp_id,
-							'Answer_Title' => 'No',
-							'Answer_Votes' => '0',
-							'Answer_Param' => array(
-								'TotalSoftPoll_Ans_Im' => '',
-								'TotalSoftPoll_Ans_Vd' => '',
-								'TotalSoftPoll_Ans_Cl' => '#1e73be'
-							),
-							'embed' =>  $tsp_check_embed
-						),
-						'new-5' => array(
-							'id'           => 'new-5',
-							'Question_id'  => $tsp_id,
-							'Answer_Title' => 'Yes',
-							'Answer_Votes' => '0',
-							'Answer_Param' => array(
-								'TotalSoftPoll_Ans_Im' => '',
-								'TotalSoftPoll_Ans_Vd' => '',
-								'TotalSoftPoll_Ans_Cl' => '#8224e3'
-							),
-							'embed' =>  $tsp_check_embed
-						),
+						'embed' =>  $tsp_check_embed
 					),
-					'created_at'        => date( 'd.m.Y h:i:sa' ),
-					'updated_at'        => date( 'd.m.Y h:i:sa' )
-				);
-				$ts_poll_question_query['Question_Style'] = $this->ts_poll_themes[$tsp_id];
-				$ts_poll_question_query['Question_Style'] = $this->tsp_icon_swap($ts_poll_question_query['Question_Style'],$tsp_shortcode);
-				$ts_poll_question_query['answers_count'] = count($ts_poll_question_query['Answers']);
-				$ts_poll_question_query['Answers'] = $this->tsp_get_sorted_answers($ts_poll_question_query['answers_count'],$ts_poll_question_query['Answers_Sort'],$ts_poll_question_query['Answers'],$tsp_saved);
-				if ($tsp_from_builder === true) {
-					$tsp_total_votes_count = array_sum( array_column( $ts_poll_question_query['Answers'], 'Answer_Votes' ) );
-					$tsp_votes_total_divider =  $tsp_total_votes_count != 0 ? $tsp_total_votes_count : 1;
-					foreach ( $ts_poll_question_query['Answers'] as $tsp_response_key => $tsp_response_value ) {
-						$ts_poll_question_query['Answers'][$tsp_response_key]['tsp_result_percent'] = $ts_poll_question_query['Question_Settings']['TotalSoft_Poll_Set_01'] == "true" ? round( $tsp_response_value["Answer_Votes"] * 100 / $tsp_votes_total_divider, 2 ) : 100;
-						$ts_poll_question_query['Answers'][$tsp_response_key]['img_src'] = $tsp_response_value["Answer_Param"]["TotalSoftPoll_Ans_Im"] == '' ? esc_url( plugins_url( 'public/img/tsp_no_img.jpg', __DIR__ ) ) : esc_url( $tsp_response_value["Answer_Param"]["TotalSoftPoll_Ans_Im"] );
+					'new-4' => array(
+						'id'           => 'new-4',
+						'Question_id'  => $tsp_id,
+						'Answer_Title' => 'No',
+						'Answer_Votes' => '0',
+						'Answer_Param' => array(
+							'TotalSoftPoll_Ans_Im' => '',
+							'TotalSoftPoll_Ans_Vd' => '',
+							'TotalSoftPoll_Ans_Cl' => '#1e73be'
+						),
+						'embed' =>  $tsp_check_embed
+					),
+					'new-5' => array(
+						'id'           => 'new-5',
+						'Question_id'  => $tsp_id,
+						'Answer_Title' => 'Yes',
+						'Answer_Votes' => '0',
+						'Answer_Param' => array(
+							'TotalSoftPoll_Ans_Im' => '',
+							'TotalSoftPoll_Ans_Vd' => '',
+							'TotalSoftPoll_Ans_Cl' => '#8224e3'
+						),
+						'embed' =>  $tsp_check_embed
+					),
+				),
+				'created_at'        => date( 'd.m.Y h:i:sa' ),
+				'updated_at'        => date( 'd.m.Y h:i:sa' )
+			);
+			$ts_poll_question_query['Question_Style'] = $this->ts_poll_themes[$tsp_id];
+			$ts_poll_question_query['Question_Style'] = $this->tsp_icon_swap($ts_poll_question_query['Question_Style'],$tsp_shortcode);
+			$ts_poll_question_query['answers_count'] = count($ts_poll_question_query['Answers']);
+			$ts_poll_question_query['Answers'] = $this->tsp_get_sorted_answers($ts_poll_question_query['answers_count'],$ts_poll_question_query['Answers_Sort'],$ts_poll_question_query['Answers'],$tsp_saved);
+			if ($tsp_from_builder === true) {
+				$tsp_total_votes_count = array_sum( array_column( $ts_poll_question_query['Answers'], 'Answer_Votes' ) );
+				$tsp_votes_total_divider =  $tsp_total_votes_count != 0 ? $tsp_total_votes_count : 1;
+				foreach ( $ts_poll_question_query['Answers'] as $tsp_response_key => $tsp_response_value ) {
+					$ts_poll_question_query['Answers'][$tsp_response_key]['tsp_result_percent'] = $ts_poll_question_query['Question_Settings']['TotalSoft_Poll_Set_01'] == "true" ? round( $tsp_response_value["Answer_Votes"] * 100 / $tsp_votes_total_divider, 2 ) : 100;
+					$ts_poll_question_query['Answers'][$tsp_response_key]['img_src'] = $tsp_response_value["Answer_Param"]["TotalSoftPoll_Ans_Im"] == '' ? esc_url( plugins_url( 'public/img/tsp_no_img.jpg', __DIR__ ) ) : esc_url( $tsp_response_value["Answer_Param"]["TotalSoftPoll_Ans_Im"] );
+				}
+			}
+			if ( array_key_exists("ts_poll_ch_s", $ts_poll_question_query['Question_Style'] ) ) {
+				if ( ! is_numeric( $ts_poll_question_query['Question_Style']["ts_poll_ch_s"] ) ) {
+					if ( $ts_poll_question_query['Question_Style']["ts_poll_ch_s"] == 'big' ) {
+						$ts_poll_question_query['Question_Style']["ts_poll_ch_s"] = '32';
+					} elseif ( $ts_poll_question_query['Question_Style']["ts_poll_ch_s"] == 'medium 2' ) {
+						$ts_poll_question_query['Question_Style']["ts_poll_ch_s"] = '26';
+					} elseif ( $ts_poll_question_query['Question_Style']["ts_poll_ch_s"] == 'medium 1' ) {
+						$ts_poll_question_query['Question_Style']["ts_poll_ch_s"] = '22';
+					} elseif ( $ts_poll_question_query['Question_Style']["ts_poll_ch_s"] == 'small' ) {
+						$ts_poll_question_query['Question_Style']["ts_poll_ch_s"] = '18';
+					} else {
+						$ts_poll_question_query['Question_Style']["ts_poll_ch_s"] == '22';
 					}
 				}
-				if ( array_key_exists("ts_poll_ch_s", $ts_poll_question_query['Question_Style'] ) ) {
-					if ( ! is_numeric( $ts_poll_question_query['Question_Style']["ts_poll_ch_s"] ) ) {
-						if ( $ts_poll_question_query['Question_Style']["ts_poll_ch_s"] == 'big' ) {
-							$ts_poll_question_query['Question_Style']["ts_poll_ch_s"] = '32';
-						} elseif ( $ts_poll_question_query['Question_Style']["ts_poll_ch_s"] == 'medium 2' ) {
-							$ts_poll_question_query['Question_Style']["ts_poll_ch_s"] = '26';
-						} elseif ( $ts_poll_question_query['Question_Style']["ts_poll_ch_s"] == 'medium 1' ) {
-							$ts_poll_question_query['Question_Style']["ts_poll_ch_s"] = '22';
-						} elseif ( $ts_poll_question_query['Question_Style']["ts_poll_ch_s"] == 'small' ) {
-							$ts_poll_question_query['Question_Style']["ts_poll_ch_s"] = '18';
-						} else {
-							$ts_poll_question_query['Question_Style']["ts_poll_ch_s"] == '22';
-						}
-					}
-				}
-				return $ts_poll_question_query;
-				break;
-			default:
-				return false;
-				break;
+			}
+			return $ts_poll_question_query;
 		}
+		return false;
 	}
 	public function tsp_get_theme_params( $theme_id ) {
 		if ( array_key_exists( $theme_id, $this->ts_poll_themes ) ) {

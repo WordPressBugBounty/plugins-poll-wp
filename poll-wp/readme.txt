@@ -4,7 +4,7 @@ Contributors: totalsoft
 Donate link: https://total-soft.com/wp-poll/
 Requires at least: 5.0
 Tested up to: 6.7
-Stable tag: 2.4.7
+Stable tag: 2.4.8
 Requires PHP: 5.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -73,8 +73,8 @@ This plugin allows you to create polls in WordPress and includes the following f
 
 ### [Premium version adds](https://total-soft.com/wp-poll/)
 
-*  SURVEY NEW THEME
-*  [Versus Poll Theme](”https://poll-wp.total-soft.com/versus-poll/”)
+*  [🆕 Versus Poll Theme](”https://poll-wp.total-soft.com/versus-poll/”)
+*  [🆕 Survey Theme](”https://total-soft.com/wp-poll-survey/”)
 *  User capabilities
 *  Multiple voting in a poll:
 *  [Multiple voting in a poll](https://poll-wp.total-soft.com/wordpress-poll-multivote/)
@@ -262,6 +262,11 @@ A fully featured [All poll demo types](https://total-soft.com/wp-poll-vote-stand
 
 
 == Changelog ==
+
+= Version 2.4.8 =
+
+* Fixed a bug with search.
+* Added a new function for Survey.
 
 = Version 2.4.7 =
 

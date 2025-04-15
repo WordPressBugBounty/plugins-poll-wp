@@ -499,4 +499,4 @@
             esc_attr( $total_soft_poll)
         ) : ""
     );
-    wp_add_inline_script( 'tspoll_builder', $tsp_content_js, 'before' );
+    wp_add_inline_script( TS_POLL_PLUGIN_PREFIX . "builder", $tsp_content_js, 'before' );

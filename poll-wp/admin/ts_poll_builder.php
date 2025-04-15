@@ -2316,9 +2316,9 @@ if ( 'edit' === $this->tsp_build ) {
 			array_key_exists( 'svg', $tsp_font_params ) ? esc_url( $tsp_font_params['svg'] ) : ''
 		);
 	}
-	wp_register_style( 'ts_poll_builder_font_faces', false );
-	wp_enqueue_style( 'ts_poll_builder_font_faces' );
-	wp_add_inline_style( 'ts_poll_builder_font_faces', $tsp_font_families_css );
+	wp_register_style( TS_POLL_PLUGIN_PREFIX . "builder-font", false );
+	wp_enqueue_style( TS_POLL_PLUGIN_PREFIX . "builder-font" );
+	wp_add_inline_style( TS_POLL_PLUGIN_PREFIX . "builder-font", $tsp_font_families_css );
 }
 echo sprintf(
 	'

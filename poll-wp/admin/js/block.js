@@ -3,7 +3,7 @@
 	var BlockControls = wp.blockEditor.BlockControls
 	var SelectControl = wp.components.SelectControl
 	var Placeholder = wp.components.Placeholder
-	var tspoll_list = ts_poll_gutenberg_script_data.tspoll_list
+	var tspoll_list = tsPollGutenberg.tspoll_list
 	let el = wp.element.createElement
 	let Fragment = wp.element.Fragment
 	function createTspFunction(question_id) {
@@ -15,7 +15,6 @@
 				new Vue({
 					el: `#ts_poll_form_${tsp_question_id}`,
 					data: {
-						tsp_active_section: false,
 						tsp_answers: "",
 						tsp_total: "",
 						tsp_sceleton: false,
@@ -35,7 +34,7 @@
 						renderTsPoll: function () {
 							var tspSelf = this;
 							jQuery.ajax({
-								url: ts_poll_gutenberg_script_data.tsp_ajax_url,
+								url: tsPollGutenberg.tsp_ajax_url,
 								data: {
 									action: "tsp_vue_function",
 									tsp_id: tsp_question_id,
@@ -52,8 +51,8 @@
 									tspSelf.tsp_answers = response.data.answers;
 									tspSelf.tsp_total = response.data.total_votes;
 									setTimeout(() => {
+										document.getElementById(`ts_load_vue_poll_${tsp_question_id}`).style.display = "none";
 										document.getElementById(`ts_poll_section_${tsp_question_id}`).removeAttribute("style");
-										tspSelf.tsp_active_section = true;
 										tspSelf.ts_poll_mode = response.data.mode;
 									}, 1000);
 								}
@@ -96,14 +95,14 @@
 			return tspSameCallFunction;
 		}());
 	}
-	if (ts_poll_gutenberg_script_data.polls_count >= 1) {
+	if (tsPollGutenberg.polls_count >= 1) {
 		blocks.registerBlockType(
 			'tspoll/poll-block',
 			{
 				title: 'TS Poll',
 				icon: 'chart-bar',
 				category: 'widgets',
-				description: ts_poll_gutenberg_script_data.tspoll_plugin_desc,
+				description: tsPollGutenberg.tspoll_plugin_desc,
 				keywords: ['poll', 'question', 'answer', 'video poll', 'image poll', 'wordpress poll'],
 				example: {
 					attributes: {
@@ -122,7 +121,7 @@
 								el(
 									'img',
 									{
-										src: ts_poll_gutenberg_script_data.ts_poll_preview,
+										src: tsPollGutenberg.ts_poll_preview,
 										width: '100%',
 										height: '100%'
 									},
@@ -185,7 +184,7 @@
 									{
 										width: 100,
 										height: 100,
-										src: ts_poll_gutenberg_script_data.ts_poll_logo
+										src: tsPollGutenberg.ts_poll_logo
 									},
 								),
 								el(

@@ -17,16 +17,16 @@ class ts_poll_gutenberg_block {
 	}
 	public function ts_poll_register_block() {
 		wp_register_script(
-			'ts_poll_gutenberg_script',
+			TS_POLL_PLUGIN_PREFIX . 'gutenberg',
 			plugin_dir_url( __FILE__ ) . 'js/block.js',
 			array( 'jquery', 'wp-blocks', 'wp-element', 'wp-editor', 'wp-components' )
 		);
-		wp_register_style( 'ts-poll-block-css', plugin_dir_url( __FILE__ ) . 'css/block.css' );
-		wp_enqueue_style( 'ts-poll-block-css' );
+		wp_register_style( TS_POLL_PLUGIN_PREFIX . 'block', plugin_dir_url( __FILE__ ) . 'css/block.css' );
+		wp_enqueue_style( TS_POLL_PLUGIN_PREFIX . 'block' );
 		register_block_type(
 			'tspoll/poll-block',
 			array(
-				'editor_script'   => 'ts_poll_gutenberg_script',
+				'editor_script'   => TS_POLL_PLUGIN_PREFIX . 'gutenberg',
 				'render_callback' => array( $this, 'ts_poll_block_render_callback' ),
 				'attributes'      => array(
 					'tsp_id'  => array(
@@ -67,8 +67,8 @@ class ts_poll_gutenberg_block {
 		}
 		$ts_polls_count = count( $ts_polls );
 		wp_localize_script(
-			'ts_poll_gutenberg_script',
-			'ts_poll_gutenberg_script_data',
+			TS_POLL_PLUGIN_PREFIX . 'gutenberg',
+			'tsPollGutenberg',
 			array(
 				'tsp_ajax_url' => esc_url( admin_url( 'admin-ajax.php' ) ),
 				'polls_count'        => $ts_polls_count,

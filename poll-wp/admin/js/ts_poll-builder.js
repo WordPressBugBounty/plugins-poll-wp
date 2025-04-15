@@ -353,7 +353,6 @@
                     tsp_theme_name: tspoll_builder_json.tsp_proporties.Question_Param.TS_Poll_Q_Theme,
                     tspDataChange: '',
                     tsp_question_params: tspoll_builder_json.tsp_proporties.Question_Param,
-                    tsp_active_section: false,
                     tsp_answers: "",
                     tsp_total: 1,
                     tsp_sceleton: false,
@@ -372,8 +371,8 @@
                         this.tsp_answers = tspoll_builder_json.tsp_proporties.Question_Answers;
                         this.tspDataChange = tsp_question_id;
                         setTimeout(() => {
+                            document.getElementById(`ts_load_vue_poll_${tsp_question_id}`).style.display = 'none';
                             document.getElementById(`ts_poll_section_${tsp_question_id}`).removeAttribute("style");
-                            this.tsp_active_section = true;
                         }, 1000);
                     },
                     tspGetObjKey: function (obj, value) {
@@ -855,7 +854,7 @@
                                 `
                             );
                         }
-                        var tsp_special_stylesheet = document.querySelector(`#ts_poll_special_${tsp_question_id}-css`).sheet;
+                        var tsp_special_stylesheet = document.querySelector(`#ts-poll-special-${tsp_question_id}-css`).sheet;
                         if (tspStyleSpecial.length != 0) {
                             for (let i = 0; i < tspStyleSpecial.length; i++) {
                                 tsp_special_stylesheet.insertRule(tspStyleSpecial[i], 0);

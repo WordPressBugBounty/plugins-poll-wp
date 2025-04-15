@@ -156,7 +156,7 @@ class ts_poll_admin{
 			}else if ( isset( $_GET['tsp-id'] ) || isset( $_GET['tsp-theme'] ) ) {
 				if ( isset( $_GET['tsp-id'] ) && is_numeric( $_GET['tsp-id'] ) && is_int( (int) $_GET['tsp-id'] ) && (int) $_GET['tsp-id'] > 0 ) {
 					global $wpdb;
-					$this->tsp_build_id         = sanitize_text_field( $_GET['tsp-id'] );
+					$this->tsp_build_id = sanitize_text_field( $_GET['tsp-id'] );
 					$ts_poll_check = apply_filters( "tsp_get_all_params",  $this->tsp_build_id, true, false,true);
 					if (  $ts_poll_check !== false ) {
 						$ts_poll_check['Question_Title'] = html_entity_decode( htmlspecialchars_decode( $ts_poll_check['Question_Title'] ), ENT_QUOTES );
@@ -174,7 +174,8 @@ class ts_poll_admin{
 						$this->tsp_build            = 'edit';
 						$this->tsp_build_proporties = $ts_poll_check;
 					} else {
-						$this->tsp_build = 'not';
+						wp_safe_redirect( admin_url( 'admin.php?page=ts-poll-builder' ) );
+						exit();
 					}
 				} elseif ( isset( $_GET['tsp-theme'] ) && array_key_exists( $_GET['tsp-theme'], $this->tsp_themes ) ) {
 					$this->tsp_build_id                                     = sanitize_text_field( $_GET['tsp-theme'] );
@@ -192,7 +193,8 @@ class ts_poll_admin{
 						'Question_Answers'  => $tspoll_theme_json['Answers']
 					);
 				} else {
-					$this->tsp_build = '404';
+					wp_safe_redirect( admin_url( 'admin.php?page=ts-poll-builder' ) );
+					exit();
 				}
 			} else {
 				$this->tsp_build        = 'new';
@@ -629,30 +631,30 @@ class ts_poll_admin{
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
-		wp_enqueue_style( 'ts_poll_fonts', plugin_dir_url( __DIR__ ) . 'fonts/ts_poll-fonts.css', array(), time(), 'all' );
+		wp_enqueue_style( TS_POLL_PLUGIN_PREFIX . "fonts", plugin_dir_url( __DIR__ ) . 'fonts/ts_poll-fonts.css', array(), TS_POLL_VERSION, 'all' );
 		if ( 'ts-poll' === $this->tsp_page_slug ) {
-			wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/ts_poll-admin.css', array(), time(), 'all' );
-			wp_enqueue_style( 'tspoll_toastr', plugin_dir_url( __FILE__ ) . 'css/toastr.min.css', array(), time(), 'all' );
+			wp_enqueue_style( TS_POLL_PLUGIN_PREFIX . "admin", plugin_dir_url( __FILE__ ) . 'css/ts_poll-admin.css', array(), TS_POLL_VERSION, 'all' );
+			wp_enqueue_style( TS_POLL_PLUGIN_PREFIX . "toastr", plugin_dir_url( __FILE__ ) . 'css/toastr.min.css', array(), TS_POLL_VERSION, 'all' );
 		}
 		if ( 'ts-poll-builder' === $this->tsp_page_slug ) {
-			wp_enqueue_style( 'tspoll_toastr', plugin_dir_url( __FILE__ ) . 'css/toastr.min.css', array(), time(), 'all' );
-			wp_enqueue_style( 'tspoll_builder', plugin_dir_url( __FILE__ ) . 'css/ts_poll-builder.css', array(), time(), 'all' );
-			wp_add_inline_style( 'tspoll_builder', sprintf( ':root{ --tspoll_click_for : "%s"; }', esc_attr__( 'Click for change text', 'tspoll' ) ) );
+			wp_enqueue_style( TS_POLL_PLUGIN_PREFIX . "toastr", plugin_dir_url( __FILE__ ) . 'css/toastr.min.css', array(), TS_POLL_VERSION, 'all' );
+			wp_enqueue_style( TS_POLL_PLUGIN_PREFIX . "builder", plugin_dir_url( __FILE__ ) . 'css/ts_poll-builder.css', array(), TS_POLL_VERSION, 'all' );
+			wp_add_inline_style( TS_POLL_PLUGIN_PREFIX . "builder", sprintf( ':root{ --tspoll_click_for : "%s"; }', esc_attr__( 'Click for change text', 'tspoll' ) ) );
 			if ( 'edit' === $this->tsp_build ) {
-				wp_enqueue_style( "tsp_context-menu", plugin_dir_url( __FILE__ ) . 'css/jquery.contextMenu.css', array(), time(), 'all' );
-				wp_enqueue_style( 'tsp_builder', plugin_dir_url( __FILE__ ) . 'css/ts_poll-edit.css', array(), time(), 'all' );
-				wp_enqueue_style( 'tspoll_icon_picker', plugin_dir_url( __FILE__ ) . 'css/tsp-aesthetic-icon-picker.css', array(), time(), 'all' );
-				wp_enqueue_style( 'tspoll_color_picker', plugin_dir_url( __FILE__ ) . 'css/tsp-spectrum.css', array(), time(), 'all' );
-				wp_enqueue_style( 'tspoll_datatables', plugin_dir_url( __FILE__ ) . 'css/vanilla-dataTables.css', array(), time(), 'all' );
+				wp_enqueue_style( TS_POLL_PLUGIN_PREFIX . "context-menu", plugin_dir_url( __FILE__ ) . 'css/jquery.contextMenu.css', array(), TS_POLL_VERSION, 'all' );
+				wp_enqueue_style( TS_POLL_PLUGIN_PREFIX . "builder-edit", plugin_dir_url( __FILE__ ) . 'css/ts_poll-edit.css', array(), TS_POLL_VERSION, 'all' );
+				wp_enqueue_style( TS_POLL_PLUGIN_PREFIX . "icon-picker", plugin_dir_url( __FILE__ ) . 'css/tsp-aesthetic-icon-picker.css', array(), TS_POLL_VERSION, 'all' );
+				wp_enqueue_style( TS_POLL_PLUGIN_PREFIX . "color-picker", plugin_dir_url( __FILE__ ) . 'css/tsp-spectrum.css', array(), TS_POLL_VERSION, 'all' );
+				wp_enqueue_style( TS_POLL_PLUGIN_PREFIX . "data-tables", plugin_dir_url( __FILE__ ) . 'css/vanilla-dataTables.css', array(), TS_POLL_VERSION, 'all' );
 			} elseif ( 'new' === $this->tsp_build ) {
-				wp_enqueue_style( 'tsp_builder', plugin_dir_url( __FILE__ ) . 'css/ts_poll-new.css', array(), time(), 'all' );
+				wp_enqueue_style( TS_POLL_PLUGIN_PREFIX . "builder-new", plugin_dir_url( __FILE__ ) . 'css/ts_poll-new.css', array(), TS_POLL_VERSION, 'all' );
 			}
 		}
 		if ( 'ts-poll-pro' === $this->tsp_page_slug ) {
-			wp_enqueue_style( $this->plugin_name."_pro", plugin_dir_url( __FILE__ ) . 'css/ts_poll-pro.css', array(), time(), 'all' );
+			wp_enqueue_style( TS_POLL_PLUGIN_PREFIX . "pro", plugin_dir_url( __FILE__ ) . 'css/ts_poll-pro.css', array(), TS_POLL_VERSION, 'all' );
 		}
 		if ( 'ts-poll-add-ons' === $this->tsp_page_slug ) {
-			wp_enqueue_style( $this->plugin_name."_add_ons", plugin_dir_url( __FILE__ ) . 'css/ts_poll-addons.css', array(), time(), 'all' );
+			wp_enqueue_style( TS_POLL_PLUGIN_PREFIX . "add-ons", plugin_dir_url( __FILE__ ) . 'css/ts_poll-addons.css', array(), TS_POLL_VERSION, 'all' );
 			$tsp_addons_inline_style = sprintf(
 				'
 				@font-face {
@@ -699,7 +701,7 @@ class ts_poll_admin{
 				esc_url("https://fonts.gstatic.com/s/sourcesanspro/v21/6xKydSBYKcSV-LCoeQqfX1RYOo3ig4vwlxdr.ttf"),
 				esc_url("https://fonts.gstatic.com/s/sourcesanspro/v21/6xKydSBYKcSV-LCoeQqfX1RYOo3iu4nwlxdr.ttf")
 			);
-			wp_add_inline_style($this->plugin_name."_add_ons", $tsp_addons_inline_style);
+			wp_add_inline_style(TS_POLL_PLUGIN_PREFIX . "add-ons", $tsp_addons_inline_style);
 		}
 	}
 	/**
@@ -720,10 +722,19 @@ class ts_poll_admin{
 		 * class.
 		 */
 		if ( 'ts-poll' === $this->tsp_page_slug ) {
-			wp_register_script( 'tspoll_toastr', plugin_dir_url( __FILE__ ) . 'js/toastr.min.js', array(), time(), false );
-			wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/ts_poll-admin.js', array( 'jquery', 'tspoll_toastr' ), time(), false );
+			wp_register_script( TS_POLL_PLUGIN_PREFIX . "toastr", plugin_dir_url( __FILE__ ) . 'js/toastr.min.js', array(), TS_POLL_VERSION, false );
+			wp_enqueue_script( 
+				TS_POLL_PLUGIN_PREFIX . "admin",
+				plugin_dir_url( __FILE__ ) . 'js/ts_poll-admin.js',
+				array( 
+					'jquery', 
+					TS_POLL_PLUGIN_PREFIX . "toastr"
+				), 
+				TS_POLL_VERSION,
+				false
+			);
 			wp_localize_script(
-				$this->plugin_name,
+				TS_POLL_PLUGIN_PREFIX . "admin",
 				'tspoll_admin_json',
 				array(
 					'copy'          	   => esc_html__( 'Copy', 'tspoll' ),
@@ -739,12 +750,12 @@ class ts_poll_admin{
 		}
 		if ( 'ts-poll-builder' === $this->tsp_page_slug ) {
 			wp_enqueue_media();
-			wp_enqueue_script( "tsp_context-menu", plugin_dir_url( __FILE__ ) . 'js/jquery.contextMenu.js', array( 'jquery' ), time(), true );
-			wp_register_script( 'tspoll_toastr', plugin_dir_url( __FILE__ ) . 'js/toastr.min.js', array(), time(), false );
-			wp_enqueue_script( 'tspoll_color_picker', plugin_dir_url( __FILE__ ) . 'js/tsp-spectrum.js', array(), time(), false );
-			wp_enqueue_script( 'tspoll_datatables', plugin_dir_url( __FILE__ ) . 'js/vanilla-dataTables.js', array(), time(), false );
+			wp_enqueue_script( TS_POLL_PLUGIN_PREFIX . "context-menu", plugin_dir_url( __FILE__ ) . 'js/jquery.contextMenu.js', array( 'jquery' ), TS_POLL_VERSION, true );
+			wp_register_script( TS_POLL_PLUGIN_PREFIX . "toastr", plugin_dir_url( __FILE__ ) . 'js/toastr.min.js', array(), TS_POLL_VERSION, false );
+			wp_enqueue_script( TS_POLL_PLUGIN_PREFIX . "color-picker", plugin_dir_url( __FILE__ ) . 'js/tsp-spectrum.js', array(), TS_POLL_VERSION, false );
+			wp_enqueue_script( TS_POLL_PLUGIN_PREFIX . "data-table", plugin_dir_url( __FILE__ ) . 'js/vanilla-dataTables.js', array(), TS_POLL_VERSION, false );
 			wp_localize_script(
-				'tspoll_datatables',
+				TS_POLL_PLUGIN_PREFIX . "data-table",
 				'tspoll_translations',
 				array(
 					'search'          => esc_html__( 'Search', 'tspoll' ),
@@ -756,8 +767,22 @@ class ts_poll_admin{
 					'entries'         => esc_html__( 'entries', 'tspoll' )
 				)
 			);
-			wp_register_script( "ts_poll_vue_js", TS_POLL_PLUGIN_DIR_URL . 'public/js/vue.js', array( ), $this->version , false );
-			wp_enqueue_script( 'tspoll_builder', plugin_dir_url( __FILE__ ) . 'js/ts_poll-builder.js', array( 'jquery','ts_poll_vue_js', 'tspoll_toastr', 'jquery-ui-sortable', 'tspoll_color_picker', 'tspoll_datatables', 'tsp_context-menu' ), time(), true );
+			wp_register_script( TS_POLL_PLUGIN_PREFIX . "vue", TS_POLL_PLUGIN_DIR_URL . 'public/js/vue.js', array( ), TS_POLL_VERSION , false );
+			wp_enqueue_script( 
+				TS_POLL_PLUGIN_PREFIX . "builder",
+				plugin_dir_url( __FILE__ ) . 'js/ts_poll-builder.js',
+				array( 
+					'jquery',
+					'jquery-ui-sortable',
+					TS_POLL_PLUGIN_PREFIX . 'vue',
+					TS_POLL_PLUGIN_PREFIX . 'toastr',
+					TS_POLL_PLUGIN_PREFIX . 'color-picker',
+					TS_POLL_PLUGIN_PREFIX . 'data-table',
+					TS_POLL_PLUGIN_PREFIX . 'context-menu' 
+				), 
+				TS_POLL_VERSION,
+				true 
+			);
 			if ( 'edit' === $this->tsp_build ) {
 				$tsp_answers = $tsp_votes = $tsp_colors = array();
 				foreach ( $this->tsp_build_proporties['Question_Answers'] as $key => $value ) :
@@ -782,7 +807,7 @@ class ts_poll_admin{
 					}
 				}
 				wp_localize_script(
-					'tspoll_builder',
+					TS_POLL_PLUGIN_PREFIX . "builder",
 					'tspoll_builder_json',
 					array(
 						'ajaxurl'              => admin_url( 'admin-ajax.php' ),
@@ -826,7 +851,7 @@ class ts_poll_admin{
 			}
 		}
 		if ( 'ts-poll-add-ons' === $this->tsp_page_slug ) {
-			wp_enqueue_script( $this->plugin_name."_add_ons", plugin_dir_url( __FILE__ ) . 'js/ts_poll-addons.js', array( 'jquery'), time(), true );
+			wp_enqueue_script( TS_POLL_PLUGIN_PREFIX . "add-ons", plugin_dir_url( __FILE__ ) . 'js/ts_poll-addons.js', array( 'jquery'), TS_POLL_VERSION, true );
 		}
 	}
 	public static function set_screen( $status, $option, $value ) {

@@ -44,7 +44,7 @@ class ts_poll_public {
 	 */
 	public function __construct( $plugin_name, $version ) {
 		$this->plugin_name = $plugin_name;
-		$this->version     = $version;
+		$this->version = $version;
 	}
 	/**
 	 * Register the stylesheets for the public-facing side of the site.
@@ -63,8 +63,8 @@ class ts_poll_public {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
-		wp_enqueue_style( TS_POLL_PLUGIN_NAME.'_public_css', TS_POLL_PLUGIN_DIR_URL . 'public/css/ts_poll-public.css', array(), TS_POLL_VERSION, 'all' );
-   		wp_enqueue_style( 'ts_poll_fonts', TS_POLL_PLUGIN_DIR_URL . 'fonts/ts_poll-fonts.css', array(), TS_POLL_VERSION, 'all' );
+		wp_enqueue_style( TS_POLL_PLUGIN_PREFIX . "public", TS_POLL_PLUGIN_DIR_URL . 'public/css/ts_poll-public.css', array(), TS_POLL_VERSION, 'all' );
+   		wp_enqueue_style( TS_POLL_PLUGIN_PREFIX .'fonts', TS_POLL_PLUGIN_DIR_URL . 'fonts/ts_poll-fonts.css', array(), TS_POLL_VERSION, 'all' );
 	}
 	/**
 	 * Register the JavaScript for the public-facing side of the site.
@@ -83,9 +83,13 @@ class ts_poll_public {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
-		wp_register_script( "ts_poll_vue_js", TS_POLL_PLUGIN_DIR_URL . 'public/js/vue.js', array( ), TS_POLL_VERSION , false );
-		wp_register_script( TS_POLL_PLUGIN_NAME, TS_POLL_PLUGIN_DIR_URL . 'public/js/ts_poll-public.js', array( 'jquery','ts_poll_vue_js' ), TS_POLL_VERSION, false );
-		wp_enqueue_script( "ts_poll_vue_js");
-		wp_enqueue_script( TS_POLL_PLUGIN_NAME );
+		wp_register_script( TS_POLL_PLUGIN_PREFIX . "vue", TS_POLL_PLUGIN_DIR_URL . 'public/js/vue.js', array( ), TS_POLL_VERSION , false );
+		wp_register_script( TS_POLL_PLUGIN_PREFIX . "public", TS_POLL_PLUGIN_DIR_URL . 'public/js/ts_poll-public.js', array( 'jquery', TS_POLL_PLUGIN_PREFIX . 'vue' ), TS_POLL_VERSION, false );
+		wp_enqueue_script( TS_POLL_PLUGIN_PREFIX . "vue");
+		wp_enqueue_script( TS_POLL_PLUGIN_PREFIX . "public" );
+		wp_localize_script(TS_POLL_PLUGIN_PREFIX . "public", 'tsPollData', array(
+			'root_url' => esc_url_raw(rest_url()),
+			'nonce' => wp_create_nonce('wp_rest')
+		));
 	}
 }

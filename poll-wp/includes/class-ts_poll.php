@@ -73,7 +73,7 @@ class TS_Poll {
 		if ( defined( 'TS_POLL_VERSION' ) ) {
 			$this->version = TS_POLL_VERSION;
 		} else {
-			$this->version = '2.4.7';
+			$this->version = '2.4.8';
 		}
 		$this->plugin_name = 'TS Poll';
 		$this->load_dependencies();
@@ -252,10 +252,14 @@ class TS_Poll {
 		return $string;
 	}
 	public function ts_poll_activate_scripts() {
-		wp_enqueue_style( TS_POLL_PLUGIN_NAME.'_public_css', TS_POLL_PLUGIN_DIR_URL . 'public/css/ts_poll-public.css', array(), TS_POLL_VERSION, 'all' );
-		wp_enqueue_style( 'ts_poll_fonts', TS_POLL_PLUGIN_DIR_URL . 'fonts/ts_poll-fonts.css', array(), TS_POLL_VERSION, 'all' );
-		wp_enqueue_script( "ts_poll_vue_js", TS_POLL_PLUGIN_DIR_URL . 'public/js/vue.js', array( ), TS_POLL_VERSION , false );
-		wp_enqueue_script( TS_POLL_PLUGIN_NAME, TS_POLL_PLUGIN_DIR_URL . 'public/js/ts_poll-public.js', array( 'jquery','ts_poll_vue_js' ), TS_POLL_VERSION, false );
+		wp_enqueue_style( TS_POLL_PLUGIN_PREFIX . "public", TS_POLL_PLUGIN_DIR_URL . 'public/css/ts_poll-public.css', array(), TS_POLL_VERSION, 'all' );
+		wp_enqueue_style( TS_POLL_PLUGIN_PREFIX . "fonts", TS_POLL_PLUGIN_DIR_URL . 'fonts/ts_poll-fonts.css', array(), TS_POLL_VERSION, 'all' );
+		wp_enqueue_script( TS_POLL_PLUGIN_PREFIX . "vue", TS_POLL_PLUGIN_DIR_URL . 'public/js/vue.js', array( ), TS_POLL_VERSION , false );
+		wp_enqueue_script( TS_POLL_PLUGIN_PREFIX . "public", TS_POLL_PLUGIN_DIR_URL . 'public/js/ts_poll-public.js', array( 'jquery',TS_POLL_PLUGIN_PREFIX . 'vue' ), TS_POLL_VERSION, false );
+		wp_localize_script(TS_POLL_PLUGIN_PREFIX . "public", 'tsPollData', array(
+			'root_url' => esc_url_raw(rest_url()),
+			'nonce' => wp_create_nonce('wp_rest')
+		));
 	}
 	public function tspoll_text_domain() {
 		load_plugin_textdomain( 'tspoll', false, TS_POLL_PLUGIN_DIR . '/languages/' );
@@ -640,40 +644,16 @@ class TS_Poll {
 	 * @param int $id Poll ID.
 	 */
 	private function ts_poll_content( $total_soft_poll, $ts_poll_edit ) {
-		wp_enqueue_script( "ts_poll_vue_js", TS_POLL_PLUGIN_DIR_URL . 'public/js/vue.js', array( ), $this->version , false );
-		wp_enqueue_script( $this->plugin_name, TS_POLL_PLUGIN_DIR_URL . 'public/js/ts_poll-public.js', array( 'jquery','ts_poll_vue_js' ), $this->version, false );
-		wp_localize_script($this->plugin_name, 'tsPollData', array(
-			'root_url' => esc_url_raw(rest_url()),
-			'nonce'    => wp_create_nonce('wp_rest')
-		));
-		wp_enqueue_style( $this->plugin_name.'_public_css', TS_POLL_PLUGIN_DIR_URL . 'public/css/ts_poll-public.css', array(), $this->version, 'all' );
-		wp_enqueue_style( 'ts_poll_fonts', TS_POLL_PLUGIN_DIR_URL . 'fonts/ts_poll-fonts.css', array(), $this->version, 'all' );
-		$tsp_themes = array(
-			'standart_poll'           => 'Standart Poll',
-			'standard_poll'           => 'Standard Poll',
-			'image_poll'              => 'Image Poll',
-			'video_poll'              => 'Video Poll',
-			'standart_without_button' => 'Standart Without Button',
-			'standard_without_button' => 'Standard Without Button',
-			'image_without_button'    => 'Image Without Button',
-			'video_without_button'    => 'Video Without Button',
-			'image_in_question'       => 'Image in Question',
-			'video_in_question'       => 'Video in Question'
-		);
 		global $wpdb;
-		$ts_poll_question_table     = esc_url( $wpdb->prefix . 'ts_poll_questions' );
-		$ts_poll_answers_table      = esc_url( $wpdb->prefix . 'ts_poll_answers' );
+		$ts_poll_question_table = esc_sql( $wpdb->prefix . 'ts_poll_questions' );
+		$ts_poll_answers_table = esc_sql( $wpdb->prefix . 'ts_poll_answers' );
 		$ts_poll_time_bool = $ts_poll_vote_bool = $ts_poll_can_vote = false;
-		$t_s_poll_answers_values    = $ts_poll_answers_query = $ts_poll_answers_count = $tspoll_question_styles = $ts_poll_question_params = $t_s_poll_question_settings =  $ts_poll_old_standard = '';
-		$total_soft_poll_res_count  = 1;
+		$t_s_poll_answers_values = $ts_poll_answers_query = $ts_poll_answers_count = $tspoll_question_styles = $ts_poll_question_params = $t_s_poll_question_settings =  $ts_poll_old_standard = '';
+		$total_soft_poll_res_count = 1;
 		$total_soft_poll_res_count1 = 0;
-		$ts_poll_answers_columned   = $ts_poll_answers_order = $ts_poll_question_query = $ts_poll_colors_array = array();
+		$ts_poll_answers_columned = $ts_poll_answers_order = $ts_poll_question_query = $ts_poll_colors_array = array();
 		remove_all_filters( 'embed_oembed_html', 10 );
-		if ( $ts_poll_edit != 'true' ) {
-			wp_enqueue_script( $this->plugin_name . 'ResizeSensor', plugin_dir_url( __DIR__ ) . 'public/js/ResizeSensor.js', array(), time(), false );
-			wp_enqueue_script( $this->plugin_name . 'ElementQueries', plugin_dir_url( __DIR__ ) . 'public/js/ElementQueries.js', array(), time(), false );
-		}
-		if ( is_numeric( $total_soft_poll ) && is_int( (int) $total_soft_poll ) && (int) $total_soft_poll > 0 || array_key_exists( $total_soft_poll, $tsp_themes ) ) {
+		if ( is_numeric( $total_soft_poll ) && is_int( (int) $total_soft_poll ) && (int) $total_soft_poll > 0 || in_array( $total_soft_poll, ['standart_poll','standard_poll','image_poll','video_poll','standart_without_button','standard_without_button','image_without_button','video_without_button','image_in_question','video_in_question'] ) ) {
 			if ( is_numeric( $total_soft_poll ) && is_int( (int) $total_soft_poll ) && (int) $total_soft_poll > 0 ) {
 				$ts_poll_question_query = apply_filters( "tsp_get_all_params", (string) $total_soft_poll, true, true, false);
 				if ($ts_poll_question_query["Question_Param"]["TS_Poll_Q_Theme"] === "Video Poll" || $ts_poll_question_query["Question_Param"]["TS_Poll_Q_Theme"] === "Video Without Button" || $ts_poll_question_query["Question_Param"]["TS_Poll_Q_Theme"] === "Image Without Button") {
@@ -703,7 +683,7 @@ class TS_Poll {
 						$ts_poll_question_query['Answers'][$tsp_response_key]["embed"] = $tsp_check_embed;
 					}
 				}
-			} elseif ( array_key_exists( $total_soft_poll, $tsp_themes ) ) {
+			} elseif ( in_array( $total_soft_poll, ['standart_poll','standard_poll','image_poll','video_poll','standart_without_button','standard_without_button','image_without_button','video_without_button','image_in_question','video_in_question'] ) ) {
 				if ( $ts_poll_edit !== 'true' ) { return false; }
 				$ts_poll_question_query = apply_filters( "tsp_get_all_params", (string) $total_soft_poll, false, true, false);
 			} else {
@@ -749,20 +729,20 @@ class TS_Poll {
 					}
 				}
 			}
-			wp_enqueue_style( "ts_poll_special_{$total_soft_poll}", plugin_dir_url( __DIR__ ) . 'public/css/ts_poll-content-special.css', array(), time(), 'all' );
+			wp_enqueue_style( TS_POLL_PLUGIN_PREFIX . "special-" . $total_soft_poll, plugin_dir_url( __DIR__ ) . 'public/css/ts_poll-content-special.css', array(), time(), 'all' );
 			include plugin_dir_path( dirname( __FILE__ ) ) . 'public/css/tsp-form-css.php';
 			$ts_poll_popup_standard = false;
 			$ts_poll_popup_standard_html = "";
 			echo sprintf(
 				'
 				<form method="POST" id="ts_poll_form_%1$s" class="ts_poll_form ts_poll_form_%1$s" data-tsp-pos="%2$s" v-bind:data-tsp-mode="ts_poll_mode">
-					<div class="ts_load_vue_poll ts_load_vue_poll_%1$s"  v-bind:class="{tsp_not_active_section : tsp_active_section}">
+					<div id="ts_load_vue_poll_%1$s" class="ts_load_vue_poll ts_load_vue_poll_%1$s" >
 						<div class="ts_load_poll_logo">
 							<div class="tsp_load_circle"></div>
 						</div>
 						<span class="tsp_load_span">Loading poll ...</span>
 					</div>
-					<div id="ts_poll_section_%1$s"  class="ts_poll_section_%1$s ts_poll_section" data-tsp-box="%3$s" v-bind:class="{tsp_active_section : tsp_active_section}" > 
+					<div id="ts_poll_section_%1$s" class="ts_poll_section_%1$s ts_poll_section" data-tsp-box="%3$s" style="display:none;" > 
 				',
 				(string) esc_attr( $total_soft_poll ),
 				esc_attr( $tspoll_question_styles["ts_poll_pos"] ),
@@ -944,8 +924,17 @@ class TS_Poll {
 				wp_nonce_field( 'tsp_vote_nonce_' . $total_soft_poll, 'tsp_vote_nonce_field_' . $total_soft_poll, true, false ),
 				$ts_poll_popup_standard_html
 			);
-			if($ts_poll_edit === "true"){
-				wp_add_inline_style("ts_poll_special_{$total_soft_poll}",$ts_poll_generated_css);
+			wp_enqueue_script( TS_POLL_PLUGIN_PREFIX . "vue", TS_POLL_PLUGIN_DIR_URL . 'public/js/vue.js', array( ), TS_POLL_VERSION , false );
+			wp_enqueue_script( TS_POLL_PLUGIN_PREFIX . "public", TS_POLL_PLUGIN_DIR_URL . 'public/js/ts_poll-public.js', array( 'jquery', TS_POLL_PLUGIN_PREFIX . 'vue' ), TS_POLL_VERSION, false );
+			wp_localize_script(TS_POLL_PLUGIN_PREFIX . "public", 'tsPollData', array(
+				'root_url' => esc_url_raw(rest_url()),
+				'nonce' => wp_create_nonce('wp_rest')
+			));
+			wp_enqueue_style( TS_POLL_PLUGIN_PREFIX . "public", TS_POLL_PLUGIN_DIR_URL . 'public/css/ts_poll-public.css', array(), TS_POLL_VERSION, 'all' );
+			wp_enqueue_style( TS_POLL_PLUGIN_PREFIX . "fonts", TS_POLL_PLUGIN_DIR_URL . 'fonts/ts_poll-fonts.css', array(), TS_POLL_VERSION, 'all' );
+	
+			if($ts_poll_edit == "true"){
+				wp_add_inline_style(TS_POLL_PLUGIN_PREFIX . "special-" . $total_soft_poll,$ts_poll_generated_css);
 			}else{
 				echo sprintf(
 					'
@@ -955,13 +944,14 @@ class TS_Poll {
 					',
 					$ts_poll_generated_css
 				);
+				wp_enqueue_script( TS_POLL_PLUGIN_PREFIX . "resize-sensor", plugin_dir_url( __DIR__ ) . 'public/js/ResizeSensor.js', array(), TS_POLL_VERSION, false );
+				wp_enqueue_script( TS_POLL_PLUGIN_PREFIX . "element-queries", plugin_dir_url( __DIR__ ) . 'public/js/ElementQueries.js', array(), TS_POLL_VERSION, false );
 			}
 			if ( $ts_poll_edit === 'true' ) {
 				include plugin_dir_path( dirname( __FILE__ ) ) . 'public/js/tsp-content-js-edit.php';
 			}elseif ($ts_poll_edit === 'false') {
 				return;
 			} else {
-				wp_enqueue_script( "ts_poll_js_{$total_soft_poll}", plugin_dir_url( __DIR__ ) . 'public/js/ts_poll-content.js', array( 'jquery' ), time(), false );
 				include plugin_dir_path( dirname( __FILE__ ) ) . 'public/js/tsp-content-js.php';
 			}
 		}else{

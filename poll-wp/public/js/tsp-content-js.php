@@ -740,7 +740,6 @@
 						let ts_poll_app_%1$s = new Vue({
 							el:"#ts_poll_form_%1$s",
 							data:{
-								tsp_active_section : false,
 								tsp_answers:"",
 								tsp_total:"",
 								tsp_sceleton: false,
@@ -775,8 +774,8 @@
 											tspSelf.tsp_answers = data.answers;
 											tspSelf.tsp_total = data.total_votes;
 											setTimeout(() => {
+												document.getElementById("ts_load_vue_poll_%1$s").style.display = "none";
 												document.getElementById("ts_poll_section_%1$s").removeAttribute("style");
-												tspSelf.tsp_active_section = true;
 												tspSelf.ts_poll_mode = data.mode;
 											}, 1000);
 										} else {

@@ -7,11 +7,6 @@ form.ts_poll_form>.ts_poll_section {
     margin: 0 !important;
 }
 
-form.ts_poll_form>.ts_poll_section:not(.tsp_active_section),
-form.ts_poll_form>div.ts_load_vue_poll.tsp_not_active_section {
-    display: none !important;
-}
-
 form.ts_poll_form {
     position: relative;
     display: -ms-flexbox;
@@ -84,6 +79,8 @@ div.ts_load_poll_logo>div.tsp_load_circle {
     border: 0.5rem solid #f3f3f3 !important;
     border-radius: 50% !important;
     border-top: 0.5rem solid #8c8c8c !important;
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
     -webkit-animation: ts_poll_logo_spin 1.5s linear infinite;
     animation: ts_poll_logo_spin 1.5s linear infinite;
 }
