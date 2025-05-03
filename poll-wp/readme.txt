@@ -3,7 +3,7 @@ Tags: poll, WordPress poll, poll plugin, Image poll, survey
 Contributors: totalsoft
 Donate link: https://total-soft.com/wp-poll/
 Requires at least: 5.0
-Tested up to: 6.7
+Tested up to: 6.8
 Stable tag: 2.4.8
 Requires PHP: 5.5
 License: GPLv2 or later
@@ -13,8 +13,10 @@ Poll plugin is a responsive and customizable for WordPress. Poll will help you m
 
 == Description ==
 
-* [WordPress Poll Plugin](https://total-soft.com/wp-poll/)
+* [WordPress Poll plugin pricing](https://total-soft.com/wp-poll/)
 * [All Poll Demo Types](https://poll-wp.total-soft.com/standard-poll)
+* [🆕 Versus Poll Theme](”https://poll-wp.total-soft.com/versus-poll/”)
+* [🆕 Survey Theme](”https://total-soft.com/wp-poll-survey/”)
 * [Poll Support](https://wordpress.org/support/plugin/poll-wp)
 
 The plugin allows you to create awesome poll on your WordPress site. It has many powerful features to create very beautiful and easy to use polls on your website. You can create / edit polls change the color and background color. If you are looking for a simple, easy but very professional polls for your website,so, you find it! This plugin is what you are looking for.
