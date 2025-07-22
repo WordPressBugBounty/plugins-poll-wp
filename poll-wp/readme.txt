@@ -1,10 +1,10 @@
 ﻿=== TS Poll - Survey, Versus Poll, Image Poll, Video Poll ===
 Tags: poll, WordPress poll, poll plugin, Image poll, survey
-Contributors: totalsoft
+Contributors: totalsoft, totalsoftsupport
 Donate link: https://total-soft.com/wp-poll/
 Requires at least: 5.0
 Tested up to: 6.8
-Stable tag: 2.5.0
+Stable tag: 2.5.1
 Requires PHP: 5.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -264,6 +264,11 @@ A fully featured [All poll demo types](https://total-soft.com/wp-poll-vote-stand
 
 
 == Changelog ==
+
+= Version 2.5.1 =
+
+* Added function for working with survey. 
+* Fixed small error with back button.
 
 = Version 2.5.0 =
 

@@ -1188,33 +1188,6 @@
                     tsSearchTemplates: function (event) {
                         this.tsFilterTemplates(this.tsFilter, event.target.value);
                     },
-                    tsImportTemplate: function (templateID) {
-                        $.ajax({
-                            url: ts_json.ajaxurl,
-                            data: {
-                                action: 'ts_import_template',
-                                ts_load_nonce: ts_json.ts_load_nonce,
-                                ts_importer_id: ts_json.ts_importer_id,
-                                template_id: templateID
-                            },
-                            beforeSend: function () {
-                                document.getElementById("ts-import-notification").style.display = "";
-                            },
-                            type: 'POST',
-                        }).done(function (tsResponse) {
-                            if (tsResponse.success !== true) {
-                                document.getElementById("ts-import-notification").style.display = "none";
-                                console.error(`TS Poll --- Template import failed. Error message - ${tsResponse.data}`);
-                                toastr["error"]("Template import failed.", "Error", tspToastrOptions);
-                            } else {
-                                window.location = tsResponse.data;
-                            }
-                        }).fail(function () {
-                            document.getElementById("ts-import-notification").style.display = "none";
-                            console.error("TS Poll --- Template import failed.");
-                            toastr["error"]("Template import failed.", "Error", tspToastrOptions);
-                        });
-                    },
                     tsChooseTheme: function () {
                         document.querySelector(".tsp-main.tsp-main-templates").classList.add("tsp-left");
                         document.querySelector(".tsp-main.tsp-main-themes").classList.add("tsp-right");

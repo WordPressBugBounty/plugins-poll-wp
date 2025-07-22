@@ -776,6 +776,9 @@
 											setTimeout(() => {
 												document.getElementById("ts_load_vue_poll_%1$s").style.display = "none";
 												document.getElementById("ts_poll_section_%1$s").removeAttribute("style");
+												if (typeof(document.getElementById("ts_poll_video_in_header_%1$s")) != "undefined" && document.getElementById("ts_poll_video_in_header_%1$s") != null) {
+													document.getElementById("ts_poll_video_in_header_%1$s").setAttribute("src", document.getElementById("ts_poll_video_in_header_%1$s").dataset.video);
+												}
 												tspSelf.ts_poll_mode = data.mode;
 											}, 1000);
 										} else {

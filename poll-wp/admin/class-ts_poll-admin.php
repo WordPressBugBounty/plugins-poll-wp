@@ -1265,8 +1265,8 @@ class ts_poll_admin{
 				foreach ( $field['options'] as $opt_value => $opt_name ) {
 					$tsp_select .= sprintf(
 						'
-						<div class="tsp_position_item %s" data-tsp-pos="%s">
-							<img class="tsp_position_image tsp_flex_col" src="%s">
+						<div class="tsp_position_item %1$s" data-tsp-pos="%2$s" v-on:click.stop.prevent="tspPositionItem($event.currentTarget)" >
+							<img class="tsp_position_image tsp_flex_col" src="%3$s">
 						</div>
 						',
 						$opt_value == $value ? esc_attr( 'tsp_active' ) : esc_attr( '' ),

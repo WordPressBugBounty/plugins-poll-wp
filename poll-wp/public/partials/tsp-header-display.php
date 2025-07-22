@@ -79,11 +79,12 @@
 				if (has_shortcode($wp_embed->run_shortcode( '[embed]' . esc_url( $ts_poll_question_params["TotalSoftPoll_Q_Vd"] ) . '[/embed]' ),"video")) {
 					$tsp_embed = sprintf(
 						'
-						<video controls="controls" preload="metadata" name="media">
+						<video id="ts_poll_video_in_header_%2$s" data-video="%1$s" controls="controls" preload="metadata" name="media">
 							<source type="video/mp4" src="%1$s">
 						</video>
 						',
-						esc_url( $ts_poll_question_params["TotalSoftPoll_Q_Vd"] )
+						esc_url( $ts_poll_question_params["TotalSoftPoll_Q_Vd"] ),
+						esc_attr( $total_soft_poll )
 					);
 				} else {
 					$tsp_embed = do_shortcode( $wp_embed->run_shortcode( '[embed]' . esc_url( $ts_poll_question_params["TotalSoftPoll_Q_Vd"] ) . '[/embed]' ) );
