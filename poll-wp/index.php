@@ -4,14 +4,14 @@
 	  Plugin URI: https://total-soft.com/wp-poll/
 	  Description: Best Add a powerful poll on your site. WordPress Poll plugin is a responsive and customizable for WordPress. Poll plugin will help you more easily create powerful poll.
 	  Author: totalsoft
-	  Version: 2.5.1
+	  Version: 2.5.2
 	  Author URI: https://total-soft.com
 	  License: GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
 	  */
 if ( ! defined( 'WPINC' ) ) {
 	die;
 }
-define( 'TS_POLL_VERSION', '2.5.1' );
+define( 'TS_POLL_VERSION', '2.5.2' );
 define( 'TS_POLL_PLUGIN_NAME', 'TS_POLL' );
 define( 'TS_POLL_PLUGIN_PREFIX', 'ts-poll-' );
 define( 'TS_POLL_BASE', plugin_basename( __FILE__ ) );
