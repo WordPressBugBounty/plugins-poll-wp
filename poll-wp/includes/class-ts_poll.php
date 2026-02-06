@@ -73,7 +73,7 @@ class TS_Poll {
 		if ( defined( 'TS_POLL_VERSION' ) ) {
 			$this->version = TS_POLL_VERSION;
 		} else {
-			$this->version = '2.5.2';
+			$this->version = '2.5.5';
 		}
 		$this->plugin_name = 'TS Poll';
 		$this->load_dependencies();

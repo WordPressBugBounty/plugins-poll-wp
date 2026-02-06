@@ -904,7 +904,7 @@ class ts_poll_admin{
 			'video_in_question'       => 'Video in Question'
 		);
 		$tsp_question_id    = sanitize_text_field( $_POST['tsp_id'] );
-		$tsp_question_title = sanitize_text_field( htmlentities( stripslashes( $_POST['tsp_question_title'] ), ENT_QUOTES ) );
+		$tsp_question_title = sanitize_text_field( htmlspecialchars( stripslashes( $_POST['tsp_question_title'] ), ENT_QUOTES ) );
 		if ( is_numeric( $tsp_question_id ) || array_key_exists( $tsp_question_id, $tsp_themes_arr ) ) {
 			global $wpdb;
 			$tsp_question_table    = $wpdb->prefix . 'ts_poll_questions';
@@ -948,7 +948,7 @@ class ts_poll_admin{
 				$tsp_new_question_id = $wpdb->insert_id;
 				foreach ( $tsp_answers_sort as $key => $value ) {
 					$tsp_arr_key      = sanitize_text_field( $value );
-					$tsp_answer_title = htmlentities( sanitize_text_field( stripslashes( $tsp_answers[ $tsp_arr_key ]['Answer_Title'] ) ), ENT_QUOTES );
+					$tsp_answer_title = htmlspecialchars( sanitize_text_field( stripslashes( $tsp_answers[ $tsp_arr_key ]['Answer_Title'] ) ), ENT_QUOTES );
 					foreach ( $tsp_answers[ $tsp_arr_key ]['Answer_Param'] as $param_key => $param_value ) {
 						if ( $param_key == 'TotalSoftPoll_Ans_Vd' || $param_key == 'TotalSoftPoll_Ans_Im' ) {
 							$tsp_answers[ $tsp_arr_key ]['Answer_Param'][ $param_key ] = sanitize_url( $param_value );
@@ -1035,7 +1035,7 @@ class ts_poll_admin{
 				}
 				foreach ( $tsp_answers_sort as $key => $value ) {
 					$tsp_arr_key      = sanitize_text_field( $value );
-					$tsp_answer_title = sanitize_text_field( htmlentities( stripslashes( $tsp_answers[ $tsp_arr_key ]['Answer_Title'] ), ENT_QUOTES ) );
+					$tsp_answer_title = sanitize_text_field( htmlspecialchars( stripslashes( $tsp_answers[ $tsp_arr_key ]['Answer_Title'] ), ENT_QUOTES ) );
 					foreach ( $tsp_answers[ $tsp_arr_key ]['Answer_Param'] as $param_key => $param_value ) {
 						if ( $param_key == 'TotalSoftPoll_Ans_Im' || $param_key == 'TotalSoftPoll_Ans_Vd' ) {
 							$tsp_answers[ $tsp_arr_key ]['Answer_Param'][ $param_key ] = sanitize_url( $param_value );

@@ -1910,7 +1910,7 @@ if ( 'new' === $this->tsp_build ) {
 						<span class="tsp_select_div_title tsp_field_title">
 							<?php esc_html_e( 'Answer title', 'tspoll' ); ?>
 						</span>
-						<input id="tsp_answer_title" name="tsp_answer_title" type="text"  value="" placeholder="<?php esc_html_e( 'Answer title', 'tspoll' ); ?>" v-on:input="tspAnswerTitleInput($event.currentTarget.value)"  maxlength="255"  />
+						<input id="tsp_answer_title" name="tsp_answer_title" type="text"  value="" placeholder="<?php esc_html_e( 'Answer title', 'tspoll' ); ?>" v-on:input="tspAnswerTitleInput($event.currentTarget.value)"/>
 					</div>
 					<div class="tsp_color_div_edit">
 						<label class="tsp_color_label" for="tsp_answer_color"><?php esc_html_e( 'Special color', 'tspoll' ); ?></label>
@@ -2090,7 +2090,7 @@ if ( 'new' === $this->tsp_build ) {
 			<div class="tsp_flex_col" data-tsp-field="title" >
 				<p><?php esc_html_e( 'Write question text', 'tspoll' ); ?></p>
 				<div class="tsp_flex_row tsp_shortcode_div">
-					<input type="text" id="tsp_global_title" v-on:input="titleOnInput"  value="<?php echo esc_html( html_entity_decode( htmlspecialchars_decode( $this->tsp_build_proporties['Question_Title'] ), ENT_QUOTES ) ); ?>"  maxlength="255" >
+					<input type="text" id="tsp_global_title" v-on:input="titleOnInput"  value="<?php echo esc_html( html_entity_decode( htmlspecialchars_decode( $this->tsp_build_proporties['Question_Title'] ), ENT_QUOTES ) ); ?>" >
 				</div>
 			</div>
 		</div>

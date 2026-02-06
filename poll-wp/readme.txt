@@ -3,8 +3,8 @@ Contributors: totalsoft
 Donate link: https://total-soft.com/wp-poll/
 Tags: poll, WordPress poll, poll plugin, Image poll, survey
 Requires at least: 5.0
-Tested up to: 6.8
-Stable tag: 2.5.2
+Tested up to: 6.9
+Stable tag: 2.5.5
 Requires PHP: 5.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -264,6 +264,20 @@ A fully featured [All poll demo types](https://total-soft.com/wp-poll-vote-stand
 
 
 == Changelog ==
+
+= Version 2.5.5 =
+
+* Video Poll play icon change issue.
+
+* Poll title and answer title character max length issue.
+
+= Version 2.5.4 =
+
+* Poll WP has been tested up to version 6.9.
+
+= Version 2.5.3 =
+
+* Solved. The plugin has been tested and a small bug has been found.
 
 = Version 2.5.2 =
 

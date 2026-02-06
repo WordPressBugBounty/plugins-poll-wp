@@ -331,6 +331,33 @@
                     },
                 },
             });
+            function tsphtmlspecialchars(str) {
+                if (!str) return '';
+                return str
+                    .replace(/&/g, '&amp;')
+                    .replace(/"/g, '&quot;')
+                    .replace(/'/g, '&#039;')
+                    .replace(/</g, '&lt;')
+                    .replace(/>/g, '&gt;');
+            }
+
+            function getEncodedLength(str) {
+                return tsphtmlspecialchars(str).length;
+            }
+
+
+            function tspTruncate(str, maxLength = 255) {
+                let truncated = '';
+                for (let i = 0; i < str.length; i++) {
+                    const next = truncated + str[i];
+                    if (getEncodedLength(next) > maxLength) {
+                        toastr["error"]("Maximum length exceeded.", tspoll_builder_json.error, tspToastrOptions);
+                        break;
+                    }
+                    truncated = next;
+                }
+                return truncated;
+            }
             new Vue({
                 el: "#tsp_builder_section",
                 mixins: [window["mixin"]],
@@ -505,9 +532,11 @@
                         this.inputFocus();
                     },
                     titleOnInput: function (event) {
-                        tspoll_builder_json.tsp_proporties.Question_Title = event.target.value;
+                        const safeTitle = tspTruncate(event.target.value, 255);
+                        document.getElementById("tsp_global_title").value = safeTitle;
+                        tspoll_builder_json.tsp_proporties.Question_Title = safeTitle;
                         document.querySelectorAll(`#tsp_question_title_e,.ts_poll_header_${tsp_question_id} > .ts_poll_title_${tsp_question_id},.ts_poll_r_header_${tsp_question_id} > .ts_poll_title_${tsp_question_id}`).forEach(element => {
-                            element.innerText = event.target.value;
+                            element.innerText = safeTitle;
                         });
                     },
                     tspRangeInput: function (event) {
@@ -597,7 +626,9 @@
                             var tsp_add_classes = changeValue.split(" ");
                             var tsp_result_classes = tsp_elem_arr.concat(tsp_add_classes);
                             tsp_result_classes = tsp_result_classes.join(" ");
-                            document.querySelector(`${changeItem}`).setAttribute("class", tsp_result_classes);
+                            document.querySelectorAll(`${changeItem}`).forEach(el => {
+                                el.setAttribute("class", tsp_result_classes);
+                            });
                         } else {
                             let tspFontAwesomeValue = this.tspGetKeyByValue(this.tsp_all_fonts, changeValue);
                             document.documentElement.style.setProperty(changeItem, `"\\${tspFontAwesomeValue}"`);
@@ -772,8 +803,11 @@
                         this.tspDataChange = `${deleteElemId}-${tsp_question_id}`;
                     },
                     tspAnswerTitleInput: function (changeTitle) {
-                        if (this.tsp_answers[this.tspGetObjKey(this.tsp_answers, this.tspEditItemId)].hasOwnProperty(`Answer_Title`)) {
-                            this.$set(this.tsp_answers[this.tspGetObjKey(this.tsp_answers, this.tspEditItemId)], "Answer_Title", changeTitle);
+                        const safeTitle = tspTruncate(changeTitle, 255);
+                        document.getElementById("tsp_answer_title").value = safeTitle;
+                        const answerKey = this.tspGetObjKey(this.tsp_answers, this.tspEditItemId);
+                        if (this.tsp_answers[answerKey].hasOwnProperty('Answer_Title')) {
+                            this.$set(this.tsp_answers[answerKey], 'Answer_Title', safeTitle);
                         }
                     },
                     tspSwapElement: function (indexA, indexB, sortElem) {

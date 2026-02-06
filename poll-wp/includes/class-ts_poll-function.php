@@ -420,7 +420,7 @@ class ts_poll_function {
 		$ts_templates_arr = $this->get_json('templates');
 		if (array_key_exists($ts_template_id,$ts_templates_arr)) {
 			$ts_template_array = $ts_templates_arr[$ts_template_id];
-			$ts_title = sanitize_text_field( htmlentities( stripslashes( $ts_template_array['title'] ), ENT_QUOTES ) );
+			$ts_title = sanitize_text_field( htmlspecialchars( stripslashes( $ts_template_array['title'] ), ENT_QUOTES ) );
 			global $wpdb;
 			$tsp_question_table = $wpdb->prefix . 'ts_poll_questions';
 			$tsp_answers_table  = $wpdb->prefix . 'ts_poll_answers';
@@ -471,7 +471,7 @@ class ts_poll_function {
 					array(
 						'id'           => '',
 						'Question_id'  => (int) $tsp_insert_id,
-						'Answer_Title' => htmlentities( sanitize_text_field( stripslashes( $tsp_answers_value['Answer_Title'] ) ), ENT_QUOTES ),
+						'Answer_Title' => htmlspecialchars( sanitize_text_field( stripslashes( $tsp_answers_value['Answer_Title'] ) ), ENT_QUOTES ),
 						'Answer_Param' => json_encode( $tsp_answer_param ),
 						'Answer_Votes' => 0
 					),
