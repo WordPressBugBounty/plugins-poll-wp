@@ -1,28 +1,7 @@
 <?php
 class ts_poll_function {
-	/**
-	 * The ID of this plugin.
-	 *
-	 * @since    1.7.0
-	 * @access   private
-	 * @var      string    $plugin_name    The ID of this plugin.
-	 */
 	private $plugin_name;
-	/**
-	 * The version of this plugin.
-	 *
-	 * @since    1.7.0
-	 * @access   private
-	 * @var      string    $version    The current version of this plugin.
-	 */
 	private $version;
-	/**
-	 * Initialize the class and set its properties.
-	 *
-	 * @since    1.7.0
-	 * @param      string $plugin_name       The name of the plugin.
-	 * @param      string $version    The version of this plugin.
-	 */
 	private $ts_poll_fonts;
 	private $ts_poll_fonts_array;
 	private $ts_poll_themes;
@@ -45,6 +24,131 @@ class ts_poll_function {
 		add_filter( "tsp_get_font_face", array( $this, 'tsp_get_font_face' ) , 10 ,1 );
 		add_filter( "tsp_get_theme_params", array( $this, 'tsp_get_theme_params' ) , 10 ,1 );
 		add_filter( "tsp_get_all_params", array( $this, 'tsp_get_all_params' ) , 10, 4 );
+		add_filter( "tspoll_is_safe_oembed_url", array( $this, 'tspoll_is_safe_oembed_url' ), 10, 1 );
+		add_filter( "tspoll_normalize_video_url", array( $this, 'tspoll_normalize_video_url' ), 10, 1 );
+	}
+	public function tspoll_is_safe_oembed_url( $url ) {
+		$url = is_string( $url ) ? trim( $url ) : '';
+		if ( $url === '' ) {
+			return false;
+		}
+
+		$parts = wp_parse_url( $url );
+		if ( ! is_array( $parts ) ) {
+			return false;
+		}
+
+		$scheme = isset( $parts['scheme'] ) ? strtolower( $parts['scheme'] ) : '';
+		if ( $scheme !== 'http' && $scheme !== 'https' ) {
+			return false;
+		}
+
+		$host = isset( $parts['host'] ) ? strtolower( $parts['host'] ) : '';
+		if ( $host === '' ) {
+			return false;
+		}
+
+		if ( $host === 'localhost' || str_ends_with( $host, '.localhost' ) ) {
+			return false;
+		}
+
+		if ( filter_var( $host, FILTER_VALIDATE_IP ) ) {
+			return (bool) filter_var(
+				$host,
+				FILTER_VALIDATE_IP,
+				FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE
+			);
+		}
+
+		$resolved_ips = array();
+
+		$ipv4s = gethostbynamel( $host );
+		if ( is_array( $ipv4s ) ) {
+			$resolved_ips = array_merge( $resolved_ips, $ipv4s );
+		}
+
+		if ( function_exists( 'dns_get_record' ) && defined( 'DNS_AAAA' ) ) {
+			$aaaa = dns_get_record( $host, DNS_AAAA );
+			if ( is_array( $aaaa ) ) {
+				foreach ( $aaaa as $rec ) {
+					if ( isset( $rec['ipv6'] ) && is_string( $rec['ipv6'] ) ) {
+						$resolved_ips[] = $rec['ipv6'];
+					}
+				}
+			}
+		}
+
+		$resolved_ips = array_values( array_unique( array_filter( $resolved_ips ) ) );
+		if ( empty( $resolved_ips ) ) {
+			return false;
+		}
+
+		foreach ( $resolved_ips as $ip ) {
+			if ( ! filter_var( $ip, FILTER_VALIDATE_IP ) ) {
+				return false;
+			}
+			$is_public = filter_var(
+				$ip,
+				FILTER_VALIDATE_IP,
+				FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE
+			);
+			if ( ! $is_public ) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+	public function tspoll_normalize_video_url( $url ) {
+		$url = is_string( $url ) ? trim( $url ) : '';
+		if ( $url === '' ) {
+			return '';
+		}
+
+		$parts = wp_parse_url( $url );
+		if ( ! is_array( $parts ) ) {
+			return '';
+		}
+
+		$scheme = isset( $parts['scheme'] ) ? strtolower( $parts['scheme'] ) : '';
+		if ( $scheme !== 'http' && $scheme !== 'https' ) {
+			return '';
+		}
+
+		$host = isset( $parts['host'] ) ? strtolower( $parts['host'] ) : '';
+		if ( $host === '' ) {
+			return '';
+		}
+
+		if ( apply_filters( 'tspoll_is_safe_oembed_url', $url ) ) {
+			return $url;
+		}
+
+		if ( $this->tspoll_is_local_url( $url ) || $this->tspoll_is_direct_video_file_url( $url ) ) {
+			return $url;
+		}
+
+		return '';
+	}
+
+	private function tspoll_is_local_url( $url ) {
+		$home = wp_parse_url( home_url() );
+		$u    = wp_parse_url( $url );
+		if ( ! is_array( $home ) || ! is_array( $u ) ) {
+			return false;
+		}
+		$home_host = isset( $home['host'] ) ? strtolower( $home['host'] ) : '';
+		$url_host  = isset( $u['host'] ) ? strtolower( $u['host'] ) : '';
+		return $home_host !== '' && $home_host === $url_host;
+	}
+
+	private function tspoll_is_direct_video_file_url( $url ) {
+		$path = wp_parse_url( $url, PHP_URL_PATH );
+		if ( ! is_string( $path ) || $path === '' ) {
+			return false;
+		}
+		$ext = strtolower( pathinfo( $path, PATHINFO_EXTENSION ) );
+		return in_array( $ext, array( 'mp4', 'webm', 'ogv', 'mov', 'm4v' ), true );
 	}
 	public function set_fonts() {
 		$this->ts_poll_fonts = array(

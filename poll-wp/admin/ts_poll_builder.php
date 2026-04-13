@@ -460,7 +460,13 @@ if ( 'new' === $this->tsp_build ) {
 					</span>
 				</a>
 				',
-				add_query_arg( 'tsp-template-id', esc_attr( $value["template_id"] ), admin_url( 'admin.php?page=ts-poll-builder' ) ),
+				add_query_arg(
+					array(
+						'tsp-template-id'   => esc_attr( $value["template_id"] ),
+						'tsp_import_nonce'  => wp_create_nonce( 'tsp_import_template' ),
+					),
+					admin_url( 'admin.php?page=ts-poll-builder' )
+				),
 				__('Import', "ts-poll" )
 			) : "",
 			__('Preview', "ts-poll" ),

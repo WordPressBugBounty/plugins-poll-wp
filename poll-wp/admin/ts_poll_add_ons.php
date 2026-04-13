@@ -3,23 +3,10 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 $data = array(
-    "active" => "6000",
+    "active" => "4000",
     "review" => "4.7",
-    "downloads" => "200000+"
+    "downloads" => "400000+"
 );
-$username = 'totalsoft';
-$params = array(
-    'timeout'   => 10,
-    'sslverify' => false
-);
-$raw = wp_remote_retrieve_body( wp_remote_get( 'https://wptally.com/api/' . $username, $params ) );
-$raw = json_decode( $raw, true );
-if ( is_array( $raw ) && !array_key_exists( 'error', $raw ) ) {
-    $raw = $raw["plugins"]["poll-wp"];
-    $data["active"] = $raw["installs"];
-    $data["review"] = $raw["rating"];
-    $data["downloads"] = $raw["downloads"];
-}
 $tsp_addons_cards = "";
 $tsp_addons_array = array(
     "Multi Check" => [

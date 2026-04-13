@@ -76,18 +76,27 @@
 			if ($ts_poll_question_params["TotalSoftPoll_Q_Vd"] == '') {
 				$tsp_embed = sprintf( '<img src="%s">', esc_url( plugins_url( 'img/tsp_no_video.png', __DIR__ ) ) );
 			}else{
-				if (has_shortcode($wp_embed->run_shortcode( '[embed]' . esc_url( $ts_poll_question_params["TotalSoftPoll_Q_Vd"] ) . '[/embed]' ),"video")) {
+				$video_url = apply_filters( 'tspoll_normalize_video_url', esc_url( $ts_poll_question_params["TotalSoftPoll_Q_Vd"] ) );
+				$path = wp_parse_url( $video_url, PHP_URL_PATH );
+				$ext  = is_string( $path ) ? strtolower( pathinfo( $path, PATHINFO_EXTENSION ) ) : '';
+				$is_direct_file = in_array( $ext, array( 'mp4', 'webm', 'ogv', 'mov', 'm4v' ), true );
+
+				if ( $video_url === '' ) {
+					$tsp_embed = sprintf( '<img src="%s">', esc_url( plugins_url( 'img/tsp_no_video.png', __DIR__ ) ) );
+				} elseif ( $is_direct_file ) {
 					$tsp_embed = sprintf(
 						'
 						<video id="ts_poll_video_in_header_%2$s" data-video="%1$s" controls="controls" preload="metadata" name="media">
 							<source type="video/mp4" src="%1$s">
 						</video>
 						',
-						esc_url( $ts_poll_question_params["TotalSoftPoll_Q_Vd"] ),
+						$video_url,
 						esc_attr( $total_soft_poll )
 					);
+				} elseif ( apply_filters( 'tspoll_is_safe_oembed_url', $video_url ) ) {
+					$tsp_embed = do_shortcode( $wp_embed->run_shortcode( '[embed]' . $video_url . '[/embed]' ) );
 				} else {
-					$tsp_embed = do_shortcode( $wp_embed->run_shortcode( '[embed]' . esc_url( $ts_poll_question_params["TotalSoftPoll_Q_Vd"] ) . '[/embed]' ) );
+					$tsp_embed = sprintf( '<img src="%s">', esc_url( plugins_url( 'img/tsp_no_video.png', __DIR__ ) ) );
 				}
 			}
 			$tsp_in_question = sprintf(

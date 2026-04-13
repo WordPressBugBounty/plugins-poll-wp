@@ -318,12 +318,7 @@ section.tsp_pro_container {
     display: block;
 }
 
-/* .tsp-pricing-table .tsp-price-value .tsp-duration{
-    text-transform: uppercase;
-    display: block;
-} */
 .tsp-pricing-table .tsp-title {
-    /* font-size: 35px; */
     font-size: 25px;
     font-weight: 400;
     letter-spacing: 1px;

@@ -3,8 +3,8 @@ Contributors: totalsoft
 Donate link: https://total-soft.com/wp-poll/
 Tags: poll, WordPress poll, poll plugin, Image poll, survey
 Requires at least: 5.0
-Tested up to: 6.9
-Stable tag: 2.5.5
+Tested up to: 7.0
+Stable tag: 2.6.0
 Requires PHP: 5.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -264,6 +264,11 @@ A fully featured [All poll demo types](https://total-soft.com/wp-poll-vote-stand
 
 
 == Changelog ==
+
+= Version 2.6.0 =
+
+* Added a function for selecting an answer. 
+* Two minor bugs were fixed.
 
 = Version 2.5.5 =
 

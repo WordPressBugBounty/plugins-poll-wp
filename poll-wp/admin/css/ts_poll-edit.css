@@ -1,8 +1,3 @@
-/**
- * All of the CSS for edit poll builder admin-specific functionality should be
- * included in this file.
- */
-/* Builder Select Field section */
 .tsp_content[data-tsp-section="field_style"],
 .tsp_content[data-tsp-section="results"] {
     width: 100%;
@@ -246,15 +241,10 @@ main.tsp_content_fields_menu>div:not(.active) {
     font-weight: 400;
     transition: .2s;
     -webkit-touch-callout: none;
-    /* iOS Safari */
     -webkit-user-select: none;
-    /* Safari */
     -khtml-user-select: none;
-    /* Konqueror HTML */
     -moz-user-select: none;
-    /* Old versions of Firefox */
     -ms-user-select: none;
-    /* Internet Explorer/Edge */
     user-select: none;
 }
 
@@ -389,15 +379,10 @@ label.tsp-toggle-label:active:after {
 }
 
 .tsp-add_answer_text {
-    /* iOS Safari */
     -webkit-user-select: none;
-    /* Safari */
     -khtml-user-select: none;
-    /* Konqueror HTML */
     -moz-user-select: none;
-    /* Old versions of Firefox */
     -ms-user-select: none;
-    /* Internet Explorer/Edge */
     user-select: none;
     float: left;
     border-radius: .375rem 0 0 .375rem;
@@ -466,15 +451,10 @@ label.tsp-toggle-label:active:after {
 
 .tsp-list .tsp-list-item>div {
     padding: .1875rem 0rem;
-    /* iOS Safari */
     -webkit-user-select: none;
-    /* Safari */
     -khtml-user-select: none;
-    /* Konqueror HTML */
     -moz-user-select: none;
-    /* Old versions of Firefox */
     -ms-user-select: none;
-    /* Internet Explorer/Edge */
     user-select: none;
 }
 
@@ -1287,15 +1267,6 @@ main.tsp_content_fields_edit>.tsp_answer_params>.tsp_video_div_edit {
     -ms-user-select: none;
     user-select: none;
 }
-
-/* .tsp-tab-inner {
-    width: 100%;
-    height: 0;
-    padding-bottom: calc(100vh - 4.375rem);
-    position: relative;
-    background-color: #ededed;
-    max-height: 100%;
-} */
 .tsp_content[data-tsp-section="info"] .tsp-info-inner {
     width: 100%;
     height: 0;

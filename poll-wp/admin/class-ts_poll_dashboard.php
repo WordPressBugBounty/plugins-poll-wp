@@ -6,9 +6,9 @@ class ts_poll_dashboard extends WP_List_Table {
 	public function __construct() {
 		parent::__construct(
 			array(
-				'singular' => esc_html__( 'Poll', 'tspoll' ), // singular name of the listed records
-				'plural'   => esc_html__( 'Polls', 'tspoll' ), // plural name of the listed records
-				'ajax'     => true, // should this table support ajax?
+				'singular' => esc_html__( 'Poll', 'tspoll' ),
+				'plural'   => esc_html__( 'Polls', 'tspoll' ),
+				'ajax'     => true
 			)
 		);
 	}
@@ -42,7 +42,7 @@ class ts_poll_dashboard extends WP_List_Table {
 			case 'created_at':
 				return esc_html( date( 'F jS, Y', strtotime( $item[ $column_name ] ) ) );
 			default:
-				return print_r( $item, true ); // Show the whole array for troubleshooting purposes
+				return '';
 		}
 	}
 	public function get_columns() {

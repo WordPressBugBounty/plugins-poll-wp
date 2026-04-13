@@ -717,33 +717,33 @@
             border-color: var(--tsp_r_section_bc_%1$s);
         }
         div#ts_poll_section_%1$s > .ts_poll_r_section_%1$s[data-tsp-effect="FTL"] {
-            -ms-transform: rotateY(-90deg); /* IE 9 */
+            -ms-transform: rotateY(-90deg);
             -moz-transform: rotateY(-90deg);
             -o-transform: rotateY(-90deg);
-            -webkit-transform: rotateY(-90deg); /* Safari */
-            transform: rotateY(-90deg); /* Standard syntax */
+            -webkit-transform: rotateY(-90deg);
+            transform: rotateY(-90deg);
         }
         div#ts_poll_section_%1$s > .ts_poll_r_section_%1$s[data-tsp-effect="FTR"] {
-            -ms-transform: rotateX(-90deg); /* IE 9 */
+            -ms-transform: rotateX(-90deg); 
             -moz-transform: rotateX(-90deg);
             -o-transform: rotateX(-90deg);
-            -webkit-transform: rotateX(-90deg); /* Safari */
-            transform: rotateX(-90deg); /* Standard syntax */
+            -webkit-transform: rotateX(-90deg);
+            transform: rotateX(-90deg);
         }
         div#ts_poll_section_%1$s > .ts_poll_r_section_%1$s[data-tsp-effect="FBL"] {
             z-index: -1;
-            -ms-transform: rotate(-180deg); /* IE 9 */
+            -ms-transform: rotate(-180deg); 
             -moz-transform: rotate(-180deg);
             -o-transform: rotate(-180deg);
-            -webkit-transform: rotate(-180deg); /* Safari */
-            transform: rotate(-180deg); /* Standard syntax */
+            -webkit-transform: rotate(-180deg);
+            transform: rotate(-180deg);
         }
         div#ts_poll_section_%1$s > .ts_poll_r_section_%1$s[data-tsp-effect="FBR"] {
-            -ms-transform: skewX(90deg); /* IE 9 */
+            -ms-transform: skewX(90deg); 
             -moz-transform: skewX(90deg);
             -o-transform: skewX(90deg);
-            -webkit-transform: skewX(90deg); /* Safari */
-            transform: skewX(90deg); /* Standard syntax */
+            -webkit-transform: skewX(90deg);
+            transform: skewX(90deg);
         }
         div#ts_poll_section_%1$s > .ts_poll_r_section_%1$s[data-tsp-effect="FBTT"] {
             -ms-transform: skewY(90deg);

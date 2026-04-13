@@ -12,33 +12,22 @@ class ts_poll_list_table extends WP_List_Table {
 			)
 		);
 	}
-	/**
-	 * Retrieve poll questions data from the database
-	 *
-	 * @param int $per_page
-	 * @param int $page_number
-	 *
-	 * @return mixed
-	 */
 	public static function ts_get_polls( $per_page = 10, $page_number = 1 ) {
 		global $wpdb;
+		$per_page    = max( 1, (int) $per_page );
+		$page_number = max( 1, (int) $page_number );
 		$sql = "SELECT `id`,`Question_Title`,`Question_Param`,`created_at` FROM {$wpdb->prefix}ts_poll_questions";
 		if ( ! empty( $_REQUEST['orderby'] ) ) {
 			$orderby = in_array( $_REQUEST['orderby'], ['Question_Title','id'], true ) ? $_REQUEST['orderby'] : 'id';
 			$order = !empty( $_REQUEST['order'] ) && 'DESC' === strtoupper( $_REQUEST['order'] ) ? 'DESC' : 'ASC';
-			$orderby_sql = sanitize_sql_orderby( "{$orderby} {$order}" );
-			$sql .= " ORDER BY {$orderby_sql}";
+			$sql .= " ORDER BY " . sanitize_sql_orderby( "{$orderby} {$order}" );
 		}
-		$sql   .= " LIMIT $per_page";
-		$sql   .= ' OFFSET ' . ( $page_number - 1 ) * $per_page;
-		$result = $wpdb->get_results( $sql, 'ARRAY_A' );
+
+		$sql .= " LIMIT %d OFFSET %d";
+		$result = $wpdb->get_results( $wpdb->prepare( $sql, $per_page, ( $page_number - 1 ) * $per_page ), 'ARRAY_A' );
+
 		return $result;
 	}
-	/**
-	 * Delete a poll.
-	 *
-	 * @param int $id poll id
-	 */
 	public static function ts_poll_delete( $id ) {
 		global $wpdb;
 		$wpdb->delete(
@@ -52,11 +41,6 @@ class ts_poll_list_table extends WP_List_Table {
 			array( '%d' )
 		);
 	}
-	/**
-	 * Copy a poll.
-	 *
-	 * @param int $id poll id
-	 */
 	public static function ts_poll_copy( $id ) {
 		global $wpdb;
 		$TS_Poll_Question_Table = $wpdb->prefix . 'ts_poll_questions';
@@ -99,30 +83,15 @@ class ts_poll_list_table extends WP_List_Table {
 			$wpdb->update( $TS_Poll_Question_Table, array( 'Answers_Sort' => $TS_Poll_Answers_Copied_Imploded ), array( 'id' => $TS_Poll_Question_Copied ), array( '%s' ), array( '%d' ) );
 		}
 	}
-	/**
-	 * Returns the count of polls in the database.
-	 *
-	 * @return null|string
-	 */
 	public static function ts_poll_question_count() {
 		global $wpdb;
 		$sql = "SELECT COUNT(*) FROM {$wpdb->prefix}ts_poll_questions";
 		return $wpdb->get_var( $sql );
 	}
-	/** Text displayed when no poll data is available */
 	public function no_items() {
 		esc_html__( 'No polls avaliable.', 'tspoll' );
 	}
-	/**
-	 * Method for name column
-	 *
-	 * @param array $item an array of DB data
-	 *
-	 * @return string
-	 */
 	function column_name( $item ) {
-		// create a nonce
-		$ts_poll_action_nonce = wp_create_nonce( 'ts_poll_nonce' );
 		$title                = sprintf( '<strong><a href="?page=%s&tsp-id=%d" target="_blank">%s</a></strong>', esc_attr( 'ts-poll-builder' ), absint( $item['id'] ), esc_html( html_entity_decode( htmlspecialchars_decode( $item['Question_Title'] ), ENT_QUOTES ) ) );
 		$actions              = array(
 			'edit'   => sprintf( '<a href="?page=%s&tsp-id=%s">%s</a>', esc_attr( 'ts-poll-builder' ), absint( $item['id'] ), esc_attr__( 'Edit', 'tspoll' ) ),
@@ -131,14 +100,6 @@ class ts_poll_list_table extends WP_List_Table {
 		);
 		return $title . $this->row_actions( $actions );
 	}
-	/**
-	 * Render a column when no column specific method exists.
-	 *
-	 * @param array  $item
-	 * @param string $column_name
-	 *
-	 * @return mixed
-	 */
 	public function column_default( $item, $column_name ) {
 		switch ( $column_name ) {
 			case 'Question_Title':
@@ -179,27 +140,15 @@ class ts_poll_list_table extends WP_List_Table {
 					__("Export as json","tspoll")
 				);	
 			default:
-				return print_r( $item, true ); // Show the whole array for troubleshooting purposes
+				return '';
 		}
 	}
-	/**
-	 * Render the bulk edit checkbox
-	 *
-	 * @param array $item
-	 *
-	 * @return string
-	 */
 	function column_cb( $item ) {
 		return sprintf(
 			'<input type="checkbox" name="tspoll_ids[]" value="%s" />',
 			$item['id']
 		);
 	}
-	/**
-	 * Associative array of columns
-	 *
-	 * @return array
-	 */
 	function get_columns() {
 		$columns = array(
 			'cb'             => '<input type="checkbox" />',
@@ -212,11 +161,6 @@ class ts_poll_list_table extends WP_List_Table {
 		);
 		return $columns;
 	}
-	/**
-	 * Columns to make sortable.
-	 *
-	 * @return array
-	 */
 	public function get_sortable_columns() {
 		$sortable_columns = array(
 			'Question_Title' => array( 'Question_Title', true ),
@@ -224,11 +168,6 @@ class ts_poll_list_table extends WP_List_Table {
 		);
 		return $sortable_columns;
 	}
-	/**
-	 * Returns an associative array containing the bulk action
-	 *
-	 * @return array
-	 */
 	public function get_bulk_actions() {
 		$actions = array(
 			'bulk-delete' => esc_attr__( 'Delete', 'tspoll' ),
@@ -239,9 +178,6 @@ class ts_poll_list_table extends WP_List_Table {
 	public function ts_poll_admin_notice( $class, $message ) {
 		return sprintf( '<div class="%1$s is-dismissible"><p>%2$s</p></div>', esc_attr( $class ), esc_html( $message ) );
 	}
-	/**
-	 * Handles data query and filter, sorting, and pagination.
-	 */
 	public function process_bulk_action() {
 		if ( isset( $_POST['action'] ) || isset( $_POST['action2'] ) ) {
 			if ( ! isset( $_POST['ts_poll_action_nonce'] )
@@ -250,19 +186,16 @@ class ts_poll_list_table extends WP_List_Table {
 				echo self::ts_poll_admin_notice( 'notice notice-error ', esc_html__( 'Sorry, your nonce did not verify.', 'tspoll' ) );
 				exit;
 			} else {
-				// If the bulk action is triggered
 				$ts_poll_post_action = isset( $_POST['action'] ) ? sanitize_text_field( $_POST['action'] ) : sanitize_text_field( $_POST['action2'] );
 				if ( isset( $_POST['tspoll_ids'] ) ) {
 					$count       = count( $_POST['tspoll_ids'] );
 					$ts_poll_ids = esc_sql( $_POST['tspoll_ids'] );
 					if ( 'bulk-delete' === $ts_poll_post_action ) {
-						// loop over the array of record IDs and delete them
 						foreach ( $ts_poll_ids as $id ) {
 							self::ts_poll_delete( $id );
 						}
 						echo self::ts_poll_admin_notice( 'notice notice-success', esc_html__( "{$count} poll was successfully deleted.", 'tspoll' ) );
 					} elseif ( 'bulk-copy' === $ts_poll_post_action ) {
-						// loop over the array of record IDs and copy them
 						foreach ( $ts_poll_ids as $id ) {
 							self::ts_poll_copy( $id );
 						}
@@ -306,15 +239,14 @@ class ts_poll_list_table extends WP_List_Table {
 	}
 	public function prepare_items() {
 		$this->_column_headers = $this->get_column_info();
-		/** Process bulk action */
 		$this->process_bulk_action();
 		$per_page     = $this->get_items_per_page( 'ts_polls_per_page', 10 );
 		$current_page = $this->get_pagenum();
 		$total_items  = self::ts_poll_question_count();
 		$this->set_pagination_args(
 			array(
-				'total_items' => $total_items, // WE have to calculate the total number of items
-				'per_page'    => $per_page // WE have to determine how many items to show on a page
+				'total_items' => $total_items,
+				'per_page'    => $per_page
 			)
 		);
 		$this->items = self::ts_get_polls( $per_page, $current_page );

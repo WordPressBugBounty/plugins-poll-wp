@@ -1,13 +1,4 @@
 <?php
-/**
- * All Gutenberg block functions.
- *
- * @link       TS Poll
- * @since      1.7.0
- *
- * @package    TS_Poll
- * @subpackage TS_Poll/admin
- */
 class ts_poll_gutenberg_block {
 	public function __construct() {
 		if ( function_exists( 'register_block_type' ) ) {
@@ -19,7 +10,7 @@ class ts_poll_gutenberg_block {
 		wp_register_script(
 			TS_POLL_PLUGIN_PREFIX . 'gutenberg',
 			plugin_dir_url( __FILE__ ) . 'js/block.js',
-			array( 'jquery', 'wp-blocks', 'wp-element', 'wp-editor', 'wp-components' )
+			array( 'jquery', 'wp-blocks', 'wp-element', 'wp-block-editor', 'wp-components' )
 		);
 		wp_register_style( TS_POLL_PLUGIN_PREFIX . 'block', plugin_dir_url( __FILE__ ) . 'css/block.css' );
 		wp_enqueue_style( TS_POLL_PLUGIN_PREFIX . 'block' );

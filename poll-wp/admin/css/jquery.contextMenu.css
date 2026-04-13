@@ -265,9 +265,6 @@
   transform: translateY(-50%);
 }
 
-/**
- * Inputs
- */
 .context-menu-item.context-menu-input {
   padding: .3em .6em;
 }

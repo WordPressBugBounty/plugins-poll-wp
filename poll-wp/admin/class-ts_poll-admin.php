@@ -1,47 +1,7 @@
 <?php
-/**
- * The admin-specific functionality of the plugin.
- *
- * @link       TS Poll
- * @since      1.7.0
- *
- * @package    TS_Poll
- * @subpackage TS_Poll/admin
- */
-/**
- * The admin-specific functionality of the plugin.
- *
- * Defines the plugin name, version, and two examples hooks for how to
- * enqueue the admin-specific stylesheet and JavaScript.
- *
- * @package    TS_Poll
- * @subpackage TS_Poll/admin
- * @author     TS Poll <TS Poll>
- */
 class ts_poll_admin{
-	/**
-	 * The ID of this plugin.
-	 *
-	 * @since    1.7.0
-	 * @access   private
-	 * @var      string    $plugin_name    The ID of this plugin.
-	 */
 	private $plugin_name;
-	/**
-	 * The version of this plugin.
-	 *
-	 * @since    1.7.0
-	 * @access   private
-	 * @var      string    $version    The current version of this plugin.
-	 */
 	private $version;
-	/**
-	 * Initialize the class and set its properties.
-	 *
-	 * @since    1.7.0
-	 * @param      string    $plugin_name       The name of this plugin.
-	 * @param      string    $version    The version of this plugin.
-	 */
 	public $ts_poll_question_obj;
 	public $tsp_build;
 	public $tsp_build_proporties;
@@ -74,6 +34,7 @@ class ts_poll_admin{
 	}
 	function tspoll_push_notice() {
 		if ($this->tsp_page_slug === 'ts-poll') {
+			$notice_nonce = wp_create_nonce( 'tspoll_notice_action' );
 			$ts_poll_dismissed_meta = get_user_meta(  get_current_user_id(), 'tspoll_dismissed_notice' );
 			$ts_poll_remind_me_meta = get_user_meta(  get_current_user_id(), 'tspoll_remindme_notice' );
 			$ts_poll_dismissed = !$ts_poll_dismissed_meta || $ts_poll_dismissed_meta[0] !== $this->version;
@@ -112,16 +73,19 @@ class ts_poll_admin{
 					esc_url(plugin_dir_url( __FILE__ ) . 'img/ts-video-gallery-logo.png'),
 					esc_url('https://wordpress.org/plugins/gallery-videos/'),
 					esc_url('https://total-soft.com/wp-video-gallery/'),
-					esc_url( add_query_arg( 'ts-poll-remind-me', 'true' ) ),
+					esc_url( add_query_arg( array( 'ts-poll-remind-me' => 'true', 'tspoll_notice_nonce' => $notice_nonce ) ) ),
 					__('Remind me later'),
-					esc_url( add_query_arg( 'ts-poll-dismissed', 'true' ) ),
+					esc_url( add_query_arg( array( 'ts-poll-dismissed' => 'true', 'tspoll_notice_nonce' => $notice_nonce ) ) ),
 					__('Dismiss')
 				);
 			}
 		}
 	}
 	function tspoll_dismissed_notice() {
-		if ( isset( $_GET['ts-poll-dismissed'] ) || isset( $_GET['ts-poll-remind-me'] )){
+		if ( isset( $_GET['ts-poll-dismissed'] ) || isset( $_GET['ts-poll-remind-me'] ) ){
+			if ( ! isset( $_GET['tspoll_notice_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( $_GET['tspoll_notice_nonce'] ), 'tspoll_notice_action' ) ) {
+				return;
+			}
 			if ( isset( $_GET['ts-poll-dismissed'] )){
 				$ts_poll_dismissed_meta = get_user_meta(  get_current_user_id(), 'tspoll_dismissed_notice' );
 				!$ts_poll_dismissed_meta ? add_user_meta( get_current_user_id(), 'tspoll_dismissed_notice', $this->version, true ) : update_user_meta( get_current_user_id(), 'tspoll_dismissed_notice', $this->version );
@@ -129,11 +93,14 @@ class ts_poll_admin{
 				$ts_poll_remind_me_meta = get_user_meta(  get_current_user_id(), 'tspoll_remindme_notice' );
 				!$ts_poll_remind_me_meta ? add_user_meta( get_current_user_id(), 'tspoll_remindme_notice', time()+(get_option('gmt_offset') * 3600), true ) : update_user_meta( get_current_user_id(), 'tspoll_remindme_notice', time()+(get_option('gmt_offset') * 3600) ) ;
 			}
-			wp_redirect(wp_get_referer());
+			wp_safe_redirect( wp_get_referer() ? wp_get_referer() : admin_url( 'admin.php?page=ts-poll' ) );
 			exit;
 		}
 	}
 	public function tsp_process_requests(){
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
 		if ( 'ts-poll-builder' === $this->tsp_page_slug && is_admin() ) {
 			$this->tsp_themes = array(
 				'standard_poll'           => array( "name" => 'Standard Poll', "free" => true),
@@ -146,7 +113,13 @@ class ts_poll_admin{
 				'video_in_question'       => array( "name" => 'Video in Question', "free" => true),
 				'versus_poll'             => array( "name" => 'Versus Poll', "free" => false)
 			);
-			if(isset( $_GET['tsp-template-id'] ) && is_numeric( $_GET['tsp-template-id'] ) && is_int( (int) $_GET['tsp-template-id'] )){
+			if (
+				isset( $_GET['tsp-template-id'] )
+				&& is_numeric( $_GET['tsp-template-id'] )
+				&& is_int( (int) $_GET['tsp-template-id'] )
+				&& isset( $_GET['tsp_import_nonce'] )
+				&& wp_verify_nonce( sanitize_text_field( $_GET['tsp_import_nonce'] ), 'tsp_import_template' )
+			){
 				$tsp_insert_id = apply_filters( "tsp_import_template",sanitize_text_field( $_GET['tsp-template-id'] ));
 				if ($tsp_insert_id !== false) {
 					wp_safe_redirect( add_query_arg( 'tsp-id', $tsp_insert_id, admin_url( 'admin.php?page=ts-poll-builder' ) ) );
@@ -307,15 +280,10 @@ class ts_poll_admin{
 				}
 				#tspoll_dashboard_form td {
 					-webkit-touch-callout: none;
-					/* iOS Safari */
 					-webkit-user-select: none;
-					/* Safari */
 					-khtml-user-select: none;
-					/* Konqueror HTML */
 					-moz-user-select: none;
-					/* Old versions of Firefox */
 					-ms-user-select: none;
-					/* Internet Explorer/Edge */
 					user-select: none;
 				}
 				#tspoll_dashboard_form td.column-id>span {
@@ -524,10 +492,17 @@ class ts_poll_admin{
 		<?php
 	}
 	function tspoll_dashboard_fetch_callback() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_send_json_error( array( 'message' => 'Forbidden' ), 403 );
+		}
+		check_ajax_referer( 'tsp-dashboard-nonce', 'ts_poll_dashboard_widget_nonce', true );
 		$tsp_dashboard_list_table = new ts_poll_dashboard();
 		$tsp_dashboard_list_table->ajax_response();
 	}
 	function tspoll_dashboard_update_callback() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_send_json_error( array( 'message' => 'Forbidden' ), 403 );
+		}
 		check_ajax_referer( 'tsp-dashboard-nonce', 'ts_poll_dashboard_widget_nonce', true );
 		$tsp_dashboard_list_table = new ts_poll_dashboard();
 		$tsp_dashboard_list_table->prepare_items();
@@ -540,11 +515,6 @@ class ts_poll_admin{
 			))
 		);
 	}
-	/**
-	 * Register the dashboard widget.
-	 *
-	 * @since 1.8.6
-	*/
 	public function tspoll_dashboard_widget_register() {
 		global $wp_meta_boxes;
 		wp_add_dashboard_widget(
@@ -579,11 +549,6 @@ class ts_poll_admin{
 			esc_url( plugin_dir_url( __DIR__ ) . 'public/img/tsp_loading.gif' )
 		);
 	}
-	/**
-	 * Register the stylesheets for the admin area.
-	 *
-	 * @since    1.7.0
-	 */
 	public function tsp_add_action_link( $links ) {
 		$links['tspoll_support'] = sprintf( '<a href="%s" style="color: #8bc34a;font-weight: bold;" target="_blank">%s</a>', esc_url( 'https://wordpress.org/support/plugin/poll-wp/' ), esc_attr__( 'Support', 'tspoll' ) );
 		$links['tspoll_go_pro']  = sprintf( '<a href="%s" style="color: #ff0000;font-weight: bold;" target="_blank">%s</a>', esc_url( 'https://total-soft.com/wp-poll/' ), esc_attr__( 'Go Pro', 'tspoll' ) );
@@ -620,17 +585,6 @@ class ts_poll_admin{
 		) );
 	}
 	public function enqueue_styles() {
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in ts_poll_loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The ts_poll_loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
 		wp_enqueue_style( TS_POLL_PLUGIN_PREFIX . "fonts", plugin_dir_url( __DIR__ ) . 'fonts/ts_poll-fonts.css', array(), TS_POLL_VERSION, 'all' );
 		if ( 'ts-poll' === $this->tsp_page_slug ) {
 			wp_enqueue_style( TS_POLL_PLUGIN_PREFIX . "admin", plugin_dir_url( __FILE__ ) . 'css/ts_poll-admin.css', array(), TS_POLL_VERSION, 'all' );
@@ -704,23 +658,7 @@ class ts_poll_admin{
 			wp_add_inline_style(TS_POLL_PLUGIN_PREFIX . "add-ons", $tsp_addons_inline_style);
 		}
 	}
-	/**
-	 * Register the JavaScript for the admin area.
-	 *
-	 * @since    1.7.0
-	 */
 	public function enqueue_scripts() {
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in ts_poll_loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The ts_poll_loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
 		if ( 'ts-poll' === $this->tsp_page_slug ) {
 			wp_register_script( TS_POLL_PLUGIN_PREFIX . "toastr", plugin_dir_url( __FILE__ ) . 'js/toastr.min.js', array(), TS_POLL_VERSION, false );
 			wp_enqueue_script( 
@@ -801,7 +739,19 @@ class ts_poll_admin{
 								%1$s
 							</div>
 							',
-							$tsp_response_value["Answer_Param"]["TotalSoftPoll_Ans_Vd"] == '' ? sprintf( '<img src="%s" alt="No Video avaible">', esc_url( plugin_dir_url( __DIR__ ) . '/public/img/tsp_no_video.png' ) ) : do_shortcode( $wp_embed->run_shortcode( '[embed]' . esc_url( $tsp_response_value["Answer_Param"]["TotalSoftPoll_Ans_Vd"] ) . '[/embed]' ) )
+							( function() use ( $tsp_response_value, $wp_embed ) {
+								$video_url = apply_filters( 'tspoll_normalize_video_url', esc_url( $tsp_response_value["Answer_Param"]["TotalSoftPoll_Ans_Vd"] ) );
+								if ( $video_url === '' ) {
+									return sprintf( '<img src="%s" alt="No Video avaible">', esc_url( plugin_dir_url( __DIR__ ) . '/public/img/tsp_no_video.png' ) );
+								}
+								if ( apply_filters( 'tspoll_is_safe_oembed_url', $video_url ) ) {
+									return do_shortcode( $wp_embed->run_shortcode( '[embed]' . $video_url . '[/embed]' ) );
+								}
+								return sprintf(
+									'<video controls="controls" preload="metadata" name="media"><source type="video/mp4" src="%1$s"></video>',
+									esc_url( $video_url )
+								);
+							} )()
 						);
 						$this->tsp_build_proporties['Question_Answers'][$tsp_response_key]["embed"] = $tsp_check_embed;
 					}
@@ -858,6 +808,9 @@ class ts_poll_admin{
 		return $value;
 	}
 	function tsp_get_attachment_callback() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_send_json_error( array( 'message' => 'Forbidden' ), 403 );
+		}
 		if ( ! isset( $_POST['tsp_nonce'] ) || $_POST['tsp_nonce'] == '' || ! wp_verify_nonce( $_POST['tsp_nonce'], 'tsp_builder_nonce_field' ) ) {
 			wp_send_json_error();
 		}
@@ -869,27 +822,40 @@ class ts_poll_admin{
 		}
 	}
 	function tsp_get_attachment_id() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_send_json_error( array( 'message' => 'Forbidden' ), 403 );
+		}
 		if ( ! isset( $_POST['tsp_nonce'] ) || $_POST['tsp_nonce'] == '' || ! wp_verify_nonce( $_POST['tsp_nonce'], 'tsp_builder_nonce_field' ) ) {
 			wp_send_json_error();
 		}
 		$attachment_url = sanitize_text_field( $_POST['attachment_url'] );
-		$fp             = fopen( $attachment_url, 'rb' );
-		if ( $fp ) {
-			list($width, $height) = getimagesize( $attachment_url );
-			$data                 = array(
-				'image'  => esc_url( $attachment_url ),
-				'width'  => esc_html( $width ),
-				'height' => esc_html( $height )
-			);
-			if ( is_numeric( attachment_url_to_postid( $attachment_url ) ) ) {
-				$data['id'] = attachment_url_to_postid( $attachment_url );
-			}
-			wp_send_json_success( $data );
-		} else {
+		$attachment_id = attachment_url_to_postid( $attachment_url );
+		if ( ! is_numeric( $attachment_id ) || (int) $attachment_id <= 0 ) {
 			wp_send_json_error();
 		}
+
+		$file_path = get_attached_file( (int) $attachment_id );
+		if ( ! $file_path || ! file_exists( $file_path ) ) {
+			wp_send_json_error();
+		}
+
+		$image_size = @getimagesize( $file_path );
+		if ( ! is_array( $image_size ) || count( $image_size ) < 2 ) {
+			wp_send_json_error();
+		}
+
+		$data = array(
+			'image'  => esc_url( $attachment_url ),
+			'width'  => esc_html( $image_size[0] ),
+			'height' => esc_html( $image_size[1] )
+		);
+		$data['id'] = (int) $attachment_id;
+		wp_send_json_success( $data );
 	}
 	function tsp_save_question() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_send_json_error( array( 'message' => 'Forbidden' ), 403 );
+		}
 		if ( ! isset( $_POST['tsp_nonce'] ) || $_POST['tsp_nonce'] == '' || ! wp_verify_nonce( $_POST['tsp_nonce'], 'tsp_builder_nonce_field' ) ) {
 			wp_send_json_error( 'TS Poll nonce error.' );
 		}
@@ -923,6 +889,9 @@ class ts_poll_admin{
 			foreach ( $tsp_question_params as $key => $value ) {
 				if ( $key == 'TS_Poll_Q_Theme' ) {
 					$tsp_question_params[ $key ] = sanitize_text_field( $value );
+				} elseif ( $key === 'TotalSoftPoll_Q_Vd' ) {
+					$maybe_url = sanitize_url( $value );
+					$tsp_question_params[ $key ] = apply_filters( 'tspoll_normalize_video_url', $maybe_url );
 				} else {
 					$tsp_question_params[ $key ] = sanitize_url( $value );
 				}
@@ -951,7 +920,12 @@ class ts_poll_admin{
 					$tsp_answer_title = htmlspecialchars( sanitize_text_field( stripslashes( $tsp_answers[ $tsp_arr_key ]['Answer_Title'] ) ), ENT_QUOTES );
 					foreach ( $tsp_answers[ $tsp_arr_key ]['Answer_Param'] as $param_key => $param_value ) {
 						if ( $param_key == 'TotalSoftPoll_Ans_Vd' || $param_key == 'TotalSoftPoll_Ans_Im' ) {
-							$tsp_answers[ $tsp_arr_key ]['Answer_Param'][ $param_key ] = sanitize_url( $param_value );
+							$maybe_url = sanitize_url( $param_value );
+							if ( $param_key === 'TotalSoftPoll_Ans_Vd' ) {
+								$tsp_answers[ $tsp_arr_key ]['Answer_Param'][ $param_key ] = apply_filters( 'tspoll_normalize_video_url', $maybe_url );
+							} else {
+								$tsp_answers[ $tsp_arr_key ]['Answer_Param'][ $param_key ] = $maybe_url;
+							}
 						} else {
 							$tsp_answers[ $tsp_arr_key ]['Answer_Param'][ $param_key ] = sanitize_text_field( $param_value );
 						}
@@ -1038,7 +1012,12 @@ class ts_poll_admin{
 					$tsp_answer_title = sanitize_text_field( htmlspecialchars( stripslashes( $tsp_answers[ $tsp_arr_key ]['Answer_Title'] ), ENT_QUOTES ) );
 					foreach ( $tsp_answers[ $tsp_arr_key ]['Answer_Param'] as $param_key => $param_value ) {
 						if ( $param_key == 'TotalSoftPoll_Ans_Im' || $param_key == 'TotalSoftPoll_Ans_Vd' ) {
-							$tsp_answers[ $tsp_arr_key ]['Answer_Param'][ $param_key ] = sanitize_url( $param_value );
+							$maybe_url = sanitize_url( $param_value );
+							if ( $param_key === 'TotalSoftPoll_Ans_Vd' ) {
+								$tsp_answers[ $tsp_arr_key ]['Answer_Param'][ $param_key ] = apply_filters( 'tspoll_normalize_video_url', $maybe_url );
+							} else {
+								$tsp_answers[ $tsp_arr_key ]['Answer_Param'][ $param_key ] = $maybe_url;
+							}
 						} else {
 							$tsp_answers[ $tsp_arr_key ]['Answer_Param'][ $param_key ] = sanitize_text_field( $param_value );
 						}

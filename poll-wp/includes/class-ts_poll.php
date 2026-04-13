@@ -1,79 +1,15 @@
 <?php
-/**
- * The file that defines the core plugin class
- *
- * A class definition that includes attributes and functions used across both the
- * public-facing side of the site and the admin area.
- *
- * @link       TS Poll
- * @since      1.7.0
- *
- * @package    TS_Poll
- * @subpackage TS_Poll/includes
- */
-/**
- * The core plugin class.
- *
- * This is used to define internationalization, admin-specific hooks, and
- * public-facing site hooks.
- *
- * Also maintains the unique identifier of this plugin as well as the current
- * version of the plugin.
- *
- * @since      1.7.0
- * @package    TS_Poll
- * @subpackage TS_Poll/includes
- * @author     TS Poll <TS Poll>
- */
 class TS_Poll {
-	/**
-	 * The loader that's responsible for maintaining and registering all hooks that power
-	 * the plugin.
-	 *
-	 * @since    1.7.0
-	 * @access   protected
-	 * @var      ts_poll_loader    $loader    Maintains and registers all hooks for the plugin.
-	 */
 	protected $loader;
-	/**
-	 * The unique identifier of this plugin.
-	 *
-	 * @since    1.7.0
-	 * @access   protected
-	 * @var      string    $plugin_name    The string used to uniquely identify this plugin.
-	 */
 	protected $plugin_name;
-	/**
-	 * The current version of the plugin.
-	 *
-	 * @since    1.7.0
-	 * @access   protected
-	 * @var      string    $version    The current version of the plugin.
-	 */
 	protected $version;
-	/**
-	 * The question proporty query result.
-	 *
-	 * @since    1.7.0
-	 * @access   protected
-	 * @var      string    $version    The question proporty query result.
-	 */
 	public $ts_poll_question_query;
-	/**
-	 * Define the core functionality of the plugin.
-	 *
-	 * Set the plugin name and the plugin version that can be used throughout the plugin.
-	 * Load the dependencies, define the locale, and set the hooks for the admin area and
-	 * the public-facing side of the site.
-	 *
-	 * @since    1.7.0
-	 */
 	public $ts_poll_fonts_array;
 	public function __construct() {
 		if ( defined( 'TS_POLL_VERSION' ) ) {
 			$this->version = TS_POLL_VERSION;
 		} else {
-			$this->version = '2.5.5';
+			$this->version = '2.6.0';
 		}
 		$this->plugin_name = 'TS Poll';
 		$this->load_dependencies();
@@ -154,13 +90,22 @@ class TS_Poll {
 							$tsp_response_value["Answer_Param"]["TotalSoftPoll_Ans_Im"] == '' ?  esc_html("No Image avaible" )  : html_entity_decode( htmlspecialchars_decode( $tsp_response_value['Answer_Title'] ), ENT_QUOTES )
 						);
 					} else {
+						$video_url = apply_filters( 'tspoll_normalize_video_url', esc_url( $tsp_response_value["Answer_Param"]["TotalSoftPoll_Ans_Vd"] ) );
 						$tsp_check_embed = sprintf(
 							'								
 							<div class="tsp_embed_popup_inner tsp_video_popup_embed">
 								%1$s
 							</div>
 							',
-							$tsp_response_value["Answer_Param"]["TotalSoftPoll_Ans_Vd"] == '' ? sprintf( '<img src="%s" alt="No Video avaible">', esc_url( plugin_dir_url( __DIR__ ) . '/public/img/tsp_no_video.png' ) ) : do_shortcode( $wp_embed->run_shortcode( '[embed]' . esc_url( $tsp_response_value["Answer_Param"]["TotalSoftPoll_Ans_Vd"] ) . '[/embed]' ) )
+							$video_url === ''
+								? sprintf( '<img src="%s" alt="No Video avaible">', esc_url( plugin_dir_url( __DIR__ ) . '/public/img/tsp_no_video.png' ) )
+								: ( apply_filters( 'tspoll_is_safe_oembed_url', $video_url )
+									? do_shortcode( $wp_embed->run_shortcode( '[embed]' . $video_url . '[/embed]' ) )
+									: sprintf(
+										'<video controls="controls" preload="metadata" name="media"><source type="video/mp4" src="%1$s"></video>',
+										esc_url( $video_url )
+									)
+								)
 						);
 					}
 					$tsp_response_answers[$tsp_response_key]["embed"] = $tsp_check_embed;
@@ -170,7 +115,7 @@ class TS_Poll {
 			$tspoll_mode = "live";
 			if ( apply_filters( 'ts_poll_check_coming', $ts_poll_question_settings['TotalSoft_Poll_Set_02'] ) !== false) {
 				$tspoll_mode = "coming";
-			}elseif (apply_filters( 'ts_poll_check_end', $ts_poll_question_settings['TotalSoft_Poll_Set_03'] ) !== false) {
+			} elseif (apply_filters( 'ts_poll_check_end', $ts_poll_question_settings['TotalSoft_Poll_Set_03'] ) !== false) {
 				$tspoll_mode = "end";
 			}
 			return new WP_REST_Response(array('success' => true, 'answers' => $tsp_response_answers,"total_votes" => $tsp_votes_total,"mode" => $tspoll_mode), 200);
@@ -179,11 +124,10 @@ class TS_Poll {
     }
     public function ts_poll_vote(WP_REST_Request $request) {
 		global $wpdb;
-        $ts_poll_id = $request->get_param('poll_id');
+        $ts_poll_id = absint( $request->get_param('poll_id') );
         $ts_poll_checked_answers = $request->get_param('checked_answers');
 		$ts_poll_checked_answers = explode( '|', $ts_poll_checked_answers);
-
-		if ( is_int( $ts_poll_id ) && $ts_poll_id > 0 && is_array( $ts_poll_checked_answers ) && count( $ts_poll_checked_answers ) > 0 ) {
+		if ( $ts_poll_id > 0 && is_array( $ts_poll_checked_answers ) && count( $ts_poll_checked_answers ) > 0 ) {
 			$ts_poll_question = apply_filters( "tsp_get_all_params", $ts_poll_id, true , true, false);
 			if ( $ts_poll_question !== false ) {
 				$ts_poll_question_settings = $ts_poll_question['Question_Settings'];
@@ -220,13 +164,22 @@ class TS_Poll {
 											$value["Answer_Param"]["TotalSoftPoll_Ans_Im"] == '' ?  esc_html("No Image avaible" )  : html_entity_decode( htmlspecialchars_decode( $value['Answer_Title'] ), ENT_QUOTES )
 										);
 									} else {
+										$video_url = apply_filters( 'tspoll_normalize_video_url', esc_url( $value["Answer_Param"]["TotalSoftPoll_Ans_Vd"] ) );
 										$ts_poll_embed = sprintf(
 											'								
 											<div class="tsp_embed_popup_inner tsp_video_popup_embed">
 												%1$s
 											</div>
 											',
-											$value["Answer_Param"]["TotalSoftPoll_Ans_Vd"] == '' ? sprintf( '<img src="%s" alt="No Video avaible">', esc_url( plugin_dir_url( __DIR__ ) . '/public/img/tsp_no_video.png' ) ) : do_shortcode( $wp_embed->run_shortcode( '[embed]' . esc_url( $value["Answer_Param"]["TotalSoftPoll_Ans_Vd"] ) . '[/embed]' ) )
+											$video_url === ''
+												? sprintf( '<img src="%s" alt="No Video avaible">', esc_url( plugin_dir_url( __DIR__ ) . '/public/img/tsp_no_video.png' ) )
+												: ( apply_filters( 'tspoll_is_safe_oembed_url', $video_url )
+													? do_shortcode( $wp_embed->run_shortcode( '[embed]' . $video_url . '[/embed]' ) )
+													: sprintf(
+														'<video controls="controls" preload="metadata" name="media"><source type="video/mp4" src="%1$s"></video>',
+														esc_url( $video_url )
+													)
+												)
 										);
 									}
 									$ts_poll_question_answers[$key]["embed"] = $ts_poll_embed;
@@ -241,7 +194,8 @@ class TS_Poll {
 		return new WP_Error('rest_forbidden', esc_html__('TS Poll vote failed.'), array('status' => 403));
     }
 	public function check_request_origin(WP_REST_Request $request) {
-        if (!isset($_SERVER['HTTP_X_WP_NONCE']) || !wp_verify_nonce($_SERVER['HTTP_X_WP_NONCE'], 'wp_rest')) {
+		$nonce = $request->get_header( 'X-WP-Nonce' );
+        if ( ! $nonce || ! wp_verify_nonce( $nonce, 'wp_rest' ) ) {
             return new WP_Error('rest_forbidden', esc_html__('You cannot access this resource.'), array('status' => 403));
         }
         return true;
@@ -295,13 +249,22 @@ class TS_Poll {
 							$tsp_response_value["Answer_Param"]["TotalSoftPoll_Ans_Im"] == '' ?  esc_html("No Image avaible" )  : html_entity_decode( htmlspecialchars_decode( $tsp_response_value['Answer_Title'] ), ENT_QUOTES )
 						);
 					} else {
+						$video_url = apply_filters( 'tspoll_normalize_video_url', esc_url( $tsp_response_value["Answer_Param"]["TotalSoftPoll_Ans_Vd"] ) );
 						$tsp_check_embed = sprintf(
 							'								
 							<div class="tsp_embed_popup_inner tsp_video_popup_embed">
 								%1$s
 							</div>
 							',
-							$tsp_response_value["Answer_Param"]["TotalSoftPoll_Ans_Vd"] == '' ? sprintf( '<img src="%s" alt="No Video avaible">', esc_url( plugin_dir_url( __DIR__ ) . '/public/img/tsp_no_video.png' ) ) : do_shortcode( $wp_embed->run_shortcode( '[embed]' . esc_url( $tsp_response_value["Answer_Param"]["TotalSoftPoll_Ans_Vd"] ) . '[/embed]' ) )
+							$video_url === ''
+								? sprintf( '<img src="%s" alt="No Video avaible">', esc_url( plugin_dir_url( __DIR__ ) . '/public/img/tsp_no_video.png' ) )
+								: ( apply_filters( 'tspoll_is_safe_oembed_url', $video_url )
+									? do_shortcode( $wp_embed->run_shortcode( '[embed]' . $video_url . '[/embed]' ) )
+									: sprintf(
+										'<video controls="controls" preload="metadata" name="media"><source type="video/mp4" src="%1$s"></video>',
+										esc_url( $video_url )
+									)
+								)
 						);
 					}
 					$tsp_response_answers[$tsp_response_key]["embed"] = $tsp_check_embed;
@@ -311,7 +274,7 @@ class TS_Poll {
 			$tspoll_mode = "live";
 			if ( apply_filters( 'ts_poll_check_coming', $ts_poll_question_settings['TotalSoft_Poll_Set_02'] ) !== false) {
 				$tspoll_mode = "coming";
-			}elseif (apply_filters( 'ts_poll_check_end', $ts_poll_question_settings['TotalSoft_Poll_Set_03'] ) !== false) {
+			} elseif (apply_filters( 'ts_poll_check_end', $ts_poll_question_settings['TotalSoft_Poll_Set_03'] ) !== false) {
 				$tspoll_mode = "end";
 			}
 			$tsp_response_arr = [
@@ -496,59 +459,17 @@ class TS_Poll {
 			}
 		}
 	}
-	/**
-	 * Load the required dependencies for this plugin.
-	 *
-	 * Include the following files that make up the plugin:
-	 *
-	 * - ts_poll_loader. Orchestrates the hooks of the plugin.
-	 * - ts_poll_admin. Defines all hooks for the admin area.
-	 * - ts_poll_public. Defines all hooks for the public side of the site.
-	 *
-	 * Create an instance of the loader which will be used to register the hooks
-	 * with WordPress.
-	 *
-	 * @since    1.7.0
-	 * @access   private
-	 */
 	private function load_dependencies() {
-		/**
-		 * The class responsible for orchestrating the actions and filters of the
-		 * core plugin.
-		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-ts_poll-loader.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-ts_poll-function.php';
-		/**
-		 * The class responsible for defining all actions that occur in the admin dashboard area.
-		*/
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-ts_poll_dashboard.php';
-		/**
-		 * The class responsible for defining all actions that occur in the admin area.
-		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-ts_poll-admin.php';
-		/**
-		* The class responsible for defining all actions that occur in the admin area.
-		*/
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-ts_poll_list.php';
-		/**
-		 * The class responsible for defining all actions that occur in the public-facing
-		 * side of the site.
-		 */
-		/**
-		* The class responsible for defining all actions that occur in the admin area.
-		*/
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-ts_poll_block.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-ts_poll-widget.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-ts_poll-public.php';
 		$this->loader = new ts_poll_loader();
 	}
-	/**
-	 * Register all of the hooks related to the admin area functionality
-	 * of the plugin.
-	 *
-	 * @since    1.7.0
-	 * @access   private
-	 */
 	private function define_admin_hooks() {
 		$plugin_admin = new ts_poll_admin( $this->get_plugin_name(), $this->get_version() );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
@@ -559,13 +480,6 @@ class TS_Poll {
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'ts_poll_pro_sub', 110 );
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'ts_poll_addons_sub', 120 );
 	}
-	/**
-	 * Register all of the hooks related to the public-facing functionality
-	 * of the plugin.
-	 *
-	 * @since    1.7.0
-	 * @access   private
-	 */
 	private function define_public_hooks() {
 		function ts_poll_register_widget() {
 			register_widget( 'ts_poll_widget' );
@@ -609,40 +523,15 @@ class TS_Poll {
 		}
 		return false;
 	}
-	/**
-	 * Run the loader to execute all of the hooks with WordPress.
-	 *
-	 * @since    1.7.0
-	 */
 	public function run() {
 		$this->loader->run();
 	}
-	/**
-	 * The name of the plugin used to uniquely identify it within the context of
-	 * WordPress and to define internationalization functionality.
-	 *
-	 * @since     1.7.0
-	 * @return    string    The name of the plugin.
-	 */
 	public function get_plugin_name() {
 		return $this->plugin_name;
 	}
-	/**
-	 * The reference to the class that orchestrates the hooks with the plugin.
-	 *
-	 * @since     1.7.0
-	 * @return    ts_poll_loader    Orchestrates the hooks of the plugin.
-	 */
 	public function get_loader() {
 		return $this->loader;
 	}
-	/**
-	 * Primary function to render a poll on the frontend.
-	 *
-	 * @since 1.7.0
-	 *
-	 * @param int $id Poll ID.
-	 */
 	private function ts_poll_content( $total_soft_poll, $ts_poll_edit ) {
 		global $wpdb;
 		$ts_poll_question_table = esc_sql( $wpdb->prefix . 'ts_poll_questions' );
@@ -671,13 +560,22 @@ class TS_Poll {
 								$tsp_response_value["Answer_Param"]["TotalSoftPoll_Ans_Im"] == '' ?  esc_html("No Image avaible" )  : html_entity_decode( htmlspecialchars_decode( $tsp_response_value['Answer_Title'] ), ENT_QUOTES )
 							);
 						} else {
+							$video_url = apply_filters( 'tspoll_normalize_video_url', esc_url( $tsp_response_value["Answer_Param"]["TotalSoftPoll_Ans_Vd"] ) );
 							$tsp_check_embed = sprintf(
 								'								
 								<div class="tsp_embed_popup_inner tsp_video_popup_embed">
 									%1$s
 								</div>
 								',
-								$tsp_response_value["Answer_Param"]["TotalSoftPoll_Ans_Vd"] == '' ? sprintf( '<img src="%s" alt="No Video avaible">', esc_url( plugin_dir_url( __DIR__ ) . '/public/img/tsp_no_video.png' ) ) : do_shortcode( $wp_embed->run_shortcode( '[embed]' . esc_url( $tsp_response_value["Answer_Param"]["TotalSoftPoll_Ans_Vd"] ) . '[/embed]' ) )
+								$video_url === ''
+									? sprintf( '<img src="%s" alt="No Video avaible">', esc_url( plugin_dir_url( __DIR__ ) . '/public/img/tsp_no_video.png' ) )
+									: ( apply_filters( 'tspoll_is_safe_oembed_url', $video_url )
+										? do_shortcode( $wp_embed->run_shortcode( '[embed]' . $video_url . '[/embed]' ) )
+										: sprintf(
+											'<video controls="controls" preload="metadata" name="media"><source type="video/mp4" src="%1$s"></video>',
+											esc_url( $video_url )
+										)
+									)
 							);
 						}
 						$ts_poll_question_query['Answers'][$tsp_response_key]["embed"] = $tsp_check_embed;
@@ -958,15 +856,6 @@ class TS_Poll {
 			return false;
 		}
 	}
-	/**
-	 * Shortcode function for show poll
-	 *
-	 * @since 1.7.0
-	 *
-	 * @param array $atts Shortcode attributes provided by a user.
-	 *
-	 * @return string
-	 */
 	public function ts_poll_shortcode( $atts ) {
 		$atts = shortcode_atts(
 			array(
@@ -979,12 +868,6 @@ class TS_Poll {
 			$this->ts_poll_content( $atts['id'], $atts['edit'] );
 		return \ob_get_clean();
 	}
-	/**
-	 * Retrieve the version number of the plugin.
-	 *
-	 * @since     1.7.0
-	 * @return    string    The version number of the plugin.
-	 */
 	public function get_version() {
 		return $this->version;
 	}

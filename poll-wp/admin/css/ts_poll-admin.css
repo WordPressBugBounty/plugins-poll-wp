@@ -1,7 +1,3 @@
-/**
- * All of the CSS for your admin-specific functionality should be
- * included in this file.
- */
 :root {
 	--ts_poll_bgc_f: #4105d8;
 	--ts_poll_bgc_s: #5534a9;
@@ -481,15 +477,10 @@ a[data-tsp-action="delete"] {
 
 #ts_poll_form td {
 	-webkit-touch-callout: none;
-	/* iOS Safari */
 	-webkit-user-select: none;
-	/* Safari */
 	-khtml-user-select: none;
-	/* Konqueror HTML */
 	-moz-user-select: none;
-	/* Old versions of Firefox */
 	-ms-user-select: none;
-	/* Internet Explorer/Edge */
 	user-select: none;
 }
 

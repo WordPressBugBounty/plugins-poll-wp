@@ -1,4 +1,3 @@
-/* Builder Select theme section */
 .tsp-no-select,
 .tsp-no-select>* {
 	-webkit-touch-callout: none;
@@ -152,7 +151,6 @@
 	border: 0.0625rem solid #dcdcde;
 }
 
-/* tsp-container */
 div.tsp-container {
 	width: 100%;
 	max-width: 100%;
@@ -162,7 +160,6 @@ div.tsp-container {
 	background: #f5f5f5;
 }
 
-/* ts main */
 main.tsp-main {
 	height: 100%;
 	width: 100%;
@@ -177,14 +174,12 @@ main.tsp-main:not(.tsp-active) {
 	display: none;
 }
 
-/* tsp-templates-header */
 header.tsp-templates-header {
 	width: 100%;
 	height: 7.5rem;
 	overflow: hidden;
 }
 
-/* tsp-templates-search */
 div.tsp-templates-search {
 	width: 12.5rem;
 	padding: 0px 5px 5px 5px;
@@ -235,7 +230,6 @@ div.tsp-templates-search>input.tsp-search-input:active {
 	outline: 2px solid transparent;
 }
 
-/* tsp-templates-menu */
 div.tsp-templates-menu {
 	width: calc(100% - 14.5rem);
 	padding: 5px 5px 5px 0px;
@@ -264,7 +258,6 @@ div.tsp-templates-menu-item:hover>span.tsp-templates-menu-item-text {
 	color: #8c8c8c;
 }
 
-/* tsp-templates-section */
 section.tsp-templates-section {
 	max-height: calc(100% - 7.5rem);
 	width: 100%;
@@ -288,7 +281,6 @@ div.tsp-templates-wrapper {
 	column-width: 15.625rem
 }
 
-/* tsp-template */
 .tsp-template {
 	margin: 0px 10px 15px 10px;
 	-webkit-transition: 1s ease all;
@@ -412,7 +404,6 @@ div.tsp-template-image-overlay>.tsp-template-btn>span {
 	}
 }
 
-/* tsp-themes-main */
 header.tsp-themes-header {
 	height: 3.75rem;
 	width: 100%;
